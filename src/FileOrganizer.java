@@ -21,7 +21,7 @@ public class FileOrganizer {
             System.out.println("   Automatically sort your files into folders     ");
             System.out.println("==================================================");
             System.out.println(
-                    "1 - Try Auto Find Donwloads Path\n2 - Manually Type Downloads Path\n3 - Manually Type Another Folder Path");
+                    "1 - Try Auto Find Donwloads Path\n2 - Manually Type Downloads Path\n3 - Manually Type Another Folder Path\n4 - Settings");
             System.out.println("==================================================");
             int userInput = getUserInput();
             if (userInput == 1) {
@@ -34,6 +34,9 @@ public class FileOrganizer {
                 System.out.println("==================================================");
                 String userHomeInput = scanner.nextLine();
                 userHome = Path.of(userHomeInput).toAbsolutePath();
+            } else if (userInput == 4) {
+                userHome = Path.of(System.getProperty("user.home"));
+                settingsMenu();
             }
             if (userHome != null && Files.exists(userHome)) {
                 cleanscreen();
@@ -112,7 +115,7 @@ public class FileOrganizer {
             try {
                 String input = scanner.nextLine();
                 int choice = Integer.parseInt(input);
-                if (choice == 1 || choice == 2 || choice == 3) {
+                if (choice == 1 || choice == 2 || choice == 3 || choice == 4) {
                     return choice;
                 } else {
                     System.out.println("Invalid option! Please type a NUMBER between 1 and 3:");
@@ -120,6 +123,47 @@ public class FileOrganizer {
             } catch (NumberFormatException e) {
                 System.out.println("Error: Please type a NUMBER between 1 and 3:");
             }
+        }
+    }
+
+    public static void setNewRule() {
+        cleanscreen();
+        System.out.println("==================================================");
+        System.out.println("          Add new extension and folder");
+        System.out.println("For the extension dont type the '.' write only the name");
+        System.out.println("             (e.g., exe or zip)");
+        System.out.println("==================================================");
+        System.out.println("Extension: ");
+        System.out.println("==================================================");
+        String extension = scanner.nextLine().trim().toLowerCase();
+        System.out.println("==================================================");
+        System.out.println("Folder name: ");
+        System.out.println("==================================================");
+        String folderName = scanner.nextLine();
+        System.out.println("==================================================");
+        System.out.printf("| Added: | Extension: '%s' | To | Folder: '%s' |\n", extension, folderName);
+        System.out.println("==================================================");
+        rules.put(extension, folderName);
+        System.out.println("Press Enter to continue: ");
+        System.out.println("==================================================");
+        scanner.nextLine();
+    }
+
+    public static void settingsMenu() {
+        cleanscreen();
+        System.out.println("==================================================");
+        System.out.println("            Setting/Customizations");
+        System.out.println("==================================================");
+        System.out.println("1 - Add new extension");
+        System.out.println("==================================================");
+        String inputString = scanner.nextLine();
+        int inputInt = Integer.parseInt(inputString);
+        switch (inputInt) {
+            case 1:
+                setNewRule();
+                break;
+            default:
+                break;
         }
     }
 }
