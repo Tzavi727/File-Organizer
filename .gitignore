@@ -1,0 +1,6 @@
+bin/
+jre/
+*.jar
+*.xml
+*.exe
+.vscode/
