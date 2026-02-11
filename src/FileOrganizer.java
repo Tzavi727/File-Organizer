@@ -11,64 +11,26 @@ public class FileOrganizer {
     public static Scanner scanner = new Scanner(System.in);
     public static Map<String, String> rules = new HashMap<>();
 
+    public enum mainMenu {
+        AUTO_FIND_PATH,
+        MANUAL_PATH,
+        SETTINGS,
+        END_PROGRAM
+    }
+
+    public enum settingsMenu {
+        ADD_NEW_EXTENSION
+    }
+
     public static void main(String[] args) throws Exception {
         setRules();
-        Path userHome = null;
         while (true) {
-            cleanscreen();
-            System.out.println("==================================================");
-            System.out.println("         DOWNLOADS FILE ORGANIZER v1.0           ");
-            System.out.println("   Automatically sort your files into folders     ");
-            System.out.println("==================================================");
-            System.out.println(
-                    "1 - Try Auto Find Donwloads Path\n2 - Manually Type Downloads Path\n3 - Manually Type Another Folder Path\n4 - Settings");
-            System.out.println("==================================================");
-            int userInput = getUserInput();
-            if (userInput == 1) {
-                userHome = Path.of(System.getProperty("user.home"));
-                userHome = userHome.resolve("Downloads");
-            } else if (userInput == 2 || userInput == 3) {
-                cleanscreen();
-                System.out.println("==================================================");
-                System.out.println("Manually Type Path Below: ");
-                System.out.println("==================================================");
-                String userHomeInput = scanner.nextLine();
-                userHome = Path.of(userHomeInput).toAbsolutePath();
-            } else if (userInput == 4) {
-                userHome = Path.of(System.getProperty("user.home"));
-                settingsMenu();
-            }
-            if (userHome != null && Files.exists(userHome)) {
-                cleanscreen();
-                final Path finalPath = userHome;
-                try (Stream<Path> stream = Files.list(userHome)) {
-                    stream.forEach(file -> {
-                        if (Files.isRegularFile(file)) {
-                            String fileName = file.getFileName().toString();
-                            int dotIndex = fileName.lastIndexOf(".");
-                            if (dotIndex > 0) {
-                                String extension = fileName.substring(dotIndex + 1).toLowerCase();
-
-                                if (rules.containsKey(extension)) {
-                                    String destinationFolder = rules.get(extension);
-                                    moveFile(file, destinationFolder, finalPath);
-                                }
-                            }
-                        }
-                    });
-                } catch (Exception e) {
-                    cleanscreen();
-                    System.out.println("Something went wrong when trying to list files.");
-                }
-                System.out.println("Your downloads folder should now be organized!");
-                scanner.nextLine();
-                break;
-            } else {
-                cleanscreen();
-                System.out.printf("Path '%s' not found.\n", userHome);
-                System.out.println("Press ENTER to try again...");
-                scanner.nextLine();
-                userHome = null;
+            showMainMenu();
+            int userMainMenuInput = getUserMainMenuInput();
+            Path selectedPath = null;
+            selectedPath = handleMainMenuInput(userMainMenuInput);
+            if (selectedPath != null) {
+                executeOrganization(selectedPath);
             }
         }
     }
@@ -110,18 +72,20 @@ public class FileOrganizer {
         }
     }
 
-    public static int getUserInput() {
+   public static int getUserMainMenuInput() {
+         mainMenu[] mainMenuOptions = mainMenu.values();
         while (true) {
             try {
                 String input = scanner.nextLine();
                 int choice = Integer.parseInt(input);
-                if (choice == 1 || choice == 2 || choice == 3 || choice == 4) {
+                if (choice >= 1 && choice <= mainMenuOptions.length) {
                     return choice;
                 } else {
-                    System.out.println("Invalid option! Please type a NUMBER between 1 and 3:");
+                    System.out.printf("Invalid option! Please type a NUMBER between 1 and %d:\n",
+                            mainMenuOptions.length);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Error: Please type a NUMBER between 1 and 3:");
+                System.out.printf("Error: Please type a NUMBER between 1 and %d:\n", mainMenuOptions.length);
             }
         }
     }
@@ -149,6 +113,30 @@ public class FileOrganizer {
         scanner.nextLine();
     }
 
+    public static Path handleMainMenuInput(int userMainMenuInput) {
+        mainMenu[] mainMenuOptions = mainMenu.values();
+        if (userMainMenuInput >= 1 && userMainMenuInput <= mainMenuOptions.length) {
+            mainMenu choosenMainMenuOptions = mainMenuOptions[userMainMenuInput - 1];
+            switch (choosenMainMenuOptions) {
+                case AUTO_FIND_PATH:
+                    return autoFindDownloadsPath();
+                case MANUAL_PATH:
+                    return manualPath();
+                case SETTINGS:
+                    settingsMenu();
+                    return null;
+                case END_PROGRAM:
+                    cleanscreen();
+                    System.out.println("Exiting File Organizer...");
+                    System.exit(0);
+                    break;
+                default:
+                    return null;
+            }
+        }
+        return null;
+    }
+
     public static void settingsMenu() {
         cleanscreen();
         System.out.println("==================================================");
@@ -156,14 +144,86 @@ public class FileOrganizer {
         System.out.println("==================================================");
         System.out.println("1 - Add new extension");
         System.out.println("==================================================");
-        String inputString = scanner.nextLine();
-        int inputInt = Integer.parseInt(inputString);
-        switch (inputInt) {
+        int userInput = getUserSettingsMenuInput();
+        switch (userInput) {
             case 1:
                 setNewRule();
                 break;
             default:
                 break;
         }
+    }
+
+    public static int getUserSettingsMenuInput() {
+         settingsMenu[] settingsMenuOptions = settingsMenu.values();
+        while (true) {
+            try {
+                String input = scanner.nextLine();
+                int choice = Integer.parseInt(input);
+                if (choice >= 1 && choice <= settingsMenuOptions.length) {
+                    return choice;
+                } else {
+                    System.out.printf("Invalid option! Please type a NUMBER between 1 and %d:\n",
+                            settingsMenuOptions.length);
+                }
+            } catch (NumberFormatException e) {
+                System.out.printf("Error: Please type a NUMBER between 1 and %d:\n", settingsMenuOptions.length);
+            }
+        }
+    }
+
+    public static Path autoFindDownloadsPath() {
+        Path userHome = Path.of(System.getProperty("user.home")).resolve("Downloads");
+        return userHome;
+    }
+
+    public static Path manualPath() {
+        cleanscreen();
+        System.out.println("==================================================");
+        System.out.println("Manually Type Path Below: ");
+        System.out.println("==================================================");
+        String userHomeInput = scanner.nextLine();
+        return Path.of(userHomeInput).toAbsolutePath();
+    }
+
+    public static void executeOrganization(Path folderPath) {
+        if (folderPath == null || !Files.exists(folderPath)) {
+            System.out.println("Invalid Path! Cannot organize.");
+            return;
+        }
+        cleanscreen();
+        final Path finalPath = folderPath;
+        try (Stream<Path> stream = Files.list(folderPath)) {
+            stream.forEach(file -> {
+                if (Files.isRegularFile(file)) {
+                    String fileName = file.getFileName().toString();
+                    int dotIndex = fileName.lastIndexOf(".");
+                    if (dotIndex > 0) {
+                        String extension = fileName.substring(dotIndex + 1).toLowerCase();
+
+                        if (rules.containsKey(extension)) {
+                            String destinationFolder = rules.get(extension);
+                            moveFile(file, destinationFolder, finalPath);
+                        }
+                    }
+                }
+            });
+        } catch (Exception e) {
+            cleanscreen();
+            System.out.println("Something went wrong when trying to list files.");
+        }
+        System.out.println("Your downloads folder should now be organized!");
+        scanner.nextLine();
+    }
+
+    public static void showMainMenu() {
+        cleanscreen();
+        System.out.println("==================================================");
+        System.out.println("         DOWNLOADS FILE ORGANIZER v1.0           ");
+        System.out.println("   Automatically sort your files into folders     ");
+        System.out.println("==================================================");
+        System.out.println(
+                "1 - Try Auto Find Donwloads Path\n2 - Manually Type Path\n3 - Settings\n4 - End Program");
+        System.out.println("==================================================");
     }
 }
