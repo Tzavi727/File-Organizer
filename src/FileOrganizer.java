@@ -219,7 +219,7 @@ public class FileOrganizer {
     public static void showMainMenu() {
         cleanscreen();
         System.out.println("==================================================");
-        System.out.println("         DOWNLOADS FILE ORGANIZER v1.0           ");
+        System.out.println("         DOWNLOADS FILE ORGANIZER v1.1           ");
         System.out.println("   Automatically sort your files into folders     ");
         System.out.println("==================================================");
         System.out.println(
