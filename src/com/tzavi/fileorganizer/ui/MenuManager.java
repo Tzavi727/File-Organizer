@@ -2,7 +2,6 @@ package com.tzavi.fileorganizer.ui;
 
 import java.nio.file.Path;
 import java.util.Scanner;
-
 import com.tzavi.fileorganizer.config.RuleManager;
 import com.tzavi.fileorganizer.services.SorterService;
 
@@ -16,6 +15,7 @@ public class MenuManager {
 
     public enum settingsMenu {
         ADD_NEW_EXTENSION,
+        LIST_RULES,
         BACK
     }
 
@@ -24,7 +24,7 @@ public class MenuManager {
     public static void showMainMenu() {
         cleanscreen();
         System.out.println("==================================================");
-        System.out.println("         DOWNLOADS FILE ORGANIZER v1.1           ");
+        System.out.println("         DOWNLOADS FILE ORGANIZER v1.3           ");
         System.out.println("   Automatically sort your files into folders     ");
         System.out.println("==================================================");
         System.out.println(
@@ -80,7 +80,7 @@ public class MenuManager {
         System.out.println("==================================================");
         System.out.println("            Setting/Customizations");
         System.out.println("==================================================");
-        System.out.println("1 - Add new extension\n2 - Go back");
+        System.out.println("1 - Add new extension\n2 - Check supported extensions\n3 - Go back");
         System.out.println("==================================================");
         handleSettingsMenuInput();
     }
@@ -93,6 +93,9 @@ public class MenuManager {
             switch (choosenSettingsMenuOptions) {
                 case ADD_NEW_EXTENSION:
                     RuleManager.setNewRule();
+                    break;
+                case LIST_RULES:
+                    RuleManager.listRules();
                     break;
                 case BACK:
                     return;

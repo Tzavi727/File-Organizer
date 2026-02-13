@@ -40,4 +40,18 @@ public class RuleManager {
         System.out.println("==================================================");
         MenuManager.scanner.nextLine();
     }
+
+    public static void listRules() {
+        MenuManager.cleanscreen();
+        System.out.println("==================================================");
+        System.out.println("         Listing supported extensions...");
+        System.out.println("==================================================");
+        rules.forEach((extension, folder) -> {
+            System.out.printf("| Extension: '%s' | -> | Folder: '%s' |\n", extension, folder);
+            System.out.println("==================================================");
+        });
+        System.out.println("           Press Enter to continue: ");
+        System.out.println("==================================================");
+        MenuManager.scanner.nextLine();
+    }
 }
