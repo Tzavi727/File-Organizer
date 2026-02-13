@@ -24,7 +24,7 @@ public class MenuManager {
     public static void showMainMenu() {
         cleanscreen();
         System.out.println("==================================================");
-        System.out.println("         DOWNLOADS FILE ORGANIZER v1.4           ");
+        System.out.println("         DOWNLOADS FILE ORGANIZER v1.5           ");
         System.out.println("   Automatically sort your files into folders     ");
         System.out.println("==================================================");
         System.out.println(

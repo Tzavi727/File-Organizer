@@ -17,7 +17,7 @@ public class SorterService {
             Path finalPath = target.resolve(originalFile.getFileName());
             Files.move(originalFile, finalPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Could not move file: " + originalFile.getFileName() + " (File might be in use)");
         }
     }
 
@@ -61,7 +61,18 @@ public class SorterService {
         System.out.println("==================================================");
         System.out.println("Manually Type Path Below: ");
         System.out.println("==================================================");
-        String userHomeInput = MenuManager.scanner.nextLine();
-        return Path.of(userHomeInput).toAbsolutePath();
+        String userHomeInput = MenuManager.scanner.nextLine().trim();
+        Path choosenPath = Path.of(userHomeInput).toAbsolutePath();
+        if (userHomeInput.isEmpty() || !Files.exists(choosenPath)) {
+            MenuManager.cleanscreen();
+            System.out.println("==================================================");
+            System.out.println("              Path not found");
+            System.out.println("         Press ENTER to continue:");
+            System.out.println("==================================================");
+            MenuManager.scanner.nextLine();
+            return null;
+        } else {
+            return choosenPath;
+        }
     }
 }
