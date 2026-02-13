@@ -9,13 +9,23 @@ public class RuleManager {
     public static Map<String, String> rules = new HashMap<>();
 
     public static void setRules() {
+        // compressed
+        rules.put("7z", "compressed");
+        rules.put("rar", "compressed");
         rules.put("zip", "compressed");
+        // executables
         rules.put("exe", "executables");
+        // images
         rules.put("jpg", "images");
-        rules.put("pdf", "documents");
-        rules.put("mp4", "videos");
         rules.put("jpeg", "images");
         rules.put("png", "images");
+        rules.put("gif", "images");
+        // videos
+        rules.put("mp4", "videos");
+        // documents
+        rules.put("pdf", "documents");
+        rules.put("docx", "documents");
+        rules.put("txt", "documents");
     }
 
     public static void setNewRule() {
@@ -44,13 +54,13 @@ public class RuleManager {
     public static void listRules() {
         MenuManager.cleanscreen();
         System.out.println("==================================================");
-        System.out.println("         Listing supported extensions...");
+        System.out.println("       | Listing supported extensions... |");
         System.out.println("==================================================");
         rules.forEach((extension, folder) -> {
             System.out.printf("| Extension: '%s' | -> | Folder: '%s' |\n", extension, folder);
             System.out.println("==================================================");
         });
-        System.out.println("           Press Enter to continue: ");
+        System.out.println("         | Press Enter to continue: |");
         System.out.println("==================================================");
         MenuManager.scanner.nextLine();
     }
