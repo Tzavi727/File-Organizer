@@ -9,6 +9,7 @@ public class MenuManager {
     public enum mainMenu {
         AUTO_FIND_PATH,
         MANUAL_PATH,
+        ORGANIZE_BY_EXTENSION,
         SETTINGS,
         END_PROGRAM
     }
@@ -24,11 +25,11 @@ public class MenuManager {
     public static void showMainMenu() {
         cleanscreen();
         System.out.println("==================================================");
-        System.out.println("         DOWNLOADS FILE ORGANIZER v1.5           ");
+        System.out.println("         DOWNLOADS FILE ORGANIZER v1.6           ");
         System.out.println("   Automatically sort your files into folders     ");
         System.out.println("==================================================");
         System.out.println(
-                "1 - Try Auto Find Donwloads Path\n2 - Manually Type Path\n3 - Settings\n4 - End Program");
+                "1 - Try Auto Find Donwloads Path\n2 - Manually Type Path\n3 - Organize by Extension\n4 - Settings\n5 - End Program");
         System.out.println("==================================================");
     }
 
@@ -60,6 +61,9 @@ public class MenuManager {
                     return SorterService.autoFindDownloadsPath();
                 case MANUAL_PATH:
                     return SorterService.manualPath();
+                case ORGANIZE_BY_EXTENSION:
+                    organizeByExtension();
+                    return null;
                 case SETTINGS:
                     settingsMenu();
                     return null;
@@ -96,6 +100,7 @@ public class MenuManager {
                     break;
                 case LIST_RULES:
                     RuleManager.listRules();
+                    waitingForInput();
                     break;
                 case BACK:
                     return;
@@ -103,6 +108,46 @@ public class MenuManager {
                     return;
 
             }
+        }
+    }
+
+    public static void organizeByExtension() {
+        cleanscreen();
+        organizeByExtensionMenu();
+        String choosenExtension = handleOrganizeByExtensionMenuInput();
+        if(choosenExtension.equals("CANCEL")){
+            return;
+        }
+        cleanscreen();
+        Path choosenPath = SorterService.getPath();
+        String folderName = RuleManager.rules.get(choosenExtension);
+        SorterService.executeOrganizationByExtension(choosenPath, choosenExtension, folderName);
+    }
+    
+    public static void organizeByExtensionMenu() {
+        RuleManager.listRules();
+        System.out.println("Choose a extension to organize or type 'back' to cancel ");
+        System.out.println("==================================================");
+    }
+
+    public static String handleOrganizeByExtensionMenuInput() {
+        while (true) {
+            String userChoosenExtension = scanner.nextLine().toLowerCase().trim();
+            if (userChoosenExtension.equals("back")) {
+                System.out.println("==================================================");
+                return "CANCEL";
+            }
+            if (RuleManager.rules.containsKey(userChoosenExtension)) {
+                return userChoosenExtension;
+            } else {
+                cleanscreen();
+                System.out.println("==================================================");
+                System.out.printf("Extension '%s' not found on the list\n",userChoosenExtension);
+                System.out.println("Try again or type 'back' to cancel:");
+                System.out.println("==================================================");
+                waitingForInput();
+            }
+            organizeByExtensionMenu();
         }
     }
 
@@ -136,5 +181,19 @@ public class MenuManager {
             for (int i = 0; i < 50; i++)
                 System.out.println();
         }
+    }
+
+    public static void waitingForInput() {
+        System.out.println("         | Press Enter to continue: |");
+        System.out.println("==================================================");
+        MenuManager.scanner.nextLine();
+    }
+
+    public static void filesOrganizedMessage(){
+        cleanscreen();
+        System.out.println("==================================================");
+        System.out.println("| Your downloads folder should now be organized! |");
+        System.out.println("==================================================");
+        waitingForInput();
     }
 }

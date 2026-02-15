@@ -10,8 +10,8 @@ import com.tzavi.fileorganizer.config.RuleManager;
 import com.tzavi.fileorganizer.ui.MenuManager;
 
 public class SorterService {
-    public static void moveFile(Path originalFile, String folderDestinationName, Path downloadsPath) {
-        Path target = downloadsPath.resolve(folderDestinationName);
+    public static void moveFile(Path originalFile, String targetFolderName, Path targetPath) {
+        Path target = targetPath.resolve(targetFolderName);
         try {
             Files.createDirectories(target);
             Path finalPath = target.resolve(originalFile.getFileName());
@@ -43,12 +43,11 @@ public class SorterService {
                     }
                 }
             });
+            MenuManager.filesOrganizedMessage();
         } catch (Exception e) {
             MenuManager.cleanscreen();
-            System.out.println("Something went wrong when trying to list files.");
+            System.out.println("Something went wrong when trying to organize files.");
         }
-        System.out.println("Your downloads folder should now be organized!");
-        MenuManager.scanner.nextLine();
     }
 
     public static Path autoFindDownloadsPath() {
@@ -73,6 +72,51 @@ public class SorterService {
             return null;
         } else {
             return choosenPath;
+        }
+    }
+
+    public static Path getPath() {
+        while (true) {
+            try {
+                MenuManager.cleanscreen();
+                System.out.println("==================================================");
+                System.out.println("                 Choose a path");
+                System.out.println("==================================================");
+                System.out.println("1 - Try Auto Find Donwloads Path\n2 - Manually Type Path");
+                System.out.println("==================================================");
+                String userInputString = MenuManager.scanner.nextLine();
+                int userInputInt = Integer.parseInt(userInputString);
+                if (userInputInt == 1) {
+                    return autoFindDownloadsPath();
+                } else if (userInputInt == 2) {
+                    return manualPath();
+                } else {
+                    continue;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("==================================================");
+                System.out.println("Invalid option!\nPlease type a NUMBER");
+                System.out.println("==================================================");
+                MenuManager.waitingForInput();
+            }
+        }
+    }
+
+    public static void executeOrganizationByExtension(Path folderPath, String extension, String folderName) {
+        if (folderPath == null || !Files.exists(folderPath)) {
+            System.out.println("Invalid Path! Cannot organize.");
+            return;
+        }
+        MenuManager.cleanscreen();
+        try (Stream<Path> stream = Files.list(folderPath)) {
+            stream.filter(file -> file.getFileName().toString().toLowerCase().endsWith("." + extension))
+                    .forEach(file -> {
+                        moveFile(file, folderName, folderPath);
+                    });
+            MenuManager.filesOrganizedMessage();
+        } catch (Exception e) {
+            MenuManager.cleanscreen();
+            System.out.println("Something went wrong when trying to organize files.");
         }
     }
 }

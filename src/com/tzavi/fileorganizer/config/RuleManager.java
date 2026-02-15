@@ -60,8 +60,5 @@ public class RuleManager {
             System.out.printf("| Extension: '%s' | -> | Folder: '%s' |\n", extension, folder);
             System.out.println("==================================================");
         });
-        System.out.println("         | Press Enter to continue: |");
-        System.out.println("==================================================");
-        MenuManager.scanner.nextLine();
     }
 }
