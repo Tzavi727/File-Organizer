@@ -1,5 +1,6 @@
 ﻿using FileOrganizer.FileOrganizer.Settings;
 using FileOrganizer.FileOrganizer.UI;
+using FileOrganizer.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,25 @@ namespace FileOrganizer.FileOrganizer.Config
 {
     internal class RuleManager
     {
-        public static Dictionary<string, string> rules = new Dictionary<string, string>();
-
-        public static void setRules()
+        public static IReadOnlyDictionary<string,string> GetAllRules()
         {
+            return new Dictionary<string, string>(rules);
+        }
+        private static Dictionary<string, string> rules = new();
+
+        public static Dictionary<string, string> GetRulesForSave()
+        {
+            return rules;
+        }
+
+        public static void ReplaceRules(Dictionary<string,string> newRules)
+        {
+            rules = newRules ?? new Dictionary<string, string>();
+        }
+
+        public static void SetDefaultRules()
+        {
+            rules.Clear();
             // compressed
             rules.Add("7z", "compressed");
             rules.Add("rar", "compressed");
@@ -34,50 +50,19 @@ namespace FileOrganizer.FileOrganizer.Config
             rules.Add("txt", "documents");
         }
 
-        public static void setNewRule()
+        public static void SetNewRule(string extension,string folderName)
         {
-            MenuManager.CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("           Add new extension and folder");
-            Console.WriteLine("   For the extension dont type the '.' write only the name");
-            Console.WriteLine("               (e.g., exe or zip)");
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("Extension: ");
-            Console.WriteLine("=====================================================");
-            String extension = Console.ReadLine().Trim().ToLower();
-            if (string.IsNullOrWhiteSpace(extension))
-            {
-                extension = "Non-Specified extension";
-            }
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("Folder Name: ");
-            Console.WriteLine("=====================================================");
-            String folderName = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(folderName))
-            {
-                folderName = "default_folder";
-            }
-            Console.WriteLine("=====================================================");
-            Console.WriteLine($"| Added: | Extension: '{extension}' | To | Folder '{folderName}' |");
-            Console.WriteLine("=====================================================");
             rules[extension] = folderName;
-            Console.WriteLine("Press ENTER to continue: ");
-            Console.WriteLine("=====================================================");
-            Console.ReadLine();
-            AppSettings.SaveRules();
         }
 
-        public static void listRules()
+        public static bool ContainsRule(string rule)
         {
-            MenuManager.CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("            Listing supported extensions...");
-            Console.WriteLine("=====================================================");
-            foreach (var rule in rules)
-            {
-                Console.WriteLine($"| Extension: {rule.Key,-3} | -> | Folder: {rule.Value,-3} | ");
-                Console.WriteLine("=====================================================");
-            }
+            return rules.ContainsKey(rule);
+        }
+
+        public static bool TryGetExtensionFolder(string extension, out string folderName)
+        {
+            return rules.TryGetValue(extension, out folderName);
         }
     }
 }

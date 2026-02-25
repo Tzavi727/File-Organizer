@@ -12,7 +12,7 @@ namespace FileOrganizer.FileOrganizer.Settings
     {
         public static void SaveRules()
         {
-            var json = JsonSerializer.Serialize(RuleManager.rules,
+            var json = JsonSerializer.Serialize(RuleManager.GetRulesForSave(),
                 new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText("rules.json", json);
         }
@@ -20,12 +20,21 @@ namespace FileOrganizer.FileOrganizer.Settings
         {
             if (File.Exists("rules.json"))
             {
-                string jsonText = File.ReadAllText("rules.json");
-                RuleManager.rules = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonText);
+                try
+                {
+                    string jsonText = File.ReadAllText("rules.json");
+                    var loadedRules = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonText);
+                    RuleManager.ReplaceRules(loadedRules);
+                }
+                catch (Exception)
+                {
+                    RuleManager.SetDefaultRules();
+                    SaveRules();
+                }
             }
             else
             {
-                RuleManager.setRules();
+                RuleManager.SetDefaultRules();
                 SaveRules();
             }
         }

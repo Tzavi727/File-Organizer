@@ -6,10 +6,10 @@ AppSettings.LoadRules();
 while (true)
 {
     string selectedPath = null;
-    MenuManager.showMainMenu();
-    selectedPath = MenuManager.HandleMainMenuInput();
+    MainMenuUI.ShowMainMenu();
+    selectedPath = MainMenuUI.HandleMainMenuInput();
     if (selectedPath != null)
     {
-        SorterService.ExecuteOrganization(selectedPath);
+        SorterServiceUI.ExecuteOrganization(selectedPath);
     }
 }
