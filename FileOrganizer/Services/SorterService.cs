@@ -36,7 +36,7 @@ namespace FileOrganizer.FileOrganizer.Services
                 {
                     if (!RuleManager.TryGetExtensionFolder(extension, out string destinationFolder))
                     {
-                        RuleManagerUI.InvalidExtensionErrorMessage();
+                        RuleManagerUI.InvalidExtension();
                         return;
                     }
                     MoveFile(file, destinationFolder, path);

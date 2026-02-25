@@ -24,12 +24,12 @@ namespace FileOrganizer.FileOrganizer.UI
         public static void ShowMainMenu()
         {
             UIutils.CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("               FILE ORGANIZER V1.8");
-            Console.WriteLine("     Automatically sort your files into folders");
-            Console.WriteLine("=====================================================");
+            UIutils.PrintSeparator();
+            UIutils.PrintCentered("FILE ORGANIZER V1.9");
+            UIutils.PrintCentered("Automatically sort your files into folders");
+            UIutils.PrintSeparator();
             Console.WriteLine("1 - Try Auto Find Donwloads Path\n2 - Manually Type Path\n3 - Organize by Extension\n4 - Settings\n5 - End Program");
-            Console.WriteLine("=====================================================");
+            UIutils.PrintSeparator();
         }
 
         public static mainMenu GetUserMainMenuInput()
@@ -41,9 +41,9 @@ namespace FileOrganizer.FileOrganizer.UI
                 {
                     return userMenuChoice;
                 }
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
                 Console.WriteLine("Invalid Input! Try again.");
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
             }
         }
 

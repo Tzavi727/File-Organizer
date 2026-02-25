@@ -25,7 +25,7 @@ namespace FileOrganizer.UI
             string path = PathHandlers.GetPath();
             if(!RuleManager.TryGetExtensionFolder(extension, out string folderName))
             {
-                RuleManagerUI.InvalidExtensionErrorMessage();
+                RuleManagerUI.InvalidExtension();
                 return;
             }
             SorterServiceUI.ExecuteOrganizationByExtension(path, extension, folderName);
@@ -34,9 +34,9 @@ namespace FileOrganizer.UI
 
         public static void organizeByExtensionMenu()
         {
-            RuleManagerUI.listRules();
-            Console.WriteLine("Choose a extension to organize or type 'back' to cancel");
-            Console.WriteLine("=====================================================");
+            RuleManagerUI.ListRules();
+            UIutils.PrintCentered("Choose a extension to organize or type 'back' to cancel");
+            UIutils.PrintSeparator();
         }
 
         public static string handleOrganizeByExtensionMenuInput()
@@ -55,10 +55,10 @@ namespace FileOrganizer.UI
                 else
                 {
                     UIutils.CleanScreen();
-                    Console.WriteLine("=====================================================");
+                    UIutils.PrintSeparator();
                     Console.WriteLine($"Extension '{userChoosenExtension}' not found on the list");
                     Console.WriteLine("Try again or type 'back' to cancel");
-                    Console.WriteLine("=====================================================");
+                    UIutils.PrintSeparator();
                     UIutils.WaitingForInput();
                 }
                 organizeByExtensionMenu();

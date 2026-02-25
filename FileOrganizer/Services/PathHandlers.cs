@@ -14,11 +14,11 @@ namespace FileOrganizer.Services
             while (true)
             {
                 UIutils.CleanScreen();
-                Console.WriteLine("=====================================================");
-                Console.WriteLine("                 Choose a path");
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
+                UIutils.PrintCentered("Choose a path");
+                UIutils.PrintSeparator();
                 Console.WriteLine("1 - Try Auto Find Donwloads Path\n2 - Manually Type Path");
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
                 string userInputString = Console.ReadLine();
                 if (int.TryParse(userInputString, out int userInputInt))
                 {
@@ -30,9 +30,10 @@ namespace FileOrganizer.Services
                             return GetManualPath();
                     }
                 }
-                Console.WriteLine("=====================================================");
-                Console.WriteLine("Invalid option!\nPlease Type a valid option");
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
+                UIutils.PrintCentered("Invalid option!");
+                UIutils.PrintCentered("Please Type a valid option");
+                UIutils.PrintSeparator();
                 UIutils.WaitingForInput();
             }
         }
@@ -46,17 +47,18 @@ namespace FileOrganizer.Services
         public static string GetManualPath()
         {
             UIutils.CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("           Manually Type Path Below: ");
-            Console.WriteLine("=====================================================");
+            UIutils.PrintSeparator();
+            UIutils.PrintCentered("Manually Type Path Below:");
+            UIutils.PrintSeparator();
             String path = Console.ReadLine();
             if (!Path.Exists(path) || string.IsNullOrWhiteSpace(path))
             {
                 UIutils.CleanScreen();
-                Console.WriteLine("=====================================================");
-                Console.WriteLine("                  Path not found");
-                Console.WriteLine("            Press ENTER to try continue:");
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
+                UIutils.PrintCentered("Path not found");
+                UIutils.PrintSeparator();
+                UIutils.PrintCentered("Press ENTER to try continue:");
+                UIutils.PrintSeparator();
                 Console.ReadLine();
                 return null;
             }

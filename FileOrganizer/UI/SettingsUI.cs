@@ -11,6 +11,7 @@ namespace FileOrganizer.UI
     public enum settingsMenuEnum
     {
         ADD_NEW_EXTENSION = 1,
+        REMOVE_RULE,
         LIST_RULES,
         BACK
     }
@@ -19,11 +20,11 @@ namespace FileOrganizer.UI
         public static void SettingsMenu()
         {
             UIutils.CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("             Settings/Customizations");
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("1 - Add new extension\n2 - Check supported extensions\n3 - Go back");
-            Console.WriteLine("=====================================================");
+            UIutils.PrintSeparator();
+            UIutils.PrintCentered("Settings/Customizations");
+            UIutils.PrintSeparator();
+            Console.WriteLine("1 - Add new extension\n2 - Remove extension\n3 - Check supported extensions\n4 - Go back");
+            UIutils.PrintSeparator();
             HandleSettingsMenuInput();
         }
 
@@ -37,9 +38,9 @@ namespace FileOrganizer.UI
                 {
                     return userInputChoice;
                 }
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
                 Console.WriteLine("Invalid Input! Try again.");
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
             }
         }
 
@@ -50,9 +51,14 @@ namespace FileOrganizer.UI
             {
                 case settingsMenuEnum.ADD_NEW_EXTENSION:
                     RuleManagerUI.SetNewRuleUI();
+                    UIutils.WaitingForInput();
+                    break;
+                case settingsMenuEnum.REMOVE_RULE:
+                    RuleManagerUI.RemoveRuleUI();
+                    UIutils.WaitingForInput();
                     break;
                 case settingsMenuEnum.LIST_RULES:
-                    RuleManagerUI.listRules();
+                    RuleManagerUI.ListRules();
                     UIutils.WaitingForInput();
                     break;
                 case settingsMenuEnum.BACK:

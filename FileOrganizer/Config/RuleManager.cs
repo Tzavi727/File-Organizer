@@ -31,6 +31,7 @@ namespace FileOrganizer.FileOrganizer.Config
         public static void SetDefaultRules()
         {
             rules.Clear();
+
             // compressed
             rules.Add("7z", "compressed");
             rules.Add("rar", "compressed");
@@ -53,6 +54,11 @@ namespace FileOrganizer.FileOrganizer.Config
         public static void SetNewRule(string extension,string folderName)
         {
             rules[extension] = folderName;
+        }
+
+        public static void RemoveRule(string extension)
+        {
+            rules.Remove(extension);
         }
 
         public static bool ContainsRule(string rule)

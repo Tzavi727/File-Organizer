@@ -17,6 +17,10 @@ namespace FileOrganizer.UI
             while (true)
             {
                 string extension = Console.ReadLine();
+                if (extension.Trim().ToLower().Equals("back"))
+                {
+                    return "CANCEL";
+                }
                 if (!string.IsNullOrWhiteSpace(extension))
                 {
                     extension = extension.Trim().ToLower();
@@ -24,8 +28,9 @@ namespace FileOrganizer.UI
                         extension = extension.Substring(1);
                     return extension;
                 }
+                UIutils.PrintSeparator();
                 Console.WriteLine("Extension cannot be empty. Try again.");
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
             }
         }
 
@@ -34,59 +39,126 @@ namespace FileOrganizer.UI
             while (true)
             {
                 string folderName = Console.ReadLine();
+                if (folderName.Trim().ToLower().Equals("back"))
+                {
+                    UIutils.OperationCanceled();
+                    return "CANCEL";
+                }
                 if (!string.IsNullOrWhiteSpace(folderName))
                 {
                     return folderName;
                 }
+                UIutils.PrintSeparator();
                 Console.WriteLine("Folder name cannot be empty. Try again.");
-                Console.WriteLine("=====================================================");
+                UIutils.PrintSeparator();
             }
         }
 
         public static void SetNewRuleUI()
         {
             UIutils.CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("           Add new extension and folder");
-            Console.WriteLine("   For the extension dont type the '.' write only the name");
-            Console.WriteLine("               (e.g., exe or zip)");
-            Console.WriteLine("=====================================================");
+            UIutils.PrintSeparator();
+            UIutils.PrintCentered("Add new extension and folder");
+            UIutils.PrintCentered("For the extension dont type the '.' write only the name");
+            UIutils.PrintCentered("(e.g., exe or zip)");
+            UIutils.PrintSeparator();
+            UIutils.PrintCentered("Or type 'back' to cancel");
+            UIutils.PrintSeparator();
             Console.WriteLine("Extension: ");
-            Console.WriteLine("=====================================================");
-            String extension = GetExtensionName();
-            Console.WriteLine("=====================================================");
+            UIutils.PrintSeparator();
+            string extension = GetExtensionName();
+            if (extension.Equals("CANCEL"))
+            {
+                UIutils.OperationCanceled();
+                return;
+            }
+            UIutils.PrintSeparator();
             Console.WriteLine("Folder Name: ");
-            Console.WriteLine("=====================================================");
-            String folderName = GetFolderName();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine($"| Added: | Extension: '{extension}' | To | Folder '{folderName}' |");
-            Console.WriteLine("=====================================================");
+            UIutils.PrintSeparator();
+            string folderName = GetFolderName();
+            if (folderName.Equals("CANCEL"))
+            {
+                UIutils.OperationCanceled();
+                return;
+            }
+            UIutils.PrintSeparator();
+            UIutils.PrintCentered($"| Added: | Extension: '{extension}' | To | Folder '{folderName}' |");
+            UIutils.PrintSeparator();
             RuleManager.SetNewRule(extension, folderName);
-            Console.WriteLine("Press ENTER to continue: ");
-            Console.WriteLine("=====================================================");
-            Console.ReadLine();
             AppSettings.SaveRules();
         }
 
-        public static void listRules()
+        public static void RemoveRuleUI()
         {
-            UIutils.CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("            Listing supported extensions...");
-            Console.WriteLine("=====================================================");
-            foreach (var rule in RuleManager.GetAllRules())
+            ListRules();
+            UIutils.PrintCentered("Type the extension you want to remove or 'back' to cancel:");
+            UIutils.PrintSeparator();
+            string extension = GetExtensionName();
+            if (extension.Equals("CANCEL"))
             {
-                Console.WriteLine($"| Extension: {rule.Key,-3} | -> | Folder: {rule.Value,-3} | ");
-                Console.WriteLine("=====================================================");
+                UIutils.OperationCanceled();
+                return;
+            }
+            if (!RuleManager.ContainsRule(extension))
+            {
+                UIutils.CleanScreen();
+                UIutils.PrintSeparator();
+                UIutils.PrintCentered($"Extension '{extension}' not found.");
+                UIutils.PrintSeparator();
+                return;
+            }
+            UIutils.CleanScreen();
+            UIutils.PrintSeparator();
+            Console.WriteLine($"Are you sure you want to delete the extension '{extension}' ?");
+            UIutils.PrintSeparator();
+            Console.WriteLine("1 - Yes \n2 - No");
+            UIutils.PrintSeparator();
+            while (true)
+            {
+                string userConfirmationString = Console.ReadLine().Trim().ToLower();
+                if (int.TryParse(userConfirmationString, out int userConfirmationInt))
+                {
+                    if (userConfirmationInt == 1)
+                    {
+                        UIutils.CleanScreen();
+                        UIutils.PrintSeparator();
+                        UIutils.PrintCentered($"Extension '{extension}' deleted from your list");
+                        UIutils.PrintSeparator();
+                        RuleManager.RemoveRule(extension);
+                        AppSettings.SaveRules();
+                        return;
+                    }
+                    else if (userConfirmationInt == 2)
+                    {
+                        UIutils.OperationCanceled();
+                        return;
+                    }
+                }
+                UIutils.PrintSeparator();
+                Console.WriteLine("Invalid Input. Choose between 1 and 2.");
+                UIutils.PrintSeparator();
             }
         }
 
-        public static void InvalidExtensionErrorMessage()
+        public static void ListRules()
         {
             UIutils.CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("Extension does not exist on the list.");
-            Console.WriteLine("=====================================================");
+            UIutils.PrintSeparator();
+            UIutils.PrintCentered("Listing supported extensions...");
+            UIutils.PrintSeparator();
+            foreach (var rule in RuleManager.GetAllRules())
+            {
+                UIutils.PrintCentered($"| Extension: {rule.Key,-3} | -> | Folder: {rule.Value,-3} | ");
+                UIutils.PrintSeparator();
+            }
+        }
+
+        public static void InvalidExtension()
+        {
+            UIutils.CleanScreen();
+            UIutils.PrintSeparator();
+            UIutils.PrintCentered("Extension does not exist on the list.");
+            UIutils.PrintSeparator();
             UIutils.WaitingForInput();
         }
     }

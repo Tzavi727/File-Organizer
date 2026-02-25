@@ -8,6 +8,27 @@ namespace FileOrganizer.UI
 {
     internal class UIutils
     {
+        private const int WIDTH = 61;
+        private const char SYMBOL = '=';
+
+        public static void PrintSeparator()
+        {
+            Console.WriteLine(new string(SYMBOL,WIDTH));
+        }
+
+        public static void PrintCentered(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                PrintSeparator();
+                return;
+            }
+            int spaces = (WIDTH - text.Length) / 2;
+
+            string centeredText = text.PadLeft(spaces + text.Length).PadRight(WIDTH);
+
+            Console.WriteLine(centeredText);
+        }
         public static void CleanScreen()
         {
             Console.Clear();
@@ -16,17 +37,25 @@ namespace FileOrganizer.UI
         public static void FilesOrganizedMessage()
         {
             CleanScreen();
-            Console.WriteLine("=====================================================");
-            Console.WriteLine("| Your downloads folder should now be organized! |");
-            Console.WriteLine("=====================================================");
+            PrintSeparator();
+            PrintCentered("Your downloads folder should now be organized!");
+            PrintSeparator();
             WaitingForInput();
         }
 
         public static void WaitingForInput()
         {
-            Console.WriteLine("Press ENTER to continue: ");
-            Console.WriteLine("=====================================================");
+            PrintCentered("Press ENTER to continue:");
+            PrintSeparator();
             Console.ReadLine();
+        }
+
+        public static void OperationCanceled()
+        {
+            CleanScreen();
+            PrintSeparator();
+            PrintCentered("Operation canceled.");
+            PrintSeparator();
         }
     }
 }
