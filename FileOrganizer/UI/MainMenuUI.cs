@@ -25,7 +25,7 @@ namespace FileOrganizer.FileOrganizer.UI
         {
             UIutils.CleanScreen();
             UIutils.PrintSeparator();
-            UIutils.PrintCentered("FILE ORGANIZER V1.9");
+            UIutils.PrintCentered("FILE ORGANIZER V2.0");
             UIutils.PrintCentered("Automatically sort your files into folders");
             UIutils.PrintSeparator();
             Console.WriteLine("1 - Try Auto Find Donwloads Path\n2 - Manually Type Path\n3 - Organize by Extension\n4 - Settings\n5 - End Program");

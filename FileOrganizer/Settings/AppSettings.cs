@@ -38,5 +38,12 @@ namespace FileOrganizer.FileOrganizer.Settings
                 SaveRules();
             }
         }
+
+        public static void RestoreDefault()
+        {
+            RuleManager.ClearRules();
+            RuleManager.SetDefaultRules();
+            SaveRules();
+        }
     }
 }

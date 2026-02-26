@@ -70,5 +70,10 @@ namespace FileOrganizer.FileOrganizer.Config
         {
             return rules.TryGetValue(extension, out folderName);
         }
+
+        public static void ClearRules()
+        {
+            rules.Clear();
+        }
     }
 }
