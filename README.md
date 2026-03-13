@@ -16,12 +16,16 @@ A robust C# program that organizes your files into folders according to their re
     *   It also auto sorts files by its extension (e.g., .png -> images folder) using LINQ queries.
 *   **Modular Architecture**
     *   Cleanly separated into UI, Service, Config, and Settings layers for a professional-grade structure.
+*   **Modern GUI Dashboard**
+    *   A clean, industrial interface inspired by professional engineering tools
+*   **Real-Time File Scanning**
+    *   Automatically scans and lists files in the selected directory as you type or browse.
 
 ---
 
 ## Technologies Used
 
-*   **Language:** C#
+*   **Language:** C# & Avalonia UI (XAML)
 *   **Framework:** .NET
 *   **Development Environment:** Visual Studio 2022 / VS Code
 *   **Key C# Concepts Applied:**
@@ -35,6 +39,16 @@ A robust C# program that organizes your files into folders according to their re
 
 ## How to Run
 
+### Option 1: Just get the latest release (Recommended)
+
+1.  Go to the [Latest Release](https://github.com/Tzavi727/File-Organizer/releases) page.
+2.  Download the `FileOrganizer.zip` file.
+3.  Extract it anywhere and run **`FileOrganizer.exe`**.
+
+---
+
+### Option 2: Run from the source
+
 1.  **Prerequisites:** You need to have the **.NET SDK** installed on your machine (Version 8.0 or higher recommended).
 2.  **Clone the repository:**
     ```bash
@@ -42,7 +56,7 @@ A robust C# program that organizes your files into folders according to their re
     ```
 3.  **Navigate to the project folder:**
     ```bash
-    cd File-Organizer/FileOrganizer
+    cd src/FileOrganizer
     ```
 4.  **Run the application:**
     ```bash
