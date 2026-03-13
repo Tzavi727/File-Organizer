@@ -1,18 +1,17 @@
-﻿using FileOrganizer.FileOrganizer.Settings;
-using FileOrganizer.FileOrganizer.UI;
-using FileOrganizer.UI;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace FileOrganizer.FileOrganizer.Config
 {
-    internal class RuleManager
+    internal class AppConfigs
     {
-        public static IReadOnlyDictionary<string,string> GetAllRules()
+        public static IReadOnlyDictionary<string, string> GetAllRules()
         {
             return new Dictionary<string, string>(rules);
         }
@@ -23,7 +22,7 @@ namespace FileOrganizer.FileOrganizer.Config
             return rules;
         }
 
-        public static void ReplaceRules(Dictionary<string,string> newRules)
+        public static void ReplaceRules(Dictionary<string, string> newRules)
         {
             rules = newRules ?? new Dictionary<string, string>();
         }
@@ -51,7 +50,7 @@ namespace FileOrganizer.FileOrganizer.Config
             rules.Add("txt", "documents");
         }
 
-        public static void SetNewRule(string extension,string folderName)
+        public static void SetNewRule(string extension, string folderName)
         {
             rules[extension] = folderName;
         }
@@ -74,6 +73,43 @@ namespace FileOrganizer.FileOrganizer.Config
         public static void ClearRules()
         {
             rules.Clear();
+        }
+
+        public static void SaveRules()
+        {
+            var json = JsonSerializer.Serialize(GetRulesForSave(),
+                new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText("rules.json", json);
+        }
+
+        public static void LoadRules()
+        {
+            if (File.Exists("rules.json"))
+            {
+                try
+                {
+                    string jsonText = File.ReadAllText("rules.json");
+                    var loadedRules = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonText) ?? new Dictionary<string, string>();
+                    ReplaceRules(loadedRules);
+                }
+                catch (Exception)
+                {
+                    SetDefaultRules();
+                    SaveRules();
+                }
+            }
+            else
+            {
+                SetDefaultRules();
+                SaveRules();
+            }
+        }
+
+        public static void RestoreDefault()
+        {
+            ClearRules();
+            SetDefaultRules();
+            SaveRules();
         }
     }
 }
