@@ -7,7 +7,7 @@
 		Height="600"
 		x:Class="FileOrganizer.MainWindow"
 		Icon="/src/Assets/wolf.ico"
-		Title="FileOrganizer_UISandbox"
+		Title="File organizer"
 		Background="White"
 		WindowStartupLocation="CenterOwner"
 		CanResize="False">
