@@ -1,11 +1,17 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Platform.Storage;
 using FileOrganizer.FileOrganizer.Config;
 using FileOrganizer.FileOrganizer.Services;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using Tmds.DBus.Protocol;
 
 namespace FileOrganizer
 {
@@ -136,7 +142,7 @@ namespace FileOrganizer
                 extension = extension.TrimStart('.');
             }
             string folderName = FolderBox.Text;
-            if(string.IsNullOrWhiteSpace(extension) || string.IsNullOrWhiteSpace(folderName))
+            if (string.IsNullOrWhiteSpace(extension) || string.IsNullOrWhiteSpace(folderName))
             {
                 return;
             }
@@ -147,5 +153,77 @@ namespace FileOrganizer
             ExtensionToAddBox.Text = "";
             FolderBox.Text = "";
         }
+
+        private void Quit_Click(object? sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ManualSave_Click(object? sender, RoutedEventArgs e)
+        {
+            AppConfigs.SaveRules();
+        }
+
+        private void ResetDefaults_Click(object? sender, RoutedEventArgs e)
+        {
+            AppConfigs.RestoreDefault();
+            UpdateRulesList();
+            UpdateExtOptions();
+        }
+
+        private void OpenGithubPage_Click(object? sender, RoutedEventArgs e)
+        {
+            string url = "https://github.com/Tzavi727/File-Organizer";
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+
+        private void About_Click(object? sender, RoutedEventArgs e)
+        {
+            var aboutWindow = new AboutWindow();
+
+            aboutWindow.Show();
+        }
+
+        private async void LoadSettings_Click(object? sender, RoutedEventArgs e)
+        {
+            var files = await this.StorageProvider.OpenFilePickerAsync(new Avalonia.Platform.Storage.FilePickerOpenOptions
+            {
+                Title = "Import your rules",
+                FileTypeFilter = new[] { new FilePickerFileType("JSON files") { Patterns = new[] { "*.json" } } },
+                AllowMultiple = true
+            });
+
+            if (files.Count > 0)
+            {
+                string path = files[0].Path.LocalPath;
+                AppConfigs.ImportRules(path);
+                UpdateRulesList();
+                UpdateExtOptions();
+            }
+        }
+
+        private async void SaveSettingsAs_Click(object? sender, RoutedEventArgs e)
+        {
+            var file = await this.StorageProvider.SaveFilePickerAsync(new FilePickerSaveOptions
+            {
+                Title = "Export your rules",
+                SuggestedFileName = "My_custom_rules.json",
+                FileTypeChoices = new[] { new FilePickerFileType("JSON files") { Patterns = new[] { "*.json" } } }
+            });
+
+            if (file != null)
+            {
+                string path = file.Path.LocalPath;
+                AppConfigs.ExportRules(path);
+            }
+        }
+
     }
 }

@@ -12,6 +12,14 @@
 		WindowStartupLocation="CenterOwner"
 		CanResize="False">
 	<Window.Styles>
+		<Style Selector="Menu">
+			<Setter Property="Background" Value="#f0f0f0"/>
+
+		</Style>
+		<Style Selector="MenuItem">
+			<Setter Property="Background" Value="#f0f0f0"/>
+			<Setter Property="BorderBrush" Value="#f0f0f0"/>
+		</Style>
 
 		<Style Selector="TabItem">
 			<Setter Property="Background" Value="#e0e0e0"/>
@@ -20,7 +28,6 @@
 			<Setter Property="Padding" Value="10,5"/>
 			<Setter Property="BorderThickness" Value="1,1,1,0"/>
 			<Setter Property="BorderBrush" Value="#bcbcbc"/>
-
 		</Style>
 
 		<Style Selector="TabItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
@@ -40,313 +47,350 @@
 			<Setter Property="Foreground" Value="Black"/>
 			<Setter Property="Margin" Value="-2,-1,-1,-1"/>
 		</Style>
-		
+
 		<Style Selector="TabControl /template/ ItemsPresenter">
 			<Setter Property="Margin" Value="1,0,0,0" />
 		</Style>
 
 	</Window.Styles>
-	<Grid>
-		<Border Background="#f0f0f0"
-				Height="30.5"
-				VerticalAlignment="Top"
-				BorderBrush="#bcbcbc"
-				BorderThickness="0,0,0,1"/>
-		<TabControl>
-			<TabItem Header="Home"
-					 FontSize="12">
 
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="*"/>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="*"/>
-					</Grid.RowDefinitions>
+	<DockPanel>
+		<Menu DockPanel.Dock="Top">
+			<MenuItem Header="File">
+				<MenuItem Header="Load settings..."
+						  InputGesture="Ctrl+O"
+						  HotKey="Ctrl+O"
+						  Click="LoadSettings_Click"/>
 
-					<Grid Grid.Row="0"
-						  HorizontalAlignment="Stretch">
+				<MenuItem Header="_Save settings"
+						  InputGesture="Ctrl+S"
+						  HotKey="Ctrl+S"
+						  Click="ManualSave_Click"/>
 
-						<Border Margin="10"
-								Padding="15"
-								BorderBrush="#bcbcbc"
-								BorderThickness="1">
+				<MenuItem Header="_Save settings as..."
+						  InputGesture="Ctrl+Shift+S"
+						  HotKey="Ctrl+Shift+S"
+						  Click="SaveSettingsAs_Click"/>
+
+				<MenuItem Header="Reset to defaults"
+						  Click="ResetDefaults_Click"/>
+
+				<MenuItem Header="_Quit"
+						  InputGesture="Ctrl+Q"
+						  HotKey="Ctrl+Q"
+						  Click="Quit_Click"/>
+			</MenuItem>
+
+			<MenuItem Header="Help">
+				<MenuItem Header="Show guide"/>
+				<MenuItem Header="Open github page"
+						  Click="OpenGithubPage_Click"/>
+				<MenuItem Header="_About"
+						  InputGesture="F1"
+						  HotKey="F1"
+						  Click="About_Click"/>
+			</MenuItem>
+		</Menu>
+		<Grid>
+			<Border Background="#f0f0f0"
+					Height="30.5"
+					VerticalAlignment="Top"
+					BorderBrush="#bcbcbc"
+					BorderThickness="0,0,0,1"/>
+			<TabControl>
+				<TabItem Header="Home"
+						 FontSize="12">
+
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+
+						<Grid Grid.Row="0"
+							  HorizontalAlignment="Stretch">
+
+							<Border Margin="10"
+									Padding="15"
+									BorderBrush="#bcbcbc"
+									BorderThickness="1">
+
+								<StackPanel VerticalAlignment="Center">
+
+									<TextBox Grid.Row="0"
+											 Name="PathBox"
+											 Watermark="Path..."
+											 FontSize="30"
+											 Height="50"
+											 Margin="5"
+											 VerticalAlignment="Center"
+											 TextChanged="PathBox_TextChanged"/>
+
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="*"/>
+										</Grid.ColumnDefinitions>
+
+										<Button Grid.Column="0"
+												Content="Auto Detect"
+												FontSize="15"
+												Height="50"
+												HorizontalAlignment="Stretch"
+												VerticalAlignment="Stretch"
+												Margin="5"
+												Click="AutoDetect_Click"/>
+
+										<Button Grid.Column="1"
+												Content="Browse Folder"
+												FontSize="15"
+												Height="50"
+												HorizontalAlignment="Stretch"
+												VerticalAlignment="Stretch"
+												Margin="5"
+												Click="BrowseFolder_Click"/>
+									</Grid>
+								</StackPanel>
 
 
 
-							<StackPanel VerticalAlignment="Center">
+							</Border>
+							<TextBlock Text="Path Selection"
+									   FontWeight="SemiBold"
+									   FontSize="12"
+									   Background="White"
+									   Margin="15, 3, 0, 0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"/>
+						</Grid>
 
-								<TextBox Grid.Row="0"
-										 Name="PathBox"
-										 Watermark="Path..."
-										 FontSize="30"
-										 Height="50"
-										 Margin="5"
-										 VerticalAlignment="Center"
-										 TextChanged="PathBox_TextChanged"/>
+
+						<Grid Grid.Row="1"
+							  HorizontalAlignment="Stretch">
+
+							<Border Margin="10,0,10,0"
+									Padding="15"
+									BorderBrush="#bcbcbc"
+									BorderThickness="1">
+
+								<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="15">
+									<CheckBox Name="FilterMode" Content="Enable Filter" VerticalAlignment="Center"/>
+
+									<ComboBox Name="ExtensionComboBox"
+											  Width="245"
+											  PlaceholderText="Select Extension."
+											  IsEnabled="{Binding #FilterMode.IsChecked}">
+									</ComboBox>
+								</StackPanel>
+							</Border>
+							<TextBlock Text="Filter Config"
+									   FontWeight="SemiBold"
+									   FontSize="12"
+									   Background="White"
+									   Margin="15, -7, 0, 0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"/>
+
+
+						</Grid>
+
+						<Grid Grid.Row="2" HorizontalAlignment="Stretch">
+
+							<Border Margin="10"
+									Padding="15"
+									BorderBrush="#bcbcbc"
+									BorderThickness="1">
 
 								<Grid>
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="2*"/>
 										<ColumnDefinition Width="*"/>
 									</Grid.ColumnDefinitions>
 
-									<Button Grid.Column="0"
-											Content="Auto Detect"
-											FontSize="15"
-											Height="50"
-											HorizontalAlignment="Stretch"
-											VerticalAlignment="Stretch"
-											Margin="5"
-											Click="AutoDetect_Click"/>
+									<ListBox Name="FilesList" Grid.Column="0"
+											 BorderBrush="#bcbcbc" BorderThickness="1"
+											 Background="#fdfdfd" FontSize="13"
+											 Width="400" HorizontalAlignment="Left">
+									</ListBox>
 
-									<Button Grid.Column="1"
-											Content="Browse Folder"
-											FontSize="15"
-											Height="50"
-											HorizontalAlignment="Stretch"
-											VerticalAlignment="Stretch"
-											Margin="5"
-											Click="BrowseFolder_Click"/>
+									<Grid Grid.Column="1" RowDefinitions="*,*" RowSpacing="-8">
+										<Button Grid.Row="0"
+												Content="Run Full Sort"
+												FontSize="15"
+												Height="85"
+												HorizontalAlignment="Stretch"
+												VerticalAlignment="Top"
+												Margin="5,0,5,5"
+												IsEnabled="{Binding #PathBox.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+												Click="FullSort_Click"/>
+										<Button Grid.Row="1"
+												Content="Run Target Sort"
+												FontSize="15"
+												Height="85"
+												HorizontalAlignment="Stretch"
+												VerticalAlignment="Bottom"
+												Margin="5,27,5,5"
+												Click="TargetSort_Click">
+											<Button.IsEnabled>
+												<MultiBinding Converter="{x:Static BoolConverters.And}">
+													<Binding Path="#FilterMode.IsChecked"/>
+													<Binding Path="#ExtensionComboBox.SelectedItem"
+															 Converter="{x:Static ObjectConverters.IsNotNull}"/>
+												</MultiBinding>
+											</Button.IsEnabled>
+										</Button>
+
+
+									</Grid>
 								</Grid>
-							</StackPanel>
+							</Border>
 
+							<TextBlock Text="Operations"
+									   FontWeight="SemiBold"
+									   FontSize="12"
+									   Background="White"
+									   Margin="15, 3, 0, 0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"/>
 
-
-						</Border>
-						<TextBlock Text="Path Selection"
-								   FontWeight="SemiBold"
-								   FontSize="12"
-								   Background="White"
-								   Margin="15, 3, 0, 0"
-								   HorizontalAlignment="Left"
-								   VerticalAlignment="Top"/>
+							<TextBlock Text="Found Files"
+									   FontWeight="SemiBold"
+									   FontSize="12"
+									   Background="White"
+									   Margin="30, 18, 0, 0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"/>
+						</Grid>
 					</Grid>
 
+				</TabItem>
+				<TabItem Header="Settings"
+						 FontSize="12">
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
 
-					<Grid Grid.Row="1"
-						  HorizontalAlignment="Stretch">
+						<Grid Grid.Row="0">
 
-						<Border Margin="10,0,10,0"
-								Padding="15"
-								BorderBrush="#bcbcbc"
-								BorderThickness="1">
-
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="15">
-								<CheckBox Name="FilterMode" Content="Enable Filter" VerticalAlignment="Center"/>
-
-								<ComboBox Name="ExtensionComboBox"
-										  Width="245"
-										  PlaceholderText="Select Extension."
-										  IsEnabled="{Binding #FilterMode.IsChecked}">
-								</ComboBox>
-							</StackPanel>
-						</Border>
-						<TextBlock Text="Filter Config"
-								   FontWeight="SemiBold"
-								   FontSize="12"
-								   Background="White"
-								   Margin="15, -7, 0, 0"
-								   HorizontalAlignment="Left"
-								   VerticalAlignment="Top"/>
+							<Border Margin="10"
+									Padding="15"
+									BorderBrush="#bcbcbc"
+									BorderThickness="1">
 
 
-					</Grid>
+								<ListBox Name="RulesListBox" Background="#fdfdfd" BorderThickness="1"
+										 x:CompileBindings="False">
 
-					<Grid Grid.Row="2" HorizontalAlignment="Stretch">
-
-						<Border Margin="10"
-								Padding="15"
-								BorderBrush="#bcbcbc"
-								BorderThickness="1">
-
-							<Grid>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="2*"/>
-									<ColumnDefinition Width="*"/>
-								</Grid.ColumnDefinitions>
-
-								<ListBox Name="FilesList" Grid.Column="0"
-										 BorderBrush="#bcbcbc" BorderThickness="1"
-										 Background="#fdfdfd" FontSize="13"
-										 Width="400" HorizontalAlignment="Left">
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<Grid ColumnDefinitions="*, Auto, *">
+												<TextBlock Grid.Column="0"
+														   Text="{Binding Key}"
+														   FontSize="16"
+														   HorizontalAlignment="Left"/>
+												<TextBlock Grid.Column="1"
+														   Text=" ➔ "
+														   FontSize="16"
+														   Margin="10,0"/>
+												<TextBlock Grid.Column="2"
+														   Text="{Binding Value}"
+														   FontSize="16"
+														   HorizontalAlignment="Right"/>
+											</Grid>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
 								</ListBox>
+							</Border>
+							<TextBlock Text="System Rules"
+									   FontWeight="SemiBold"
+									   FontSize="12"
+									   Background="White"
+									   Margin="15, 3, 0, 0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"/>
+							<TextBlock Text="Active Mapping"
+									   FontWeight="SemiBold"
+									   FontSize="12"
+									   Background="White"
+									   Margin="35, 19, 0, 0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"/>
+						</Grid>
+						<Grid Grid.Row="1">
 
-								<Grid Grid.Column="1" RowDefinitions="*,*">
-									<Button Grid.Row="0"
-											Content="Run Full Sort"
-											FontSize="15"
-											Height="85"
-											HorizontalAlignment="Stretch"
-											VerticalAlignment="Top"
-											Margin="5,0,5,5"
-											IsEnabled="{Binding #PathBox.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-											Click="FullSort_Click"/>
-									<Button Grid.Row="1"
-											Content="Run Target Sort"
-											FontSize="15"
-											Height="85"
-											HorizontalAlignment="Stretch"
-											VerticalAlignment="Bottom"
-											Margin="5,27,5,5"
-											Click="TargetSort_Click">
-										<Button.IsEnabled>
-											<MultiBinding Converter="{x:Static BoolConverters.And}">
-												<Binding Path="#FilterMode.IsChecked"/>
-												<Binding Path="#ExtensionComboBox.SelectedItem"
-														 Converter="{x:Static ObjectConverters.IsNotNull}"/>
-											</MultiBinding>
-										</Button.IsEnabled>
-									</Button>
+							<Border Margin="10"
+									Padding="15"
+									BorderBrush="#bcbcbc"
+									BorderThickness="1">
 
+								<StackPanel Spacing="10">
+									<Grid ColumnDefinitions="*,*">
+										<Grid Grid.Column="0" ColumnDefinitions="*,*">
+											<TextBox Name="ExtensionToAddBox"
+													 Grid.Column="0"
+													 Watermark="Ext."
+													 Margin="5"
+													 HorizontalAlignment="Stretch"/>
 
-								</Grid>
-							</Grid>
-						</Border>
-
-						<TextBlock Text="Operations"
-								   FontWeight="SemiBold"
-								   FontSize="12"
-								   Background="White"
-								   Margin="15, 3, 0, 0"
-								   HorizontalAlignment="Left"
-								   VerticalAlignment="Top"/>
-
-						<TextBlock Text="Found Files"
-								   FontWeight="SemiBold"
-								   FontSize="12"
-								   Background="White"
-								   Margin="30, 18, 0, 0"
-								   HorizontalAlignment="Left"
-								   VerticalAlignment="Top"/>
-					</Grid>
-				</Grid>
-
-			</TabItem>
-			<TabItem Header="Settings"
-					 FontSize="12">
-				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="*"/>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-					</Grid.RowDefinitions>
-
-					<Grid Grid.Row="0">
-
-						<Border Margin="10"
-								Padding="15"
-								BorderBrush="#bcbcbc"
-								BorderThickness="1">
-
-
-							<ListBox Name="RulesListBox" Background="#fdfdfd" BorderThickness="1"
-									 x:CompileBindings="False">
-
-								<ListBox.ItemTemplate>
-									<DataTemplate>
-										<Grid ColumnDefinitions="*, Auto, *">
-											<TextBlock Grid.Column="0"
-													   Text="{Binding Key}"
-													   FontSize="16"
-													   HorizontalAlignment="Left"/>
-											<TextBlock Grid.Column="1"
-													   Text=" ➔ "
-													   FontSize="16"
-													   Margin="10,0"/>
-											<TextBlock Grid.Column="2"
-													   Text="{Binding Value}"
-													   FontSize="16"
-													   HorizontalAlignment="Right"/>
+											<TextBox Name="FolderBox"
+													 Grid.Column="1"
+													 Watermark="Folder Name"
+													 Margin="5"
+													 HorizontalAlignment="Stretch"/>
 										</Grid>
-									</DataTemplate>
-								</ListBox.ItemTemplate>
-							</ListBox>
-						</Border>
-						<TextBlock Text="System Rules"
-								   FontWeight="SemiBold"
-								   FontSize="12"
-								   Background="White"
-								   Margin="15, 3, 0, 0"
-								   HorizontalAlignment="Left"
-								   VerticalAlignment="Top"/>
-						<TextBlock Text="Active Mapping"
-								   FontWeight="SemiBold"
-								   FontSize="12"
-								   Background="White"
-								   Margin="35, 19, 0, 0"
-								   HorizontalAlignment="Left"
-								   VerticalAlignment="Top"/>
-					</Grid>
-					<Grid Grid.Row="1">
-
-						<Border Margin="10"
-								Padding="15"
-								BorderBrush="#bcbcbc"
-								BorderThickness="1">
-
-							<StackPanel Spacing="10">
-								<Grid ColumnDefinitions="*,*">
-									<Grid Grid.Column="0" ColumnDefinitions="*,*">
-										<TextBox Name="ExtensionToAddBox"
-												 Grid.Column="0"
-												 Watermark="Ext."
-												 Margin="5"
-												 HorizontalAlignment="Stretch"/>
-
-										<TextBox Name="FolderBox"
+										<TextBox Name="ExtensionToDelete"
 												 Grid.Column="1"
-												 Watermark="Folder Name"
+												 Watermark="Extension to Delete."
 												 Margin="5"
 												 HorizontalAlignment="Stretch"/>
 									</Grid>
-									<TextBox Name="ExtensionToDelete"
-											 Grid.Column="1"
-											 Watermark="Extension to Delete."
-											 Margin="5"
-											 HorizontalAlignment="Stretch"/>
-								</Grid>
 
-								<Grid ColumnDefinitions="*,*">
+									<Grid ColumnDefinitions="*,*">
 
-									<Button Grid.Column="0"
-											Content="Add Extension"
-											FontSize="15"
-											Height="50"
-											HorizontalAlignment="Stretch"
-											VerticalAlignment="Stretch"
-											Margin="5"
-											Click="AddExtension_Click">
-										<Button.IsEnabled>
-											<MultiBinding Converter="{x:Static BoolConverters.And}">
-												<Binding Path="#ExtensionToAddBox.Text"
-														 Converter="{x:Static StringConverters.IsNotNullOrEmpty}"/>
-												<Binding Path="#FolderBox.Text"
-														 Converter="{x:Static StringConverters.IsNotNullOrEmpty}"/>
-											</MultiBinding>
-										</Button.IsEnabled>
-									</Button>
-									<Button Grid.Column="1"
-											Content="Remove Extension"
-											IsEnabled="{Binding #ExtensionToDelete.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-											FontSize="15"
-											Height="50"
-											HorizontalAlignment="Stretch"
-											VerticalAlignment="Stretch"
-											Margin="5"
-											Click="RemoveExtension_Click"/>
-								</Grid>
-							</StackPanel>
-						</Border>
-						<TextBlock Text="Rule Management"
-								   FontWeight="SemiBold"
-								   FontSize="12"
-								   Background="White"
-								   Margin="15, 3, 0, 0"
-								   HorizontalAlignment="Left"
-								   VerticalAlignment="Top"/>
+										<Button Grid.Column="0"
+												Content="Add Extension"
+												FontSize="15"
+												Height="50"
+												HorizontalAlignment="Stretch"
+												VerticalAlignment="Stretch"
+												Margin="5"
+												Click="AddExtension_Click">
+											<Button.IsEnabled>
+												<MultiBinding Converter="{x:Static BoolConverters.And}">
+													<Binding Path="#ExtensionToAddBox.Text"
+															 Converter="{x:Static StringConverters.IsNotNullOrEmpty}"/>
+													<Binding Path="#FolderBox.Text"
+															 Converter="{x:Static StringConverters.IsNotNullOrEmpty}"/>
+												</MultiBinding>
+											</Button.IsEnabled>
+										</Button>
+										<Button Grid.Column="1"
+												Content="Remove Extension"
+												IsEnabled="{Binding #ExtensionToDelete.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+												FontSize="15"
+												Height="50"
+												HorizontalAlignment="Stretch"
+												VerticalAlignment="Stretch"
+												Margin="5"
+												Click="RemoveExtension_Click"/>
+									</Grid>
+								</StackPanel>
+							</Border>
+							<TextBlock Text="Rule Management"
+									   FontWeight="SemiBold"
+									   FontSize="12"
+									   Background="White"
+									   Margin="15, 3, 0, 0"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Top"/>
+						</Grid>
 					</Grid>
-				</Grid>
-			</TabItem>
-		</TabControl>
-	</Grid>
+				</TabItem>
+			</TabControl>
+		</Grid>
+	</DockPanel>
 </Window>
