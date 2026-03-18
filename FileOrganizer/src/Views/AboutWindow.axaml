@@ -1,0 +1,65 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="350"
+		x:Class="FileOrganizer.AboutWindow"
+		Title="About File Organizer"
+		Width="450" Height="350" CanResize="False" WindowStartupLocation="CenterOwner">
+	<Window.Styles>
+		<Style Selector="TabItem">
+			<Setter Property="Background" Value="#e0e0e0"/>
+			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="FontSize" Value="12"/>
+			<Setter Property="Padding" Value="10,5"/>
+			<Setter Property="BorderThickness" Value="1,1,1,0"/>
+			<Setter Property="BorderBrush" Value="#bcbcbc"/>
+		</Style>
+
+		<Style Selector="TabItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="#e1f5fe"/>
+		</Style>
+
+		<Style Selector="TabItem:pointerover">
+			<Setter Property="Foreground" Value="Black"/>
+		</Style>
+
+		<Style Selector="TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="Background" Value="White"/>
+		</Style>
+
+		<Style Selector="TabItem:selected">
+			<Setter Property="Background" Value="White"/>
+			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="Margin" Value="-2,-3,-1,-1"/>
+		</Style>
+
+		<Style Selector="TabControl /template/ ItemsPresenter">
+			<Setter Property="Margin" Value="1,0,0,0" />
+		</Style>
+	</Window.Styles>
+
+	<Grid>
+		<Border Background="#f0f0f0"
+				Height="27"
+				VerticalAlignment="Top"
+				BorderBrush="#bcbcbc"
+				BorderThickness="0,0,0,1"/>
+		<TabControl>
+			<TabItem Header="About">
+				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="10">
+					<Image Source="/src/Assets/wolf.png" Width="180"/>
+					<TextBlock Text="File Organizer" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
+					<TextBlock Text="Open Source, cross-platform file organizer"/>
+					<TextBlock Text="File Organizer github repository"
+							   HorizontalAlignment="Center"
+							   Foreground="Blue"
+							   Cursor="Hand"
+							   TextDecorations="Underline"
+							   PointerPressed="OpenGithubRepository"/>
+					<TextBlock Text="Made By Tzavi" HorizontalAlignment="Center"/>
+				</StackPanel>
+			</TabItem>
+		</TabControl>
+	</Grid>
+</Window>
