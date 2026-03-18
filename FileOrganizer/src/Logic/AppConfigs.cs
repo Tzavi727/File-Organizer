@@ -105,6 +105,38 @@ namespace FileOrganizer.FileOrganizer.Config
             }
         }
 
+        public static void ImportRules(string path)
+        {
+            if (File.Exists(path))
+            {
+                try
+                {
+                    string jsonText = File.ReadAllText(path);
+                    var loadedRules = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonText) ?? new Dictionary<string, string>();
+                    ReplaceRules(loadedRules);
+                    SaveRules();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
+        }
+
+        public static async Task ExportRules(string path)
+        {
+            try
+            {
+                var json = JsonSerializer.Serialize(GetRulesForSave(),
+                new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(path, json);
+            }
+            catch
+            {
+                return;
+            }
+        }
+
         public static void RestoreDefault()
         {
             ClearRules();
