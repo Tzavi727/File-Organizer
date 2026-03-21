@@ -136,12 +136,12 @@ namespace FileOrganizer
 
         private void AddExtension_Click(object? sender, RoutedEventArgs e)
         {
-            string extension = ExtensionToAddBox.Text;
+            string extension = ExtensionToAddBox.Text?.Trim().ToLower();
             if (extension.StartsWith("."))
             {
                 extension = extension.TrimStart('.');
             }
-            string folderName = FolderBox.Text;
+            string folderName = FolderBox.Text?.Trim().ToLower();
             if (string.IsNullOrWhiteSpace(extension) || string.IsNullOrWhiteSpace(folderName))
             {
                 return;
@@ -164,14 +164,19 @@ namespace FileOrganizer
             AppConfigs.SaveRules();
         }
 
-        private void ResetDefaults_Click(object? sender, RoutedEventArgs e)
+        private async void ResetDefaults_Click(object? sender, RoutedEventArgs e)
         {
-            AppConfigs.RestoreDefault();
-            UpdateRulesList();
-            UpdateExtOptions();
+            var dialog = new DialogBox("Reset to defaults", "Reset settings to default?", DialogType.Confirm);
+            bool result = await dialog.ShowDialog<bool>(this);
+            if (result)
+            {
+                AppConfigs.RestoreDefault();
+                UpdateRulesList();
+                UpdateExtOptions();
+            }
         }
 
-        private void OpenGithubPage_Click(object? sender, RoutedEventArgs e)
+        private async void OpenGithubPage_Click(object? sender, RoutedEventArgs e)
         {
             string url = "https://github.com/Tzavi727/File-Organizer";
             try
@@ -180,6 +185,8 @@ namespace FileOrganizer
             }
             catch (Exception ex)
             {
+                var dialog = new DialogBox("External process error", "Could not open your default browser.", DialogType.Error);
+                await dialog.ShowDialog<bool>(this);
                 return;
             }
         }
