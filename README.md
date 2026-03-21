@@ -2,6 +2,12 @@
 
 A robust C# program that organizes your files into folders according to their respective types. This is the official port and evolution of my original Java tool.
 
+<p align="middle">
+  <img src="https://i.imgur.com/C3CVl6N.png" width="410" align="middle"/>
+  <img src="https://i.imgur.com/VEZNVQO.png" width="410" align="middle"/>
+  <img src="https://i.imgur.com/4fqSSjp.png" width="410" align="middle"/>
+</p>
+
 ---
 
 ## Features
