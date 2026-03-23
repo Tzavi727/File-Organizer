@@ -82,7 +82,6 @@
 			</MenuItem>
 
 			<MenuItem Header="Help">
-				<MenuItem Header="Show guide"/>
 				<MenuItem Header="Open github page"
 						  Click="OpenGithubPage_Click"/>
 				<MenuItem Header="_About"
