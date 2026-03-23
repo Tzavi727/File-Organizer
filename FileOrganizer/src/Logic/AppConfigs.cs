@@ -129,7 +129,7 @@ namespace FileOrganizer.FileOrganizer.Config
             {
                 var json = JsonSerializer.Serialize(GetRulesForSave(),
                 new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(path, json);
+                await File.WriteAllTextAsync(path, json);
             }
             catch
             {
