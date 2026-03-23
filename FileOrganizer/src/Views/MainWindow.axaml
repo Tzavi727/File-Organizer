@@ -118,8 +118,13 @@
 
 								<StackPanel VerticalAlignment="Center">
 
-									<TextBox Grid.Row="0"
-											 Name="PathBox"
+									<TextBlock Name="LastActionBlock"
+											   Text="Last Action: Waiting for input..."
+											   FontWeight="SemiBold"
+											   Opacity="0.5"
+											   Margin="5,0,0,0"/>
+
+									<TextBox Name="PathBox"
 											 Watermark="Path..."
 											 FontSize="30"
 											 Height="50"

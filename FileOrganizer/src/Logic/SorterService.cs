@@ -19,11 +19,12 @@ namespace FileOrganizer.FileOrganizer.Services
             File.Move(originalFile, finalPath, true);
         }
 
-        public static void ExecuteOrganization(string path)
+        public static int ExecuteOrganization(string path)
         {
+            int fileCounter = 0;
             if (path == null || !Path.Exists(path))
             {
-                return;
+                return 0;
             }
             string[] files = Directory.GetFiles(path);
             foreach (string file in files)
@@ -33,24 +34,29 @@ namespace FileOrganizer.FileOrganizer.Services
                 {
                     if (!AppConfigs.TryGetExtensionFolder(extension, out string destinationFolder))
                     {
-                        return;
+                        continue;
                     }
+                    fileCounter++;
                     MoveFile(file, destinationFolder, path);
                 }
             }
+            return fileCounter;
         }
 
-        public static void ExecuteOrganizationByExtension(string path, string extension, string folderName)
+        public static int ExecuteOrganizationByExtension(string path, string extension, string folderName)
         {
+            int fileCounter = 0;
             if (path == null || !Path.Exists(path))
             {
-                return;
+                return 0;
             }
             var targetFiles = Directory.GetFiles(path).Where(f => f.ToLower().EndsWith("." + extension));
             foreach (var file in targetFiles)
             {
+                fileCounter++;
                 MoveFile(file, folderName, path);
             }
+            return fileCounter;
         }
     }
 }

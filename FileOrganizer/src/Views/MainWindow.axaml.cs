@@ -78,8 +78,23 @@ namespace FileOrganizer
 
             if (!string.IsNullOrWhiteSpace(path) && Directory.Exists(path))
             {
-                SorterService.ExecuteOrganization(path);
+                int filesMoved = SorterService.ExecuteOrganization(path);
                 PathBox_TextChanged(null, null);
+                if (filesMoved == 1)
+                {
+                    LastActionBlock.Text = $"Last Action: {filesMoved} File organized";
+                    LastActionBlock.Opacity = 1.0;
+                }
+                else if (filesMoved == 0)
+                {
+                    LastActionBlock.Text = "Could not find any files to organize...";
+                    LastActionBlock.Opacity = 0.4;
+                }
+                else
+                {
+                    LastActionBlock.Text = $"Last Action: {filesMoved} Files organized";
+                    LastActionBlock.Opacity = 1.0;
+                }
             }
         }
 
@@ -97,8 +112,23 @@ namespace FileOrganizer
                     {
                         return;
                     }
-                    SorterService.ExecuteOrganizationByExtension(path, extension, folderName);
+                    int filesMoved = SorterService.ExecuteOrganizationByExtension(path, extension, folderName);
                     PathBox_TextChanged(null, null);
+                    if (filesMoved == 1)
+                    {
+                        LastActionBlock.Text = $"Last Action: {filesMoved} File organized";
+                        LastActionBlock.Opacity = 1.0;
+                    }
+                    else if (filesMoved == 0)
+                    {
+                        LastActionBlock.Text = "Could not find any files to organize...";
+                        LastActionBlock.Opacity = 0.4;
+                    }
+                    else
+                    {
+                        LastActionBlock.Text = $"Last Action: {filesMoved} Files organized";
+                        LastActionBlock.Opacity = 1.0;
+                    }
                 }
             }
         }
