@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using FileOrganizer.FileOrganizer.Config;
 using FileOrganizer.FileOrganizer.Services;
+using FileOrganizer.src.Logic;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using MsBox.Avalonia.Models;
@@ -262,5 +263,13 @@ namespace FileOrganizer
             }
         }
 
+        private void Undo_Click(object? sender, RoutedEventArgs e)
+        {
+            UndoService.ExecuteUndo();
+            PathBox_TextChanged(null, null);
+
+            LastActionBlock.Text = "Last Action: Undo executed successfully.";
+            LastActionBlock.Opacity = 1.0;
+        }
     }
 }
