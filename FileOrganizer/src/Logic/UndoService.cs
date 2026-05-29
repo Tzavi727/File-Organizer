@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,22 @@ namespace FileOrganizer.src.Logic
         public static void ClearCurrentActionList()
         {
             currentAction.Clear();
+        }
+
+        public static void ExecuteUndo()
+        {
+            if (undoStack.Count > 0)
+            {
+                var lastMovedFiles = undoStack.Pop();
+
+                foreach (var move in lastMovedFiles)
+                {
+                    if (File.Exists(move.NewPath))
+                    {
+                        File.Move(move.NewPath, move.OldPath, overwrite: true);
+                    }
+                }
+            }
         }
     }
 }
