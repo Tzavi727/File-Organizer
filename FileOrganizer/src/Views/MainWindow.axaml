@@ -80,6 +80,12 @@
 						  HotKey="Ctrl+Q"
 						  Click="Quit_Click"/>
 			</MenuItem>
+			<MenuItem Header="Edit">
+				<MenuItem Header="Undo"
+						  InputGesture="Ctrl+Z"
+						  HotKey="Ctrl+Z"
+						  Click="Undo_Click"/>
+			</MenuItem>
 
 			<MenuItem Header="Help">
 				<MenuItem Header="Open github page"
