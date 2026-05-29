@@ -1,4 +1,5 @@
 ﻿using FileOrganizer.FileOrganizer.Config;
+using FileOrganizer.src.Logic;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,13 +11,14 @@ namespace FileOrganizer.FileOrganizer.Services
 {
     internal class SorterService
     {
-        public static void MoveFile(string originalFile, string folderName, string path)
+        public static void MoveFile(string file, string destinationFolder, string path)
         {
-            string targetFolder = Path.Combine(path, folderName);
+            string targetFolder = Path.Combine(path, destinationFolder);
             Directory.CreateDirectory(targetFolder);
-            string fileNameOnly = Path.GetFileName(originalFile);
-            string finalPath = Path.Combine(targetFolder, fileNameOnly);
-            File.Move(originalFile, finalPath, true);
+            string fileName = Path.GetFileName(file);
+            string finalPath = Path.Combine(targetFolder, fileName);
+            File.Move(file, finalPath, true);
+            UndoService.AddToCurrentAction(Path.GetFileName(file), file, finalPath);
         }
 
         public static int ExecuteOrganization(string path)
@@ -40,10 +42,11 @@ namespace FileOrganizer.FileOrganizer.Services
                     MoveFile(file, destinationFolder, path);
                 }
             }
+            UndoService.CommitLastAction();
             return fileCounter;
         }
 
-        public static int ExecuteOrganizationByExtension(string path, string extension, string folderName)
+        public static int ExecuteOrganizationByExtension(string path, string extension, string destinationFolder)
         {
             int fileCounter = 0;
             if (path == null || !Path.Exists(path))
@@ -54,8 +57,9 @@ namespace FileOrganizer.FileOrganizer.Services
             foreach (var file in targetFiles)
             {
                 fileCounter++;
-                MoveFile(file, folderName, path);
+                MoveFile(file, destinationFolder, path);
             }
+            UndoService.CommitLastAction();
             return fileCounter;
         }
     }
