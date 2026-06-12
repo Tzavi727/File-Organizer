@@ -75,6 +75,9 @@
 				<MenuItem Header="Reset to defaults"
 						  Click="ResetDefaults_Click"/>
 
+				<MenuItem Header="Show History"
+						  Click="OpenHistory_Click"/>
+
 				<MenuItem Header="_Quit"
 						  InputGesture="Ctrl+Q"
 						  HotKey="Ctrl+Q"
