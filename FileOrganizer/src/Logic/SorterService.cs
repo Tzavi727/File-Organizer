@@ -19,6 +19,7 @@ namespace FileOrganizer.FileOrganizer.Services
             string finalPath = Path.Combine(targetFolder, fileName);
             File.Move(file, finalPath, true);
             UndoService.AddToCurrentAction(Path.GetFileName(file), file, finalPath);
+            LogService.RecordMove(Path.GetFileName(file), file, finalPath);
         }
 
         public static int ExecuteOrganization(string path)
@@ -42,6 +43,8 @@ namespace FileOrganizer.FileOrganizer.Services
                     MoveFile(file, destinationFolder, path);
                 }
             }
+            LogService.CommitSession();
+            LogService.SaveLog();
             UndoService.CommitLastAction();
             return fileCounter;
         }
@@ -59,6 +62,7 @@ namespace FileOrganizer.FileOrganizer.Services
                 fileCounter++;
                 MoveFile(file, destinationFolder, path);
             }
+            LogService.SaveLog();
             UndoService.CommitLastAction();
             return fileCounter;
         }
