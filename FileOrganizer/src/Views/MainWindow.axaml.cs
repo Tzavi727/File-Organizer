@@ -21,6 +21,8 @@ namespace FileOrganizer
         public MainWindow()
         {
             InitializeComponent();
+            RichPresenceService.InitializeRpc();
+            RichPresenceService.SetIdlePresence();
             AppConfigs.LoadRules();
             UpdateExtOptions();
             UpdateRulesList();
@@ -85,6 +87,7 @@ namespace FileOrganizer
                 {
                     LastActionBlock.Text = $"Last Action: {filesMoved} File organized";
                     LastActionBlock.Opacity = 1.0;
+                    RichPresenceService.SetActionPresence("Organizing File...", $"File organized this session: {filesMoved}");
                 }
                 else if (filesMoved == 0)
                 {
@@ -95,6 +98,7 @@ namespace FileOrganizer
                 {
                     LastActionBlock.Text = $"Last Action: {filesMoved} Files organized";
                     LastActionBlock.Opacity = 1.0;
+                    RichPresenceService.SetActionPresence("Organizing Files...", $"Files organized this session: {filesMoved}");
                 }
             }
         }
@@ -119,6 +123,7 @@ namespace FileOrganizer
                     {
                         LastActionBlock.Text = $"Last Action: {filesMoved} File organized";
                         LastActionBlock.Opacity = 1.0;
+                        RichPresenceService.SetActionPresence("Organizing File...", $"File organized this session: {filesMoved}");
                     }
                     else if (filesMoved == 0)
                     {
@@ -129,6 +134,7 @@ namespace FileOrganizer
                     {
                         LastActionBlock.Text = $"Last Action: {filesMoved} Files organized";
                         LastActionBlock.Opacity = 1.0;
+                        RichPresenceService.SetActionPresence("Organizing Files...", $"Files organized this session: {filesMoved}");
                     }
                 }
             }
@@ -222,6 +228,27 @@ namespace FileOrganizer
             }
         }
 
+        private async void OpenHistory_Click(object? sender, RoutedEventArgs e)
+        {
+            string log = "FileOrganizerLog.json";
+            if (!System.IO.File.Exists(log))
+            {
+                var dialog = new DialogBox("No History Found", "No log file detected.", DialogType.Error);
+                await dialog.ShowDialog<bool>(this);
+                return;
+            }
+            try
+            {
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(log) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                var dialog = new DialogBox("External process error", "Could not open history file.", DialogType.Error);
+                await dialog.ShowDialog<bool>(this);
+                return;
+            }
+        }
+
         private void About_Click(object? sender, RoutedEventArgs e)
         {
             var aboutWindow = new AboutWindow();
@@ -270,6 +297,12 @@ namespace FileOrganizer
 
             LastActionBlock.Text = "Last Action: Undo executed successfully.";
             LastActionBlock.Opacity = 1.0;
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            RichPresenceService.DisposeClient();
+            base.OnClosed(e);
         }
     }
 }
