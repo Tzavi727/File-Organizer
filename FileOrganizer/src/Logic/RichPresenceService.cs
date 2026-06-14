@@ -33,7 +33,7 @@ namespace FileOrganizer.src.Logic
                 State = "Waiting for Action...",
                 Assets = new Assets()
                 {
-                    LargeImageKey = "wolf.png",
+                    LargeImageKey = "wolf",
                     LargeImageText = "File Organizer by Tzavi"
                 }
             });
