@@ -8,49 +8,63 @@
 		Width="450" Height="350" CanResize="False" WindowStartupLocation="CenterOwner">
 	<Window.Styles>
 		<Style Selector="TabItem">
-			<Setter Property="Background" Value="#e0e0e0"/>
-			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="Background" Value="{DynamicResource TabItemDefaultBrush}"/>
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
 			<Setter Property="FontSize" Value="12"/>
 			<Setter Property="Padding" Value="10,5"/>
 			<Setter Property="BorderThickness" Value="1,1,1,0"/>
-			<Setter Property="BorderBrush" Value="#bcbcbc"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
 		</Style>
 
 		<Style Selector="TabItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="Background" Value="#e1f5fe"/>
+			<Setter Property="Background" Value="{DynamicResource TabItemHoverBrush}"/>
 		</Style>
 
 		<Style Selector="TabItem:pointerover">
-			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
 		</Style>
 
 		<Style Selector="TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="Background" Value="White"/>
+			<Setter Property="Background" Value="{DynamicResource WindowBgBrush}"/>
 		</Style>
 
 		<Style Selector="TabItem:selected">
-			<Setter Property="Background" Value="White"/>
-			<Setter Property="Foreground" Value="Black"/>
-			<Setter Property="Margin" Value="-2,-3,-1,-1"/>
+			<Setter Property="Background" Value="{DynamicResource WindowBgBrush}"/>
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
+			<Setter Property="Margin" Value="-2,-1,-1,-1"/>
 		</Style>
 
 		<Style Selector="TabControl /template/ ItemsPresenter">
 			<Setter Property="Margin" Value="1,0,0,0" />
 		</Style>
+
+		<Style Selector="TextBlock">
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
+		</Style>
 	</Window.Styles>
 
 	<Grid>
-		<Border Background="#f0f0f0"
+		<Border Background="{DynamicResource MenuBgBrush}"
 				Height="27"
 				VerticalAlignment="Top"
-				BorderBrush="#bcbcbc"
-				BorderThickness="0,0,0,1"/>
+				BorderBrush="{DynamicResource BorderMainBrush}"
+				BorderThickness="0,0,0,1"
+				Margin="0,2,0,0"/>
 		<TabControl>
+
 			<TabItem Header="About">
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="10">
+
 					<Image Source="/src/Assets/wolf.png" Width="180"/>
-					<TextBlock Text="File Organizer" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center"/>
+
+					<TextBlock Text="File Organizer"
+							   FontWeight="Bold"
+							   FontSize="16"
+							   HorizontalAlignment="Center"
+							   />
+
 					<TextBlock Text="Open Source, cross-platform file organizer"/>
+
 					<TextBlock Text="File Organizer github repository"
 							   HorizontalAlignment="Center"
 							   Foreground="Blue"

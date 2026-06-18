@@ -8,43 +8,57 @@
 		x:Class="FileOrganizer.MainWindow"
 		Icon="/src/Assets/wolf.ico"
 		Title="File organizer"
-		Background="White"
+		Background="{DynamicResource WindowBgBrush}"
 		WindowStartupLocation="CenterOwner"
 		CanResize="False">
+
 	<Window.Styles>
 		<Style Selector="Menu">
-			<Setter Property="Background" Value="#f0f0f0"/>
-
+			<Setter Property="Background" Value="{DynamicResource MenuBgBrush}"/>
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
 		</Style>
+
 		<Style Selector="MenuItem">
-			<Setter Property="Background" Value="#f0f0f0"/>
-			<Setter Property="BorderBrush" Value="#f0f0f0"/>
+			<Setter Property="Background" Value="{DynamicResource MenuBgBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource MenuBgBrush}"/>
+		</Style>
+
+		<Style Selector="MenuItem:pointerover /template/ Border#root">
+			<Setter Property="Background" Value="{DynamicResource MenuItemHoverBg}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+		</Style>
+
+		<Style Selector="MenuItem:open /template/ Popup#PART_Popup > Border">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="BorderThickness" Value="1"/>
+			<Setter Property="Background" Value="{DynamicResource WindowBgBrush}"/>
+
 		</Style>
 
 		<Style Selector="TabItem">
-			<Setter Property="Background" Value="#e0e0e0"/>
-			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="Background" Value="{DynamicResource TabItemDefaultBrush}"/>
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
 			<Setter Property="FontSize" Value="12"/>
 			<Setter Property="Padding" Value="10,5"/>
 			<Setter Property="BorderThickness" Value="1,1,1,0"/>
-			<Setter Property="BorderBrush" Value="#bcbcbc"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
 		</Style>
 
 		<Style Selector="TabItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="Background" Value="#e1f5fe"/>
+			<Setter Property="Background" Value="{DynamicResource TabItemHoverBrush}"/>
 		</Style>
 
 		<Style Selector="TabItem:pointerover">
-			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
 		</Style>
 
 		<Style Selector="TabItem:selected /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="Background" Value="White"/>
+			<Setter Property="Background" Value="{DynamicResource WindowBgBrush}"/>
 		</Style>
 
 		<Style Selector="TabItem:selected">
-			<Setter Property="Background" Value="White"/>
-			<Setter Property="Foreground" Value="Black"/>
+			<Setter Property="Background" Value="{DynamicResource WindowBgBrush}"/>
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
 			<Setter Property="Margin" Value="-2,-1,-1,-1"/>
 		</Style>
 
@@ -52,6 +66,107 @@
 			<Setter Property="Margin" Value="1,0,0,0" />
 		</Style>
 
+		<Style Selector="TextBox /template/ Border">
+			<Setter Property="Opacity" Value="0.5"/>
+		</Style>
+
+		<Style Selector="TextBox:pointerover /template/ Border">
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+
+		<Style Selector="TextBlock">
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
+		</Style>
+
+		<Style Selector="TextBox">
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
+			<Setter Property="Background" Value="{DynamicResource InputBgBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="CaretBrush" Value="{DynamicResource CaretBrush}"/>
+		</Style>
+
+		<Style Selector="TextBox:pointerover /template/ Border">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+		</Style>
+
+		<Style Selector="TextBox:focus /template/ Border">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+
+		<Style Selector="TextBox.HasText /template/ Border">
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+
+		<Style Selector="Button">
+			<Setter Property="Background" Value="{DynamicResource ButtonBgBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
+		</Style>
+
+		<Style Selector="Button:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+		</Style>
+
+		<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+		</Style>
+
+		<Style Selector="ComboBox">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="PlaceholderForeground" Value="{DynamicResource TextMainBrush}"/>
+			<Setter Property="Opacity" Value="0.7"/>
+		</Style>
+
+		<Style Selector="ComboBox:pointerover /template/ Border">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+
+		<Style Selector="ComboBox:pointerover">
+			<Setter Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+
+		<Style Selector="ComboBox:focus-within">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+
+		<Style Selector="ComboBox:dropdownopen">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+
+		<Style Selector="ComboBox.HasSelection">
+			<Setter Property="Opacity" Value="1"/>
+		</Style>
+
+		<Style Selector="ComboBox:dropdownopen /template/ Border">
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+		</Style>
+
+		<Style Selector="ComboBoxItem">
+			<Setter Property="Background" Value="{DynamicResource WindowBgBrush}"/>
+		</Style>
+
+		<Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ComboBoxItemHoverBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="BorderThickness" Value="1"/>
+		</Style>
+
+		<Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource MenuItemHoverBg}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="BorderThickness" Value="1"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ComboBoxItemHoverBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
+			<Setter Property="BorderThickness" Value="1"/>
+		</Style>
 	</Window.Styles>
 
 	<DockPanel>
@@ -90,6 +205,20 @@
 						  Click="Undo_Click"/>
 			</MenuItem>
 
+			<MenuItem Header="View">
+				<MenuItem Header="Theme">
+					<MenuItem Header="Light"
+							  IsChecked="True"
+							  ToggleType="Radio"
+							  GroupName="ThemeGroup"
+							  Click="OnLightMode_Click"/>
+					<MenuItem Header="Dark"
+							  ToggleType="Radio"
+							  GroupName="ThemeGroup"
+							  Click="OnDarkMode_Click"/>
+				</MenuItem>
+			</MenuItem>
+
 			<MenuItem Header="Help">
 				<MenuItem Header="Open github page"
 						  Click="OpenGithubPage_Click"/>
@@ -100,10 +229,10 @@
 			</MenuItem>
 		</Menu>
 		<Grid>
-			<Border Background="#f0f0f0"
+			<Border Background="{DynamicResource MenuBgBrush}"
 					Height="30.5"
 					VerticalAlignment="Top"
-					BorderBrush="#bcbcbc"
+					BorderBrush="{DynamicResource BorderMainBrush}"
 					BorderThickness="0,0,0,1"/>
 			<TabControl>
 				<TabItem Header="Home"
@@ -121,7 +250,7 @@
 
 							<Border Margin="10"
 									Padding="15"
-									BorderBrush="#bcbcbc"
+									BorderBrush="{DynamicResource BorderMainBrush}"
 									BorderThickness="1">
 
 								<StackPanel VerticalAlignment="Center">
@@ -172,47 +301,52 @@
 							<TextBlock Text="Path Selection"
 									   FontWeight="SemiBold"
 									   FontSize="12"
-									   Background="White"
+									   Background="{DynamicResource WindowBgBrush}"
 									   Margin="15, 3, 0, 0"
 									   HorizontalAlignment="Left"
 									   VerticalAlignment="Top"/>
 						</Grid>
-
 
 						<Grid Grid.Row="1"
 							  HorizontalAlignment="Stretch">
 
 							<Border Margin="10,0,10,0"
 									Padding="15"
-									BorderBrush="#bcbcbc"
+									BorderBrush="{DynamicResource BorderMainBrush}"
 									BorderThickness="1">
 
-								<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="15">
-									<CheckBox Name="FilterMode" Content="Enable Filter" VerticalAlignment="Center"/>
+								<StackPanel Orientation="Horizontal"
+											HorizontalAlignment="Right"
+											Spacing="15">
+
+									<CheckBox Name="FilterMode"
+											  Content="Enable Filter"
+											  Foreground="{DynamicResource TextMainBrush}"
+											  VerticalAlignment="Center"/>
 
 									<ComboBox Name="ExtensionComboBox"
 											  Width="245"
 											  PlaceholderText="Select Extension."
-											  IsEnabled="{Binding #FilterMode.IsChecked}">
+											  IsEnabled="{Binding #FilterMode.IsChecked}"
+											  SelectionChanged="ExtensionComboBox_SelectionChanged"
+											  ScrollViewer.VerticalScrollBarVisibility="Hidden">
 									</ComboBox>
 								</StackPanel>
 							</Border>
 							<TextBlock Text="Filter Config"
 									   FontWeight="SemiBold"
 									   FontSize="12"
-									   Background="White"
+									   Background="{DynamicResource WindowBgBrush}"
 									   Margin="15, -7, 0, 0"
 									   HorizontalAlignment="Left"
 									   VerticalAlignment="Top"/>
-
-
 						</Grid>
 
 						<Grid Grid.Row="2" HorizontalAlignment="Stretch">
 
 							<Border Margin="10"
 									Padding="15"
-									BorderBrush="#bcbcbc"
+									BorderBrush="{DynamicResource BorderMainBrush}"
 									BorderThickness="1">
 
 								<Grid>
@@ -222,8 +356,8 @@
 									</Grid.ColumnDefinitions>
 
 									<ListBox Name="FilesList" Grid.Column="0"
-											 BorderBrush="#bcbcbc" BorderThickness="1"
-											 Background="#fdfdfd" FontSize="13"
+											 BorderBrush="{DynamicResource BorderMainBrush}" BorderThickness="1"
+											 Background="{DynamicResource WindowBgBrush}" FontSize="13"
 											 Width="400" HorizontalAlignment="Left">
 									</ListBox>
 
@@ -253,8 +387,6 @@
 												</MultiBinding>
 											</Button.IsEnabled>
 										</Button>
-
-
 									</Grid>
 								</Grid>
 							</Border>
@@ -262,7 +394,7 @@
 							<TextBlock Text="Operations"
 									   FontWeight="SemiBold"
 									   FontSize="12"
-									   Background="White"
+									   Background="{DynamicResource WindowBgBrush}"
 									   Margin="15, 3, 0, 0"
 									   HorizontalAlignment="Left"
 									   VerticalAlignment="Top"/>
@@ -270,7 +402,7 @@
 							<TextBlock Text="Found Files"
 									   FontWeight="SemiBold"
 									   FontSize="12"
-									   Background="White"
+									   Background="{DynamicResource WindowBgBrush}"
 									   Margin="30, 18, 0, 0"
 									   HorizontalAlignment="Left"
 									   VerticalAlignment="Top"/>
@@ -291,11 +423,13 @@
 
 							<Border Margin="10"
 									Padding="15"
-									BorderBrush="#bcbcbc"
+									BorderBrush="{DynamicResource BorderMainBrush}"
 									BorderThickness="1">
 
 
-								<ListBox Name="RulesListBox" Background="#fdfdfd" BorderThickness="1"
+								<ListBox Name="RulesListBox"
+										 Background="{DynamicResource WindowBgBrush}"
+										 BorderThickness="1"
 										 x:CompileBindings="False">
 
 									<ListBox.ItemTemplate>
@@ -321,14 +455,14 @@
 							<TextBlock Text="System Rules"
 									   FontWeight="SemiBold"
 									   FontSize="12"
-									   Background="White"
+									   Background="{DynamicResource WindowBgBrush}"
 									   Margin="15, 3, 0, 0"
 									   HorizontalAlignment="Left"
 									   VerticalAlignment="Top"/>
 							<TextBlock Text="Active Mapping"
 									   FontWeight="SemiBold"
 									   FontSize="12"
-									   Background="White"
+									   Background="{DynamicResource WindowBgBrush}"
 									   Margin="35, 19, 0, 0"
 									   HorizontalAlignment="Left"
 									   VerticalAlignment="Top"/>
@@ -337,7 +471,7 @@
 
 							<Border Margin="10"
 									Padding="15"
-									BorderBrush="#bcbcbc"
+									BorderBrush="{DynamicResource BorderMainBrush}"
 									BorderThickness="1">
 
 								<StackPanel Spacing="10">
@@ -347,13 +481,15 @@
 													 Grid.Column="0"
 													 Watermark="Ext."
 													 Margin="5"
-													 HorizontalAlignment="Stretch"/>
+													 HorizontalAlignment="Stretch"
+													 TextChanged="ExtensionToAddBox_TextChanged"/>
 
 											<TextBox Name="FolderBox"
 													 Grid.Column="1"
 													 Watermark="Folder Name"
 													 Margin="5"
-													 HorizontalAlignment="Stretch"/>
+													 HorizontalAlignment="Stretch"
+													 TextChanged="FolderBox_TextChanged"/>
 										</Grid>
 										<TextBox Name="ExtensionToDelete"
 												 Grid.Column="1"
@@ -396,7 +532,7 @@
 							<TextBlock Text="Rule Management"
 									   FontWeight="SemiBold"
 									   FontSize="12"
-									   Background="White"
+									   Background="{DynamicResource WindowBgBrush}"
 									   Margin="15, 3, 0, 0"
 									   HorizontalAlignment="Left"
 									   VerticalAlignment="Top"/>

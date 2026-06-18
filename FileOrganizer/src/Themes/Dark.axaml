@@ -1,0 +1,34 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Window Main Background -->
+    <SolidColorBrush x:Key="WindowBgBrush">#1D1D1D</SolidColorBrush>
+
+    <!-- Menu and MenuItems -->
+    <SolidColorBrush x:Key="MenuItemHoverBg">#3a3210</SolidColorBrush>
+    <SolidColorBrush x:Key="MenuBgBrush">#242424</SolidColorBrush>
+
+    <!-- TabControl -->
+    <SolidColorBrush x:Key="TabItemDefaultBrush">#242424</SolidColorBrush>
+    <SolidColorBrush x:Key="TabItemHoverBrush">#2d280a</SolidColorBrush>
+    <SolidColorBrush x:Key="TabItemSelectedBrush">#2d280a</SolidColorBrush>
+
+    <!-- Border -->
+    <SolidColorBrush x:Key="BorderMainBrush">#F3E149</SolidColorBrush>
+
+    <!-- Text -->
+    <SolidColorBrush x:Key="TextMainBrush">#F3E149</SolidColorBrush>
+
+    <!-- TextBox -->
+    <SolidColorBrush x:Key="InputBgBrush">#252525</SolidColorBrush>
+    <SolidColorBrush x:Key="CaretBrush">#F3E149</SolidColorBrush>
+
+    <!-- Buttons -->
+    <SolidColorBrush x:Key="ButtonBgBrush">#252525</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonHoverBrush">#3a3210</SolidColorBrush>
+
+    <!-- ComboBox -->
+    <SolidColorBrush x:Key="ComboBoxItemHoverBrush">#3a3210</SolidColorBrush>
+    <SolidColorBrush x:Key="ComboBoxThumbBrush">#F3E149</SolidColorBrush>
+
+</ResourceDictionary>
