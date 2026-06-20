@@ -4,8 +4,12 @@
     <!-- Window Main Background -->
     <SolidColorBrush x:Key="WindowBgBrush">White</SolidColorBrush>
 
-    <!-- Menu and MenuItems -->
+    <!-- Menu -->
     <SolidColorBrush x:Key="MenuBgBrush">#f0f0f0</SolidColorBrush>
+
+    <!-- MenuItems -->
+    <SolidColorBrush x:Key="MenuItemBgBrush">#f0f0f0</SolidColorBrush>
+    <SolidColorBrush x:Key="MenuItemBorderBrush">#f0f0f0</SolidColorBrush>
     <SolidColorBrush x:Key="MenuItemHoverBg">#e1f5fe</SolidColorBrush>
 
     <!-- TabControl -->
@@ -30,5 +34,9 @@
     <!-- ComboBox -->
     <SolidColorBrush x:Key="ComboBoxItemHoverBrush">#e1f5fe</SolidColorBrush>
     <SolidColorBrush x:Key="ComboBoxThumbBrush">#bcbcbc</SolidColorBrush>
+
+    <!-- ListBox -->
+    <SolidColorBrush x:Key="ListBoxItemHoverBrush">#e1f5fe</SolidColorBrush>
+    <SolidColorBrush x:Key="ListBoxItemSelectedBgBrush">#e1f5fe</SolidColorBrush>
 
 </ResourceDictionary>

@@ -1,6 +1,11 @@
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
+using Avalonia.Styling;
+using Avalonia.VisualTree;
 using FileOrganizer.FileOrganizer.Config;
 using FileOrganizer.FileOrganizer.Services;
 using FileOrganizer.src.Logic;
@@ -13,6 +18,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Tmds.DBus.Protocol;
+using static System.Net.Mime.MediaTypeNames;
+using Application = Avalonia.Application;
 
 namespace FileOrganizer
 {
@@ -53,6 +60,16 @@ namespace FileOrganizer
         private void PathBox_TextChanged(object? sender, TextChangedEventArgs e)
         {
             string path = PathBox.Text;
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                if (!PathBox.Classes.Contains("HasText"))
+                    PathBox.Classes.Add("HasText");
+            }
+            else
+            {
+                PathBox.Classes.Remove("HasText");
+            }
 
             if (!string.IsNullOrWhiteSpace(path) && Directory.Exists(path))
             {
@@ -303,6 +320,71 @@ namespace FileOrganizer
         {
             RichPresenceService.DisposeClient();
             base.OnClosed(e);
+        }
+
+        private void ExtensionComboBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+        {
+            if (ExtensionComboBox.SelectedItem != null)
+            {
+                if (!ExtensionComboBox.Classes.Contains("HasSelection"))
+                    ExtensionComboBox.Classes.Add("HasSelection");
+            }
+            else
+            {
+                ExtensionComboBox.Classes.Remove("HasSelection");
+            }
+        }
+
+        private void ExtensionToAddBox_TextChanged(object? sender, TextChangedEventArgs e)
+        {
+            var ext = ExtensionToAddBox.Text;
+            if (!string.IsNullOrEmpty(ext))
+            {
+                if (!ExtensionToAddBox.Classes.Contains("HasText"))
+                    ExtensionToAddBox.Classes.Add("HasText");
+            }
+            else
+            {
+                ExtensionToAddBox.Classes.Remove("HasText");
+            }
+        }
+
+        private void FolderBox_TextChanged(object? sender, TextChangedEventArgs e)
+        {
+            var folder = FolderBox.Text;
+            if (!string.IsNullOrEmpty(folder))
+            {
+                if (!FolderBox.Classes.Contains("HasText"))
+                    FolderBox.Classes.Add("HasText");
+            }
+            else
+            {
+                FolderBox.Classes.Remove("HasText");
+            }
+        }
+
+        private static void SwitchTheme(string themeName)
+        {
+            var uri = new Uri($"avares://FileOrganizer/src/Themes/{themeName}.axaml");
+            var newTheme = (ResourceDictionary)AvaloniaXamlLoader.Load(uri);
+
+            if (Application.Current != null)
+            {
+                Application.Current.Resources.MergedDictionaries.Clear();
+                Application.Current.Resources.MergedDictionaries.Add(newTheme);
+
+                Application.Current.RequestedThemeVariant = themeName == "Dark" ? ThemeVariant.Dark : ThemeVariant.Light;
+            }
+        }
+
+        private void OnLightMode_Click(object? sender, RoutedEventArgs e)
+        {
+            SwitchTheme("Light");
+        }
+
+        private void OnDarkMode_Click(object? sender, RoutedEventArgs e)
+        {
+            SwitchTheme("Dark");
         }
     }
 }

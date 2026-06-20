@@ -19,8 +19,8 @@
 		</Style>
 
 		<Style Selector="MenuItem">
-			<Setter Property="Background" Value="{DynamicResource MenuBgBrush}"/>
-			<Setter Property="BorderBrush" Value="{DynamicResource MenuBgBrush}"/>
+			<Setter Property="Background" Value="{DynamicResource MenuItemBgBrush}"/>
+			<Setter Property="BorderBrush" Value="{DynamicResource MenuItemBorderBrush}"/>
 		</Style>
 
 		<Style Selector="MenuItem:pointerover /template/ Border#root">
@@ -32,7 +32,6 @@
 			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
 			<Setter Property="BorderThickness" Value="1"/>
 			<Setter Property="Background" Value="{DynamicResource WindowBgBrush}"/>
-
 		</Style>
 
 		<Style Selector="TabItem">
@@ -157,15 +156,19 @@
 		</Style>
 
 		<Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
-			<Setter Property="Background" Value="{DynamicResource MenuItemHoverBg}"/>
+			<Setter Property="Background" Value="{DynamicResource ComboBoxItemHoverBrush}"/>
 			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
 			<Setter Property="BorderThickness" Value="1"/>
 		</Style>
 
 		<Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
-			<Setter Property="Background" Value="{DynamicResource ComboBoxItemHoverBrush}"/>
+			<Setter Property="Background" Value="{DynamicResource ListBoxItemHoverBrush}"/>
 			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
 			<Setter Property="BorderThickness" Value="1"/>
+		</Style>
+
+		<Style Selector="ListBoxItem:selected /template/ ContentPresenter">
+			<Setter Property="Background" Value="{DynamicResource ListBoxItemSelectedBgBrush}"/>
 		</Style>
 	</Window.Styles>
 
