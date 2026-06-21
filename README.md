@@ -1,11 +1,11 @@
 # File Organizer
 
-A robust C# program that organizes your files into folders according to their respective types. This is the official port and evolution of my original Java tool.
+A C# program that organizes your files into folders according to their respective types. This is the official port and evolution of my original Java tool.
 
 <p align="middle">
-  <img src="https://i.imgur.com/C3CVl6N.png" width="410" align="middle"/>
-  <img src="https://i.imgur.com/VEZNVQO.png" width="410" align="middle"/>
-  <img src="https://i.imgur.com/4fqSSjp.png" width="410" align="middle"/>
+  <img src="https://i.imgur.com/AeZnJHr.jpeg" width="410" align="middle"/>
+  <img src="https://i.imgur.com/3Llu21L.jpeg" width="410" align="middle"/>
+  <img src="https://i.imgur.com/nWc03bc.jpeg"" width="410" align="middle"/>
 </p>
 
 ---
@@ -20,26 +20,35 @@ A robust C# program that organizes your files into folders according to their re
     *   Automatically creates destination folders or verifies existing ones, preventing duplicates.
 *   **Extension Sorting**
     *   It also auto sorts files by its extension (e.g., .png -> images folder) using LINQ queries.
-*   **Modular Architecture**
-    *   Cleanly separated into UI, Service, Config, and Settings layers for a professional-grade structure.
-*   **Modern GUI Dashboard**
-    *   A clean, industrial interface inspired by professional engineering tools
+*   **Undo System**
+    *   It also has an undo option allowing you to safely go back in session undoing your last session.
+*   **Discord Integration**
+    *   Live Rich Presence tracking your organization session.
 *   **Real-Time File Scanning**
     *   Automatically scans and lists files in the selected directory as you type or browse.
-
+*   **Session Logs:**
+    *   Persistent JSON tracking of every file movement.
+*   **Import and Export Rules**
+    *   Import or export your rules or export someone else rules.
+*   **Themes**
+    *   File Organizer also has Themes such as dark and light themes. 
+*   **Shortcuts**
+    *   The program also works normally with shortcuts such as ctrl+z to undo or ctrl+s to save your rules. 
+   
 ---
 
-## Technologies Used
+## Safety & Reliability
 
-*   **Language:** C# & Avalonia UI (XAML)
-*   **Framework:** .NET
-*   **Development Environment:** Visual Studio 2022 / VS Code
-*   **Key C# Concepts Applied:**
-    *   **LINQ & Lambdas:** For data filtering and processing.
-    *   **Dictionary (Generic):** Used as the "brain" for extension mapping.
-    *   **System.IO:** High-level interaction with the Windows File System.
-    *   **JSON Serialization:** For persistent user data storage.
-    *   **Error Handling:** Robust validation with `int.TryParse` and `try-catch` blocks.
+The **File Organizer** provides multiple tools to ensure your files remain safe and easy to track:
+
+*   **Undo System**
+    *   After each organization session, you always have the option to undo your last action. The File Organizer uses a **Stack** structure to handle your session history, allowing you to safely revert every move made in the current session.
+*   **Files History**
+    *   The program keeps a detailed history of every organization. You can find the log file manually in the program's folder or open it directly through the UI: **File -> Show History**.
+*   **Persistent Log (JSON)**
+    *   As mentioned, the program logs every session. The JSON log file contains key data such as: 
+      
+       `| Unique Session ID | Organization Timestamp | File's original path | File's new path |`.
 
 ---
 
@@ -68,4 +77,3 @@ A robust C# program that organizes your files into folders according to their re
     ```bash
     dotnet run
     ```
-*(Note: Running directly from an IDE like Visual Studio 2022 is the recommended way for the best experience.)*
