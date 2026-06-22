@@ -1,24 +1,15 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using Avalonia.Styling;
-using Avalonia.VisualTree;
 using FileOrganizer.FileOrganizer.Config;
 using FileOrganizer.FileOrganizer.Services;
 using FileOrganizer.src.Logic;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Enums;
-using MsBox.Avalonia.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using Tmds.DBus.Protocol;
-using static System.Net.Mime.MediaTypeNames;
 using Application = Avalonia.Application;
 
 namespace FileOrganizer
