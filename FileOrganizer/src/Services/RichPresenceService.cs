@@ -1,13 +1,8 @@
-﻿using Avalonia.Metadata;
-using DiscordRPC;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using DiscordRPC;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FileOrganizer.src.Logic
+namespace FileOrganizer.src.Services
 {
     internal class RichPresenceService
     {

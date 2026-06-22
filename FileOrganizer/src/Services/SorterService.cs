@@ -1,13 +1,7 @@
-﻿using FileOrganizer.FileOrganizer.Config;
-using FileOrganizer.src.Logic;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FileOrganizer.FileOrganizer.Services
+namespace FileOrganizer.src.Services
 {
     internal class SorterService
     {
