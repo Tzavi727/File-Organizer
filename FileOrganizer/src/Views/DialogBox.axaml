@@ -13,27 +13,6 @@
 		WindowStartupLocation="CenterOwner"
 		Title="DialogWindow">
 
-	<Window.Styles>
-		<Style Selector="TextBlock">
-			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
-		</Style>
-
-		<Style Selector="Button">
-			<Setter Property="Background" Value="{DynamicResource ButtonBgBrush}"/>
-			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
-			<Setter Property="Foreground" Value="{DynamicResource TextMainBrush}"/>
-		</Style>
-
-		<Style Selector="Button:pointerover">
-			<Setter Property="Background" Value="{DynamicResource ButtonHoverBrush}"/>
-		</Style>
-
-		<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
-			<Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}"/>
-		</Style>
-
-	</Window.Styles>
-
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>

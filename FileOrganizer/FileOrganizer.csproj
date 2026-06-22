@@ -7,6 +7,9 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
   <ItemGroup>
+    <AvaloniaXaml Remove="src\Themes\GlobalStyles.axaml" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="src\Assets\ErrorIcon.png" />
     <None Remove="src\Assets\QuestionIcon.png" />
     <None Remove="src\Assets\wolf.ico" />
@@ -17,6 +20,7 @@
     <AvaloniaResource Include="src\Assets\QuestionIcon.png" />
     <AvaloniaResource Include="src\Assets\wolf.ico" />
     <AvaloniaResource Include="src\Assets\wolf.png" />
+    <AvaloniaResource Include="src\Themes\GlobalStyles.axaml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,6 +6,7 @@
 
     <Application.Styles>
         <SimpleTheme/>
+        <StyleInclude Source="avares://FileOrganizer/src/Themes/GlobalStyles.axaml"/>
     </Application.Styles>
 
     <Application.Resources>
