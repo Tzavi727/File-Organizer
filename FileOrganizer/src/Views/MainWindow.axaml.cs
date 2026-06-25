@@ -1,14 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
-using Avalonia.Styling;
 using FileOrganizer.src.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Application = Avalonia.Application;
 
 namespace FileOrganizer
 {
@@ -352,28 +349,11 @@ namespace FileOrganizer
             }
         }
 
-        private static void SwitchTheme(string themeName)
+        private void Themes_Click(object? sender, RoutedEventArgs e)
         {
-            var uri = new Uri($"avares://FileOrganizer/src/Themes/{themeName}.axaml");
-            var newTheme = (ResourceDictionary)AvaloniaXamlLoader.Load(uri);
+            var ThemesWindow = new ThemesPreviews();
 
-            if (Application.Current != null)
-            {
-                Application.Current.Resources.MergedDictionaries.Clear();
-                Application.Current.Resources.MergedDictionaries.Add(newTheme);
-
-                Application.Current.RequestedThemeVariant = themeName == "Dark" ? ThemeVariant.Dark : ThemeVariant.Light;
-            }
-        }
-
-        private void OnLightMode_Click(object? sender, RoutedEventArgs e)
-        {
-            SwitchTheme("Light");
-        }
-
-        private void OnDarkMode_Click(object? sender, RoutedEventArgs e)
-        {
-            SwitchTheme("Dark");
+            ThemesWindow.Show();
         }
     }
 }

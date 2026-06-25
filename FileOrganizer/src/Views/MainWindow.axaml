@@ -49,16 +49,9 @@
 			</MenuItem>
 
 			<MenuItem Header="View">
-				<MenuItem Header="Theme">
-					<MenuItem Header="Light"
-							  IsChecked="True"
-							  ToggleType="Radio"
-							  GroupName="ThemeGroup"
-							  Click="OnLightMode_Click"/>
-					<MenuItem Header="Dark"
-							  ToggleType="Radio"
-							  GroupName="ThemeGroup"
-							  Click="OnDarkMode_Click"/>
+				<MenuItem Header="Themes"
+						  Click="Themes_Click">
+
 				</MenuItem>
 			</MenuItem>
 

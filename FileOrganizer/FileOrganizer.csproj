@@ -12,12 +12,16 @@
   <ItemGroup>
     <None Remove="src\Assets\ErrorIcon.png" />
     <None Remove="src\Assets\QuestionIcon.png" />
+    <None Remove="src\Assets\ThemesPreviews\DarkPreview.jpeg" />
+    <None Remove="src\Assets\ThemesPreviews\LightPreview.jpeg" />
     <None Remove="src\Assets\wolf.ico" />
     <None Remove="src\Assets\wolf.png" />
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="src\Assets\ErrorIcon.png" />
     <AvaloniaResource Include="src\Assets\QuestionIcon.png" />
+    <AvaloniaResource Include="src\Assets\ThemesPreviews\DarkPreview.jpeg" />
+    <AvaloniaResource Include="src\Assets\ThemesPreviews\LightPreview.jpeg" />
     <AvaloniaResource Include="src\Assets\wolf.ico" />
     <AvaloniaResource Include="src\Assets\wolf.png" />
     <AvaloniaResource Include="src\Themes\GlobalStyles.axaml" />
