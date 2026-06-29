@@ -19,8 +19,10 @@ namespace FileOrganizer.src.Services
                 Application.Current.Resources.MergedDictionaries.Add(newTheme);
 
                 Application.Current.RequestedThemeVariant = themeName == "Dark" ? ThemeVariant.Dark : ThemeVariant.Light;
-            }
 
+                PreferencesService.Preferences.Theme = themeName;
+                PreferencesService.SavePreferences();
+            }
         }
     }
 }

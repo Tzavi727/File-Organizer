@@ -14,9 +14,12 @@ namespace FileOrganizer
         public MainWindow()
         {
             InitializeComponent();
+            PreferencesService.LoadPreferences();
+            this.DataContext = PreferencesService.Preferences;
+            AppConfigs.LoadRules();
+            ThemesService.SwitchTheme(PreferencesService.Preferences.Theme);
             RichPresenceService.InitializeRpc();
             RichPresenceService.SetIdlePresence();
-            AppConfigs.LoadRules();
             UpdateExtOptions();
             UpdateRulesList();
         }
@@ -161,7 +164,7 @@ namespace FileOrganizer
 
         private void RemoveExtension_Click(object? sender, RoutedEventArgs e)
         {
-            string extension = ExtensionToDelete.Text;
+            string extension = ExtensionToDeleteBox.Text;
 
             if (string.IsNullOrWhiteSpace(extension))
             {
@@ -171,7 +174,7 @@ namespace FileOrganizer
             AppConfigs.SaveRules();
             UpdateRulesList();
             UpdateExtOptions();
-            ExtensionToDelete.Text = "";
+            ExtensionToDeleteBox.Text = "";
         }
 
         private void AddExtension_Click(object? sender, RoutedEventArgs e)
@@ -349,11 +352,41 @@ namespace FileOrganizer
             }
         }
 
+        private void RemoveExtensionBox_TextChanged(object? sender, TextChangedEventArgs e)
+        {
+            var folder = ExtensionToDeleteBox.Text;
+            if (!string.IsNullOrEmpty(folder))
+            {
+                if (!ExtensionToDeleteBox.Classes.Contains("HasText"))
+                    ExtensionToDeleteBox.Classes.Add("HasText");
+            }
+            else
+            {
+                ExtensionToDeleteBox.Classes.Remove("HasText");
+            }
+        }
+
         private void Themes_Click(object? sender, RoutedEventArgs e)
         {
             var ThemesWindow = new ThemesPreviews();
 
             ThemesWindow.Show();
+        }
+
+        private void RichPresenceCheckBoxChanged(object? sender, RoutedEventArgs e)
+        {
+            bool isOn = RichPresenceCheckBox.IsChecked ?? false;
+            PreferencesService.Preferences.IsDiscordEnabled = isOn;
+            PreferencesService.SavePreferences();
+            if (isOn)
+            {
+                RichPresenceService.InitializeRpc();
+                RichPresenceService.SetIdlePresence();
+            }
+            else
+            {
+                RichPresenceService.DisposeClient();
+            }
         }
     }
 }

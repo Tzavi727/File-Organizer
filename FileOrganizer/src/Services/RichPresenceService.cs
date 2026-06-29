@@ -11,8 +11,11 @@ namespace FileOrganizer.src.Services
 
         public static void InitializeRpc()
         {
-            Client = new DiscordRpcClient("1515420956527693944");
-            Client.Initialize();
+            if (PreferencesService.Preferences.IsDiscordEnabled)
+            {
+                Client = new DiscordRpcClient("1515420956527693944");
+                Client.Initialize();
+            }
         }
 
         public static void DisposeClient()

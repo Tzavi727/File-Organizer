@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace FileOrganizer.src.Services
+{
+    internal class PreferencesService
+    {
+        public string Theme { get; set; } = "Light";
+
+        public bool IsDiscordEnabled { get; set; } = false;
+
+        public static PreferencesService Preferences = new PreferencesService();
+
+        public static PreferencesService Get() => Preferences;
+
+        public static void SavePreferences()
+        {
+            var json = JsonSerializer.Serialize(Preferences,
+                new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText("preferences.json", json);
+        }
+
+        public static void LoadPreferences()
+        {
+            if (File.Exists("preferences.json"))
+            {
+                try
+                {
+                    string jsonText = File.ReadAllText("preferences.json");
+                    var loadedPreferences = JsonSerializer.Deserialize<PreferencesService>(jsonText);
+
+                    if (loadedPreferences != null)
+                    {
+                        Preferences = loadedPreferences;
+                    }
+                }
+                catch
+                {
+                    Preferences = new PreferencesService();
+                    SavePreferences();
+                }
+            }
+            else
+            {
+                SavePreferences();
+            }
+        }
+    }
+}
