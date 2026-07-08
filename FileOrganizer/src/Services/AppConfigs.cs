@@ -11,6 +11,7 @@ namespace FileOrganizer.src.Services
 {
     internal class AppConfigs
     {
+        public static event Action? RulesChanged;
         public static IReadOnlyDictionary<string, string> GetAllRules()
         {
             return new Dictionary<string, string>(rules);
@@ -25,6 +26,7 @@ namespace FileOrganizer.src.Services
         public static void ReplaceRules(Dictionary<string, string> newRules)
         {
             rules = newRules ?? new Dictionary<string, string>();
+            RulesChanged?.Invoke();
         }
 
         public static void SetDefaultRules()
@@ -48,16 +50,20 @@ namespace FileOrganizer.src.Services
             rules.Add("pdf", "documents");
             rules.Add("docx", "documents");
             rules.Add("txt", "documents");
+
+            RulesChanged?.Invoke();
         }
 
         public static void SetNewRule(string extension, string folderName)
         {
             rules[extension] = folderName;
+            RulesChanged?.Invoke();
         }
 
         public static void RemoveRule(string extension)
         {
             rules.Remove(extension);
+            RulesChanged?.Invoke();
         }
 
         public static bool ContainsRule(string rule)

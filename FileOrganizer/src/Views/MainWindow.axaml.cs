@@ -20,181 +20,6 @@ namespace FileOrganizer
             ThemesService.SwitchTheme(PreferencesService.Preferences.Theme);
             RichPresenceService.InitializeRpc();
             RichPresenceService.SetIdlePresence();
-            UpdateExtOptions();
-            UpdateRulesList();
-        }
-
-        private void AutoDetect_Click(object? sender, RoutedEventArgs e)
-        {
-            string downloadsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-
-            PathBox.Text = downloadsPath;
-        }
-
-        private async void BrowseFolder_Click(object? sender, RoutedEventArgs e)
-        {
-            var folders = await this.StorageProvider.OpenFolderPickerAsync(new Avalonia.Platform.Storage.FolderPickerOpenOptions
-            {
-                Title = "Select the folder to organize",
-                AllowMultiple = false
-            });
-
-            if (folders.Any())
-            {
-                string folderPath = folders[0].Path.LocalPath;
-                PathBox.Text = folderPath;
-            }
-        }
-
-        private void PathBox_TextChanged(object? sender, TextChangedEventArgs e)
-        {
-            string path = PathBox.Text;
-
-            if (!string.IsNullOrEmpty(path))
-            {
-                if (!PathBox.Classes.Contains("HasText"))
-                    PathBox.Classes.Add("HasText");
-            }
-            else
-            {
-                PathBox.Classes.Remove("HasText");
-            }
-
-            if (!string.IsNullOrWhiteSpace(path) && Directory.Exists(path))
-            {
-                try
-                {
-                    string[] files = Directory.GetFiles(path);
-
-                    var fileNames = files.Select(f => Path.GetFileName(f)).ToList();
-
-                    FilesList.ItemsSource = fileNames;
-                }
-                catch (Exception ex)
-                {
-                    FilesList.ItemsSource = new List<string> { "Acess Denied or Error..." };
-                }
-            }
-            else
-            {
-                FilesList.ItemsSource = null;
-            }
-        }
-
-        private void FullSort_Click(object? sender, RoutedEventArgs e)
-        {
-            string path = PathBox.Text;
-
-            if (!string.IsNullOrWhiteSpace(path) && Directory.Exists(path))
-            {
-                int filesMoved = SorterService.ExecuteOrganization(path);
-                PathBox_TextChanged(null, null);
-                if (filesMoved == 1)
-                {
-                    LastActionBlock.Text = $"Last Action: {filesMoved} File organized";
-                    LastActionBlock.Opacity = 1.0;
-                    RichPresenceService.SetActionPresence("Organizing File...", $"File organized this session: {filesMoved}");
-                }
-                else if (filesMoved == 0)
-                {
-                    LastActionBlock.Text = "Could not find any files to organize...";
-                    LastActionBlock.Opacity = 0.4;
-                }
-                else
-                {
-                    LastActionBlock.Text = $"Last Action: {filesMoved} Files organized";
-                    LastActionBlock.Opacity = 1.0;
-                    RichPresenceService.SetActionPresence("Organizing Files...", $"Files organized this session: {filesMoved}");
-                }
-            }
-        }
-
-        private void TargetSort_Click(object? sender, RoutedEventArgs e)
-        {
-            string path = PathBox.Text;
-            string extension = ExtensionComboBox.SelectedItem?.ToString() ?? "";
-
-
-            if (!string.IsNullOrWhiteSpace(path) && Directory.Exists(path))
-            {
-                if (AppConfigs.ContainsRule(extension))
-                {
-                    if (!AppConfigs.TryGetExtensionFolder(extension, out string folderName))
-                    {
-                        return;
-                    }
-                    int filesMoved = SorterService.ExecuteOrganizationByExtension(path, extension, folderName);
-                    PathBox_TextChanged(null, null);
-                    if (filesMoved == 1)
-                    {
-                        LastActionBlock.Text = $"Last Action: {filesMoved} File organized";
-                        LastActionBlock.Opacity = 1.0;
-                        RichPresenceService.SetActionPresence("Organizing File...", $"File organized this session: {filesMoved}");
-                    }
-                    else if (filesMoved == 0)
-                    {
-                        LastActionBlock.Text = "Could not find any files to organize...";
-                        LastActionBlock.Opacity = 0.4;
-                    }
-                    else
-                    {
-                        LastActionBlock.Text = $"Last Action: {filesMoved} Files organized";
-                        LastActionBlock.Opacity = 1.0;
-                        RichPresenceService.SetActionPresence("Organizing Files...", $"Files organized this session: {filesMoved}");
-                    }
-                }
-            }
-        }
-
-        private void UpdateExtOptions()
-        {
-            var rules = AppConfigs.GetAllRules();
-
-            var extensions = rules.Keys.ToList();
-
-            ExtensionComboBox.ItemsSource = extensions;
-        }
-
-        private void UpdateRulesList()
-        {
-            var rules = AppConfigs.GetAllRules();
-
-            RulesListBox.ItemsSource = rules.ToList();
-        }
-
-        private void RemoveExtension_Click(object? sender, RoutedEventArgs e)
-        {
-            string extension = ExtensionToDeleteBox.Text;
-
-            if (string.IsNullOrWhiteSpace(extension))
-            {
-                return;
-            }
-            AppConfigs.RemoveRule(extension);
-            AppConfigs.SaveRules();
-            UpdateRulesList();
-            UpdateExtOptions();
-            ExtensionToDeleteBox.Text = "";
-        }
-
-        private void AddExtension_Click(object? sender, RoutedEventArgs e)
-        {
-            string extension = ExtensionToAddBox.Text?.Trim().ToLower();
-            if (extension.StartsWith("."))
-            {
-                extension = extension.TrimStart('.');
-            }
-            string folderName = FolderBox.Text?.Trim().ToLower();
-            if (string.IsNullOrWhiteSpace(extension) || string.IsNullOrWhiteSpace(folderName))
-            {
-                return;
-            }
-            AppConfigs.SetNewRule(extension, folderName);
-            AppConfigs.SaveRules();
-            UpdateRulesList();
-            UpdateExtOptions();
-            ExtensionToAddBox.Text = "";
-            FolderBox.Text = "";
         }
 
         private void Quit_Click(object? sender, RoutedEventArgs e)
@@ -205,18 +30,6 @@ namespace FileOrganizer
         private void ManualSave_Click(object? sender, RoutedEventArgs e)
         {
             AppConfigs.SaveRules();
-        }
-
-        private async void ResetDefaults_Click(object? sender, RoutedEventArgs e)
-        {
-            var dialog = new DialogBox("Reset to defaults", "Reset settings to default?", DialogType.Confirm);
-            bool result = await dialog.ShowDialog<bool>(this);
-            if (result)
-            {
-                AppConfigs.RestoreDefault();
-                UpdateRulesList();
-                UpdateExtOptions();
-            }
         }
 
         private async void OpenGithubPage_Click(object? sender, RoutedEventArgs e)
@@ -275,8 +88,6 @@ namespace FileOrganizer
             {
                 string path = files[0].Path.LocalPath;
                 AppConfigs.ImportRules(path);
-                UpdateRulesList();
-                UpdateExtOptions();
             }
         }
 
@@ -292,78 +103,14 @@ namespace FileOrganizer
             if (file != null)
             {
                 string path = file.Path.LocalPath;
-                AppConfigs.ExportRules(path);
+                await AppConfigs.ExportRules(path);
             }
-        }
-
-        private void Undo_Click(object? sender, RoutedEventArgs e)
-        {
-            UndoService.ExecuteUndo();
-            PathBox_TextChanged(null, null);
-
-            LastActionBlock.Text = "Last Action: Undo executed successfully.";
-            LastActionBlock.Opacity = 1.0;
         }
 
         protected override void OnClosed(EventArgs e)
         {
             RichPresenceService.DisposeClient();
             base.OnClosed(e);
-        }
-
-        private void ExtensionComboBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
-        {
-            if (ExtensionComboBox.SelectedItem != null)
-            {
-                if (!ExtensionComboBox.Classes.Contains("HasSelection"))
-                    ExtensionComboBox.Classes.Add("HasSelection");
-            }
-            else
-            {
-                ExtensionComboBox.Classes.Remove("HasSelection");
-            }
-        }
-
-        private void ExtensionToAddBox_TextChanged(object? sender, TextChangedEventArgs e)
-        {
-            var ext = ExtensionToAddBox.Text;
-            if (!string.IsNullOrEmpty(ext))
-            {
-                if (!ExtensionToAddBox.Classes.Contains("HasText"))
-                    ExtensionToAddBox.Classes.Add("HasText");
-            }
-            else
-            {
-                ExtensionToAddBox.Classes.Remove("HasText");
-            }
-        }
-
-        private void FolderBox_TextChanged(object? sender, TextChangedEventArgs e)
-        {
-            var folder = FolderBox.Text;
-            if (!string.IsNullOrEmpty(folder))
-            {
-                if (!FolderBox.Classes.Contains("HasText"))
-                    FolderBox.Classes.Add("HasText");
-            }
-            else
-            {
-                FolderBox.Classes.Remove("HasText");
-            }
-        }
-
-        private void RemoveExtensionBox_TextChanged(object? sender, TextChangedEventArgs e)
-        {
-            var folder = ExtensionToDeleteBox.Text;
-            if (!string.IsNullOrEmpty(folder))
-            {
-                if (!ExtensionToDeleteBox.Classes.Contains("HasText"))
-                    ExtensionToDeleteBox.Classes.Add("HasText");
-            }
-            else
-            {
-                ExtensionToDeleteBox.Classes.Remove("HasText");
-            }
         }
 
         private void Themes_Click(object? sender, RoutedEventArgs e)
@@ -373,20 +120,14 @@ namespace FileOrganizer
             ThemesWindow.Show();
         }
 
-        private void RichPresenceCheckBoxChanged(object? sender, RoutedEventArgs e)
+        private void Undo_Click(object? sender, RoutedEventArgs e)
         {
-            bool isOn = RichPresenceCheckBox.IsChecked ?? false;
-            PreferencesService.Preferences.IsDiscordEnabled = isOn;
-            PreferencesService.SavePreferences();
-            if (isOn)
-            {
-                RichPresenceService.InitializeRpc();
-                RichPresenceService.SetIdlePresence();
-            }
-            else
-            {
-                RichPresenceService.DisposeClient();
-            }
+            HomeViewControl.ExecuteUndo();
+        }
+
+        private async void ResetDefaults_Click(object? sender, RoutedEventArgs e)
+        {
+            await SettingsViewControl.ResetToDefaults();
         }
     }
 }

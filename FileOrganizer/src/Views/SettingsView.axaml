@@ -1,0 +1,182 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:services="using:FileOrganizer.src.Services"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:DataType="services:PreferencesService"
+			 x:Class="FileOrganizer.SettingsView">
+
+
+
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+
+		<Grid Grid.Row="0">
+			<Border Margin="10"
+					Padding="15"
+					BorderBrush="{DynamicResource BorderMainBrush}"
+					BorderThickness="1">
+				<ListBox Name="RulesListBox"
+						 Background="{DynamicResource WindowBgBrush}"
+						 BorderThickness="1"
+						 x:CompileBindings="False"
+						 ScrollViewer.VerticalScrollBarVisibility="Hidden">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid ColumnDefinitions="*, Auto, *">
+								<TextBlock Grid.Column="0"
+										   Text="{Binding Key}"
+										   FontSize="16"
+										   HorizontalAlignment="Left"/>
+								<TextBlock Grid.Column="1"
+										   Text=" ➔ "
+										   FontSize="16"
+										   Margin="10,0"/>
+								<TextBlock Grid.Column="2"
+										   Text="{Binding Value}"
+										   FontSize="16"
+										   HorizontalAlignment="Right"/>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</Border>
+			<TextBlock Text="System Rules"
+					   FontWeight="SemiBold"
+					   FontSize="12"
+					   Background="{DynamicResource WindowBgBrush}"
+					   Margin="15, 3, 0, 0"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Top">
+			</TextBlock>
+			<TextBlock Text="Active Mapping"
+					   FontWeight="SemiBold"
+					   FontSize="12"
+					   Background="{DynamicResource WindowBgBrush}"
+					   Margin="35, 19, 0, 0"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Top">
+			</TextBlock>
+		</Grid>
+
+
+		<Grid Grid.Row="1" ColumnDefinitions="Auto,*">
+			<Border Grid.Column="0" MaxHeight="135 "
+					Margin="10"
+					Padding="15"
+					BorderBrush="{DynamicResource BorderMainBrush}"
+					BorderThickness="1">
+				<ScrollViewer VerticalScrollBarVisibility="Hidden">
+					<StackPanel Spacing="10">
+						<CheckBox Content="Discord Rich Presence"
+								  Name="RichPresenceCheckBox"
+								  IsChecked="{Binding IsDiscordEnabled}"
+								  IsCheckedChanged="RichPresenceCheckBoxChanged"/>
+					</StackPanel>
+				</ScrollViewer>
+			</Border>
+			<TextBlock Grid.Column="0"
+					   Text="App Preferences"
+					   FontWeight="SemiBold"
+					   FontSize="12"
+					   Background="{DynamicResource WindowBgBrush}"
+					   Margin="20, 3, 0, 0"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Top">
+			</TextBlock>
+
+
+			<Border Grid.Column="1"
+					Margin="10"
+					Padding="15"
+					BorderBrush="{DynamicResource BorderMainBrush}"
+					BorderThickness="1">
+				<StackPanel Spacing="10">
+					<Grid ColumnDefinitions="*,auto,*">
+						<Grid Grid.Column="0" ColumnDefinitions="*,*">
+							<TextBox Name="ExtensionToAddBox"
+									 Grid.Column="0"
+									 Watermark="Ext."
+									 Margin="5"
+									 HorizontalAlignment="Stretch"
+									 TextChanged="ExtensionToAddBox_TextChanged">
+							</TextBox>
+							<TextBox Name="FolderBox"
+									 Grid.Column="1"
+									 Watermark="Folder Name"
+									 Margin="5"
+									 HorizontalAlignment="Stretch"
+									 TextChanged="FolderBox_TextChanged">
+							</TextBox>
+						</Grid>
+						<Rectangle Grid.Column="1"
+								   Width="1"
+								   Fill="{DynamicResource BorderMainBrush}"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Stretch"
+								   Margin="15, -15">
+						</Rectangle>
+						<TextBox Name="ExtensionToDeleteBox"
+								 Grid.Column="2"
+								 Watermark="Extension to Delete."
+								 Margin="5"
+								 HorizontalAlignment="Stretch"
+								 TextChanged="RemoveExtensionBox_TextChanged">
+						</TextBox>
+					</Grid>
+					<Grid ColumnDefinitions="*,auto,*">
+						<Button Grid.Column="0"
+								Content="Add Extension"
+								FontSize="15"
+								Height="50"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								Margin="5"
+								Click="AddExtension_Click">
+							<Button.IsEnabled>
+								<MultiBinding Converter="{x:Static BoolConverters.And}">
+									<Binding Path="#ExtensionToAddBox.Text"
+											 Converter="{x:Static StringConverters.IsNotNullOrEmpty}"/>
+									<Binding Path="#FolderBox.Text"
+											 Converter="{x:Static StringConverters.IsNotNullOrEmpty}"/>
+								</MultiBinding>
+							</Button.IsEnabled>
+						</Button>
+						<Rectangle Grid.Column="1"
+								   Width="1"
+								   Fill="{DynamicResource BorderMainBrush}"
+								   HorizontalAlignment="Center"
+								   VerticalAlignment="Stretch"
+								   Margin="15, -15">
+						</Rectangle>
+						<Button Grid.Column="2"
+								Content="Remove Extension"
+								IsEnabled="{Binding #ExtensionToDeleteBox.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+								FontSize="15"
+								Height="50"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								Margin="5"
+								Click="RemoveExtension_Click">
+						</Button>
+					</Grid>
+				</StackPanel>
+			</Border>
+			<TextBlock Grid.Column="1"
+					   Text="Rule Management"
+					   FontWeight="SemiBold"
+					   FontSize="12"
+					   Background="{DynamicResource WindowBgBrush}"
+					   Margin="20, 3, 0, 0"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Top"/>
+		</Grid>
+	</Grid>
+</UserControl>

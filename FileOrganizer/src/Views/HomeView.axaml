@@ -1,0 +1,163 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="FileOrganizer.HomeView">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" HorizontalAlignment="Stretch">
+			<Border Margin="10"
+					Padding="15"
+					BorderBrush="{DynamicResource BorderMainBrush}"
+					BorderThickness="1">
+				<StackPanel VerticalAlignment="Center">
+					<TextBlock Name="LastActionBlock"
+							   Text="Last Action: Waiting for input..."
+							   FontWeight="SemiBold"
+							   Opacity="0.5"
+							   Margin="5,0,0,0"/>
+					<TextBox Name="PathBox"
+							 Watermark="Path..."
+							 FontSize="30"
+							 Height="50"
+							 Margin="5"
+							 VerticalAlignment="Center"
+							 TextChanged="PathBox_TextChanged"/>
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="*"/>
+						</Grid.ColumnDefinitions>
+
+						<Button Grid.Column="0"
+								Content="Auto Detect"
+								FontSize="15"
+								Height="50"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								Margin="5"
+								Click="AutoDetect_Click"/>
+						<Button Grid.Column="1"
+								Content="Browse Folder"
+								FontSize="15"
+								Height="50"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Stretch"
+								Margin="5"
+								Click="BrowseFolder_Click"/>
+					</Grid>
+				</StackPanel>
+			</Border>
+			<TextBlock Text="Path Selection"
+					   FontWeight="SemiBold"
+					   FontSize="12"
+					   Background="{DynamicResource WindowBgBrush}"
+					   Margin="15, 3, 0, 0"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Top">
+			</TextBlock>
+
+
+		</Grid>
+
+
+		<Grid Grid.Row="1" HorizontalAlignment="Stretch">
+			<Border Margin="10,0,10,0"
+					Padding="15"
+					BorderBrush="{DynamicResource BorderMainBrush}"
+					BorderThickness="1">
+				<StackPanel Orientation="Horizontal"
+							HorizontalAlignment="Right"
+							Spacing="15">
+					<CheckBox Name="FilterMode"
+							  Content="Enable Filter"
+							  Foreground="{DynamicResource TextMainBrush}"
+							  VerticalAlignment="Center"/>
+					<ComboBox Name="ExtensionComboBox"
+							  Width="245"
+							  PlaceholderText="Select Extension."
+							  IsEnabled="{Binding #FilterMode.IsChecked}"
+							  SelectionChanged="ExtensionComboBox_SelectionChanged"
+							  ScrollViewer.VerticalScrollBarVisibility="Hidden">
+					</ComboBox>
+				</StackPanel>
+			</Border>
+			<TextBlock Text="Filter Config"
+					   FontWeight="SemiBold"
+					   FontSize="12"
+					   Background="{DynamicResource WindowBgBrush}"
+					   Margin="15, -7, 0, 0"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Top">
+			</TextBlock>
+
+
+		</Grid>
+
+
+		<Grid Grid.Row="2" HorizontalAlignment="Stretch">
+			<Border Margin="10"
+					Padding="15"
+					BorderBrush="{DynamicResource BorderMainBrush}"
+					BorderThickness="1">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<ListBox Name="FilesList" Grid.Column="0"
+							 BorderBrush="{DynamicResource BorderMainBrush}" BorderThickness="1"
+							 Background="{DynamicResource WindowBgBrush}" FontSize="13"
+							 Width="400" HorizontalAlignment="Left">
+					</ListBox>
+					<Grid Grid.Column="1" RowDefinitions="*,*" RowSpacing="-8">
+						<Button Grid.Row="0"
+								Content="Run Full Sort"
+								FontSize="15"
+								Height="85"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Top"
+								Margin="5,0,5,5"
+								IsEnabled="{Binding #PathBox.Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+								Click="FullSort_Click"/>
+						<Button Grid.Row="1"
+								Content="Run Target Sort"
+								FontSize="15"
+								Height="85"
+								HorizontalAlignment="Stretch"
+								VerticalAlignment="Bottom"
+								Margin="5,27,5,5"
+								Click="TargetSort_Click">
+							<Button.IsEnabled>
+								<MultiBinding Converter="{x:Static BoolConverters.And}">
+									<Binding Path="#FilterMode.IsChecked"/>
+									<Binding Path="#ExtensionComboBox.SelectedItem"
+											 Converter="{x:Static ObjectConverters.IsNotNull}"/>
+								</MultiBinding>
+							</Button.IsEnabled>
+						</Button>
+					</Grid>
+				</Grid>
+			</Border>
+			<TextBlock Text="Operations"
+					   FontWeight="SemiBold"
+					   FontSize="12"
+					   Background="{DynamicResource WindowBgBrush}"
+					   Margin="15, 3, 0, 0"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Top"/>
+			<TextBlock Text="Found Files"
+					   FontWeight="SemiBold"
+					   FontSize="12"
+					   Background="{DynamicResource WindowBgBrush}"
+					   Margin="30, 18, 0, 0"
+					   HorizontalAlignment="Left"
+					   VerticalAlignment="Top"/>
+		</Grid>
+	</Grid>
+</UserControl>
