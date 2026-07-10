@@ -112,12 +112,10 @@ public partial class SettingsView : UserControl
         FolderBox.Text = "";
     }
 
-    public async Task ResetToDefaults()
+    public async Task ResetToDefaults(Window parent)
     {
-        var topLevel = TopLevel.GetTopLevel(this) as Window;
         var dialog = new DialogBox("Reset to defaults", "Reset settings to default?", DialogType.Confirm);
-        if (topLevel == null) return;
-        bool result = await dialog.ShowDialog<bool>(topLevel);
+        bool result = await dialog.ShowDialog<bool>(parent);
         if (result)
         {
             AppConfigs.RestoreDefault();

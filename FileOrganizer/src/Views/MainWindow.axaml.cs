@@ -127,7 +127,7 @@ namespace FileOrganizer
 
         private async void ResetDefaults_Click(object? sender, RoutedEventArgs e)
         {
-            await SettingsViewControl.ResetToDefaults();
+            await SettingsViewControl.ResetToDefaults(this);
         }
     }
 }
