@@ -3,9 +3,6 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using FileOrganizer.src.Services;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace FileOrganizer
 {

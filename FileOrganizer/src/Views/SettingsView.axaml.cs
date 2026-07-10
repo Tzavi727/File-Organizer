@@ -1,7 +1,5 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using Avalonia.Markup.Xaml;
 using FileOrganizer.src.Services;
 using System.Linq;
 using System.Threading.Tasks;
