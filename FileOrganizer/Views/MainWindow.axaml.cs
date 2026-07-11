@@ -1,6 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
+
+// [Red] See the naming that sucks!
 using FileOrganizer.src.Services;
 using System;
 
@@ -19,6 +21,8 @@ namespace FileOrganizer
             RichPresenceService.SetIdlePresence();
         }
 
+        // [Red] Business/app logic written in UI classes. Consider using CommunityTookit with Avalonia for MVVM
+        
         private void Quit_Click(object? sender, RoutedEventArgs e)
         {
             this.Close();
@@ -29,11 +33,14 @@ namespace FileOrganizer
             AppConfigs.SaveRules();
         }
 
+        // [Yellow] Returning Task is still better than a void async
         private async void OpenGithubPage_Click(object? sender, RoutedEventArgs e)
         {
+            // Need I say anything?
             string url = "https://github.com/Tzavi727/File-Organizer";
             try
             {
+                // [Red] How can you test this?
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
             }
             catch (Exception ex)
@@ -76,6 +83,7 @@ namespace FileOrganizer
         {
             var files = await this.StorageProvider.OpenFilePickerAsync(new Avalonia.Platform.Storage.FilePickerOpenOptions
             {
+                // [Yellow] Localization?
                 Title = "Import your rules",
                 FileTypeFilter = new[] { new FilePickerFileType("JSON files") { Patterns = new[] { "*.json" } } },
                 AllowMultiple = true

@@ -76,6 +76,11 @@ public partial class HomeView : UserControl
         }
     }
 
+    // Im not an avalonia expert, but I have a feeling with MVVM all of this can be outsourced to XAML, something like
+    // <Style Selector="ComboBox.HasSelection">
+    // ...
+    // </Style>
+    
     private void ExtensionComboBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (ExtensionComboBox.SelectedItem != null)
@@ -89,6 +94,7 @@ public partial class HomeView : UserControl
         }
     }
 
+    // [Red] :( Homework question: List the issues in this method!
     private void FullSort_Click(object? sender, RoutedEventArgs e)
     {
         string path = PathBox.Text;

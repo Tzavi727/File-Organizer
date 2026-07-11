@@ -16,6 +16,12 @@
 
 	<DockPanel>
 
+		<!-- [Yellow] None of the XAML are localized/globalized. For a tool like FileOrganizer its almost mandatory even if you ship just one language, 
+					  you still must setup the right shape from the get go, so future work is disciplined.
+					  Applies to ALL XAML and code behind resources
+		-->
+
+		<!-- [Red] No MVVM, codebehind logic. Consider using CommunityTookit with Avalonia for MVVM -->
 
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="File">

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FileOrganizer.Services
 {
+    // [Yellow] Bad name for what looks like a RuleCatalog, RuleRepository or something like that.
+    // [Red] All issues from other classes equally applicable to this class.
+    
     internal class AppConfigs
     {
         public static event Action? RulesChanged;
@@ -30,6 +33,9 @@ namespace FileOrganizer.Services
         {
             rules.Clear();
 
+            // [Yellow] Magic strings
+            // [White] Consider loading from embedded resource
+            
             // compressed
             rules.Add("7z", "compressed");
             rules.Add("rar", "compressed");
@@ -78,6 +84,8 @@ namespace FileOrganizer.Services
             rules.Clear();
         }
 
+        // [Red] Responsibility overload, PErsistence belongs in a separate abstraction. See SRP principle
+        
         public static void SaveRules()
         {
             var json = JsonSerializer.Serialize(GetRulesForSave(),
@@ -85,8 +93,11 @@ namespace FileOrganizer.Services
             File.WriteAllText("rules.json", json);
         }
 
+        // [Red] SRP violation, DI violation (already explained in LogService)
         public static void LoadRules()
         {
+            // [White] Logic can be simplified. DRY violations.
+            
             if (File.Exists("rules.json"))
             {
                 try
@@ -108,6 +119,7 @@ namespace FileOrganizer.Services
             }
         }
 
+        // [Red] SRP violation, DI violation
         public static void ImportRules(string path)
         {
             if (File.Exists(path))
@@ -126,6 +138,7 @@ namespace FileOrganizer.Services
             }
         }
 
+        // [Red] SRP violation, DI violation
         public static async Task ExportRules(string path)
         {
             try
