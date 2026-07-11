@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace FileOrganizer.src.Services
+namespace FileOrganizer.Services
 {
     internal class AppConfigs
     {

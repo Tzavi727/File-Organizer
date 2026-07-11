@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace FileOrganizer.src.Services
+namespace FileOrganizer.Services
 {
     internal class UndoService
     {
