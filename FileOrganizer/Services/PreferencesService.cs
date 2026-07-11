@@ -3,12 +3,15 @@ using System.Text.Json;
 
 namespace FileOrganizer.src.Services
 {
+    // [Red] Same problems as the LogService. Not repeating.
+    
     internal class PreferencesService
     {
         public string Theme { get; set; } = "Light";
 
         public bool IsDiscordEnabled { get; set; } = false;
 
+        // [Red] Here comes the Singleton :(
         public static PreferencesService Preferences = new PreferencesService();
 
         public static PreferencesService Get() => Preferences;
