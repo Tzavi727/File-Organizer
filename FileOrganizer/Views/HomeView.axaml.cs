@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using FileOrganizer.src.Services;
+using FileOrganizer.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;

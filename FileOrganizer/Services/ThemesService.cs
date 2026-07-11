@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Styling;
 using System;
 
-namespace FileOrganizer.src.Services
+namespace FileOrganizer.Services
 {
     internal class ThemesService
     {

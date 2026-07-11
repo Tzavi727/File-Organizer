@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using FileOrganizer.src.Services;
+using FileOrganizer.Services;
 using System;
 
 namespace FileOrganizer

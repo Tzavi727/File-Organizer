@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace FileOrganizer.src.Services
+namespace FileOrganizer.Services
 {
     internal class SorterService
     {

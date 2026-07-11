@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace FileOrganizer.src.Services
+namespace FileOrganizer.Services
 {
     internal class LogService
     {

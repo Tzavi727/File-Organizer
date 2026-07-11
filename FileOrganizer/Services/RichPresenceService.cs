@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace FileOrganizer.src.Services
+namespace FileOrganizer.Services
 {
     internal class RichPresenceService
     {
