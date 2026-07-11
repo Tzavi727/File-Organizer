@@ -8,6 +8,7 @@ namespace FileOrganizer.Services
 {
     internal class AppConfigs
     {
+        private const string RulesFileName = "Rules.json";
         public static event Action? RulesChanged;
         public static IReadOnlyDictionary<string, string> GetAllRules()
         {
@@ -82,16 +83,16 @@ namespace FileOrganizer.Services
         {
             var json = JsonSerializer.Serialize(GetRulesForSave(),
                 new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText("rules.json", json);
+            File.WriteAllText(RulesFileName, json);
         }
 
         public static void LoadRules()
         {
-            if (File.Exists("rules.json"))
+            if (File.Exists(RulesFileName))
             {
                 try
                 {
-                    string jsonText = File.ReadAllText("rules.json");
+                    string jsonText = File.ReadAllText(RulesFileName);
                     var loadedRules = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonText) ?? new Dictionary<string, string>();
                     ReplaceRules(loadedRules);
                 }

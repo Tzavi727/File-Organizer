@@ -5,20 +5,22 @@ namespace FileOrganizer.Services
 {
     internal class UndoService
     {
-        private static List<(string Name, string OldPath, string NewPath)> currentAction = new();
+        public record UndoRecord(string FileName, string OldPath, string NewPath);
 
-        private static Stack<List<(string Name, string OldPath, string NewPath)>> undoStack = new();
+        private static List<UndoRecord> currentAction = new();
+
+        private static Stack<List<UndoRecord>> undoStack = new();
 
         public static void AddToCurrentAction(string fileName, string oldPath, string newPath)
         {
-            currentAction.Add((fileName, oldPath, newPath));
+            currentAction.Add(new UndoRecord(fileName, oldPath, newPath));
         }
 
         public static void CommitLastAction()
         {
             if (currentAction.Count > 0)
             {
-                undoStack.Push(new List<(string Name, string OldPath, string NewPath)>(currentAction));
+                undoStack.Push(new List<UndoRecord>(currentAction));
                 ClearCurrentActionList();
             }
         }
@@ -33,7 +35,7 @@ namespace FileOrganizer.Services
             {
                 var lastMovedFiles = undoStack.Pop();
 
-                foreach (var move in lastMovedFiles)
+                foreach (UndoRecord move in lastMovedFiles)
                 {
                     if (File.Exists(move.NewPath))
                     {

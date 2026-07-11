@@ -13,20 +13,22 @@ namespace FileOrganizer.Services
 
         public static PreferencesService Get() => Preferences;
 
+        private const string PreferencesFileName = "Preferences.json";
+
         public static void SavePreferences()
         {
             var json = JsonSerializer.Serialize(Preferences,
                 new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText("preferences.json", json);
+            File.WriteAllText(PreferencesFileName, json);
         }
 
         public static void LoadPreferences()
         {
-            if (File.Exists("preferences.json"))
+            if (File.Exists(PreferencesFileName))
             {
                 try
                 {
-                    string jsonText = File.ReadAllText("preferences.json");
+                    string jsonText = File.ReadAllText(PreferencesFileName);
                     var loadedPreferences = JsonSerializer.Deserialize<PreferencesService>(jsonText);
 
                     if (loadedPreferences != null)

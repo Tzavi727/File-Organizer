@@ -7,14 +7,15 @@ namespace FileOrganizer.Services
 {
     internal class LogService
     {
-        public class FileRecord
+        private const string LogFileName = "FileOrganizer.json";
+        public record FileRecord
         {
             public required string FileName { get; set; }
             public required string OldPath { get; set; }
             public required string NewPath { get; set; }
         }
 
-        public class SessionLog
+        public record SessionLog
         {
             public required string SessionId { get; set; }
             public required string Timestamp { get; set; }
@@ -52,11 +53,11 @@ namespace FileOrganizer.Services
         public static void SaveLog()
         {
             List<SessionLog> fullLog = new();
-            if (File.Exists("FileOrganizerLog.json"))
+            if (File.Exists(LogFileName))
             {
                 try
                 {
-                    string jsonText = File.ReadAllText("FileOrganizerLog.json");
+                    string jsonText = File.ReadAllText(LogFileName);
                     fullLog = JsonSerializer.Deserialize<List<SessionLog>>(jsonText) ?? new();
                 }
                 catch (Exception)
@@ -68,7 +69,7 @@ namespace FileOrganizer.Services
 
             var options = new JsonSerializerOptions { WriteIndented = true };
             string newJson = JsonSerializer.Serialize(fullLog, options);
-            File.WriteAllText("FileOrganizerLog.json", newJson);
+            File.WriteAllText(LogFileName, newJson);
 
             _fullLog.Clear();
         }
