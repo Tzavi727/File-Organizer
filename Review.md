@@ -18,4 +18,7 @@ Convention Used:
 
 - [White] No github actions: Not a deal breaker but github provided free CICD setup and integration and for a simple app like this its trivial to setup. For an Avalonia based app you can showcase Windows, Linux, Mac releases out of github actions. Also, a github action creates more trust as I can go to the action and download release from there. Its link is more trustworthy for a stranger than the link you advertize in your Readme.
 - [Red] 0 Unit Test. Not even a basic empty Test prorject. Clear that testing was not even in the plan.
-- 
+- [Yellow] Monolith project with everything clumped together, UI, business, Data. There are so many different way to strucuture e.g.:
+  - FileOrganizer.App
+  - FileOrganizer.Core
+  - FileOrganizer.Data
