@@ -1,43 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-	  <ApplicationIcon>src\Assets\wolf.ico</ApplicationIcon>
-	  <Nullable>enable</Nullable>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-  </PropertyGroup>
-  <ItemGroup>
-    <AvaloniaXaml Remove="src\Themes\GlobalStyles.axaml" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="src\Assets\ErrorIcon.png" />
-    <None Remove="src\Assets\QuestionIcon.png" />
-    <None Remove="src\Assets\ThemesPreviews\DarkPreview.jpeg" />
-    <None Remove="src\Assets\ThemesPreviews\LightPreview.jpeg" />
-    <None Remove="src\Assets\wolf.ico" />
-    <None Remove="src\Assets\wolf.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="src\Assets\ErrorIcon.png" />
-    <AvaloniaResource Include="src\Assets\QuestionIcon.png" />
-    <AvaloniaResource Include="src\Assets\ThemesPreviews\DarkPreview.jpeg" />
-    <AvaloniaResource Include="src\Assets\ThemesPreviews\LightPreview.jpeg" />
-    <AvaloniaResource Include="src\Assets\wolf.ico" />
-    <AvaloniaResource Include="src\Assets\wolf.png" />
-    <AvaloniaResource Include="src\Themes\GlobalStyles.axaml" />
-  </ItemGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ApplicationIcon>Assets\wolf.ico</ApplicationIcon>
+		<Nullable>enable</Nullable>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+	</PropertyGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.3.11" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.3.11" />
-	  <PackageReference Include="Avalonia.Themes.Simple" Version="11.3.11" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.11" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Avalonia.Diagnostics" Version="11.3.11">
-      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" Version="11.3.11" />
+		<PackageReference Include="Avalonia.Desktop" Version="11.3.11" />
+		<PackageReference Include="Avalonia.Themes.Simple" Version="11.3.11" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="11.3.11" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Include="Avalonia.Diagnostics" Version="11.3.11">
+			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
+	</ItemGroup>
 </Project>

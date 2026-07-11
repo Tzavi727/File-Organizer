@@ -6,7 +6,7 @@
 		x:Class="FileOrganizer.AboutWindow"
 		Title="About File Organizer"
 		Width="450" Height="350" CanResize="False" WindowStartupLocation="CenterOwner">
-	
+
 	<Grid>
 		<Border Background="{DynamicResource MenuBgBrush}"
 				Height="27"
@@ -19,13 +19,12 @@
 			<TabItem Header="About">
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="10">
 
-					<Image Source="/src/Assets/wolf.png" Width="180"/>
+					<Image Source="/Assets/wolf.png" Width="180"/>
 
 					<TextBlock Text="File Organizer"
 							   FontWeight="Bold"
 							   FontSize="16"
-							   HorizontalAlignment="Center"
-							   />
+							   HorizontalAlignment="Center"/>
 
 					<TextBlock Text="Open Source, cross-platform file organizer"/>
 

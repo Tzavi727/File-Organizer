@@ -10,7 +10,7 @@ namespace FileOrganizer.src.Services
     {
         public static void SwitchTheme(string themeName)
         {
-            var uri = new Uri($"avares://FileOrganizer/src/Themes/{themeName}.axaml");
+            var uri = new Uri($"avares://FileOrganizer/Themes/{themeName}.axaml");
             var newTheme = (ResourceDictionary)AvaloniaXamlLoader.Load(uri);
 
             if (Application.Current != null)

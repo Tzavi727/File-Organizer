@@ -18,7 +18,7 @@ public partial class ThemesPreviews : Window
         var selectedItem = ThemeList.SelectedItem as ListBoxItem;
         var preview = selectedItem?.Tag as string;
         if (preview == null) return;
-        var uri = new Uri($"avares://FileOrganizer/src/Assets/ThemesPreviews/{preview}");
+        var uri = new Uri($"avares://FileOrganizer/Assets/ThemesPreviews/{preview}");
         using (var stream = AssetLoader.Open(uri))
         {
             var bitmap = new Bitmap(stream);

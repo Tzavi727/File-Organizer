@@ -8,7 +8,7 @@
 		Width="700"
 		Height="600"
 		x:Class="FileOrganizer.MainWindow"
-		Icon="/src/Assets/wolf.ico"
+		Icon="/Assets/wolf.ico"
 		Title="File organizer"
 		Background="{DynamicResource WindowBgBrush}"
 		WindowStartupLocation="CenterOwner"

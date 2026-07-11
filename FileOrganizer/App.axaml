@@ -6,13 +6,13 @@
 
     <Application.Styles>
         <SimpleTheme/>
-        <StyleInclude Source="avares://FileOrganizer/src/Themes/GlobalStyles.axaml"/>
+        <StyleInclude Source="avares://FileOrganizer/Themes/GlobalStyles.axaml"/>
     </Application.Styles>
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://FileOrganizer/src/Themes/Light.axaml"/>
+                <ResourceInclude Source="avares://FileOrganizer/Themes/Light.axaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
