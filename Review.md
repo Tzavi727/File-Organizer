@@ -1,4 +1,12 @@
-I'll try to annotate code with comments so its easier to relate.
+I've annotated code with comments so its easier to relate. Most of the issues are repetitive and seen throughout the codebase. I've annotated them as I navigated the code, but at a certain point it became too repetitive and there was no point in rehashing the same things over and over again. That doesnt mean classes not annotated are GOOD! It just means the same stuff applies everwhere.
+
+The good thing is the fixes are going to be repetitive as well.
+
+Biggest RED Flag: No Unit Testing and by that I mean real unit testing not just Integration Testing. Even if you added a Test project right now, you would only be able to write ITs. I dont recall seeing a single non-trivial method that's utable.
+
+Get that one thing right and you'd be 5x better.
+
+PS: Ive reviewed on reddit before but due to toxic and bad experiences I dont engage with it anymore. Just wanted to make sure you are serious and not a troll. 
 
 ## Few Assumptions
 I'll assume the whole app was submitted by a professioanl (as a PR) and would expect production quality code, even though the nature and scope of work isnt too large. 
