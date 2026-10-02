@@ -9,6 +9,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<AvaloniaResource Include="Assets\**" />
+		<AvaloniaResource Remove="C_\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -22,5 +23,25 @@
 			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AvaloniaXaml Remove="C_\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="C_\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Remove="C_\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Remove="C_\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="C_\**" />
 	</ItemGroup>
 </Project>

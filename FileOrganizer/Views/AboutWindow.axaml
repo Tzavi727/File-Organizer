@@ -19,7 +19,7 @@
 			<TabItem Header="About">
 				<StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Spacing="10">
 
-					<Image Source="/Assets/wolf.png" Width="180"/>
+					<Image Source="avares://FileOrganizer/Assets/wolf.png" Width="180"/>
 
 					<TextBlock Text="File Organizer"
 							   FontWeight="Bold"

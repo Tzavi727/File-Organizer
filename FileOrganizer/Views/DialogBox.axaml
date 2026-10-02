@@ -21,11 +21,13 @@
 
 		<Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="10"
 			  HorizontalAlignment="Center" VerticalAlignment="Center">
-			<Image Name="ErrorIcon" Source="/src/Assets/ErrorIcon.png"
+			<Image Name="ErrorIcon" Source="avares://FileOrganizer/Assets/ErrorIcon.png"
 				   IsVisible="False" Grid.Column="0" Height="40" Width="40"/>
 
 			<Image Name="QuestionIcon"
-				   Source="/src/Assets/QuestionIcon.png" IsVisible="False" Grid.Column="0" Height="40" Width="40"/>
+				   Source="avares://FileOrganizer/Assets/QuestionIcon.png" 
+				   IsVisible="False" 
+				   Grid.Column="0" Height="40" Width="40"/>
 
 			<TextBlock Grid.Column="1"
 					   Name="DialogMessage"
