@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace FileOrganizer;
+namespace FileOrganizer.Views;
 
 public partial class HomeView : UserControl
 {

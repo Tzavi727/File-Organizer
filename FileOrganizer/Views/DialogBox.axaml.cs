@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace FileOrganizer;
+namespace FileOrganizer.Views;
 
 public enum DialogType { Error, Confirm }
 public partial class DialogBox : Window

@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using System;
 
-namespace FileOrganizer;
+namespace FileOrganizer.Views;
 
 public partial class AboutWindow : Window
 {

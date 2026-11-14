@@ -3,10 +3,10 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600"
-		xmlns:local="clr-namespace:FileOrganizer"
+		xmlns:views="clr-namespace:FileOrganizer.Views"
 		Width="700"
 		Height="600"
-		x:Class="FileOrganizer.MainWindow"
+		x:Class="FileOrganizer.Views.MainWindow"
 		Icon="avares://FileOrganizer/Assets/wolf.ico"
 		Title="File organizer"
 		Background="{DynamicResource WindowBgBrush}"
@@ -78,12 +78,12 @@
 			<TabControl>
 				<TabItem Header="Home"
 						 FontSize="12">
-					<local:HomeView x:Name="HomeViewControl"/>
+					<views:HomeView x:Name="HomeViewControl"/>
 				</TabItem>
 
 
 				<TabItem Header="Settings" FontSize="12">
-					<local:SettingsView x:Name="SettingsViewControl"/>
+					<views:SettingsView x:Name="SettingsViewControl"/>
 				</TabItem>
 			</TabControl>
 		</Grid>

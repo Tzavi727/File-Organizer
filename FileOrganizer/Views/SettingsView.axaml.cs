@@ -4,7 +4,7 @@ using FileOrganizer.Services;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FileOrganizer;
+namespace FileOrganizer.Views;
 
 public partial class SettingsView : UserControl
 {

@@ -4,7 +4,7 @@ using Avalonia.Platform.Storage;
 using FileOrganizer.Services;
 using System;
 
-namespace FileOrganizer
+namespace FileOrganizer.Views
 {
     public partial class MainWindow : Window
     {
