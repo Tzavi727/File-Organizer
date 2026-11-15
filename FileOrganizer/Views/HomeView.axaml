@@ -2,8 +2,10 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:FileOrganizer.ViewModels"
 			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-			 x:Class="FileOrganizer.Views.HomeView">
+			 x:Class="FileOrganizer.Views.HomeView"
+			 x:DataType="vm:HomeViewModel">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
@@ -83,6 +85,7 @@
 							  PlaceholderText="Select Extension."
 							  IsEnabled="{Binding #FilterMode.IsChecked}"
 							  SelectionChanged="ExtensionComboBox_SelectionChanged"
+							  SelectedItem="{Binding SelectedExtension}"
 							  ScrollViewer.VerticalScrollBarVisibility="Hidden">
 					</ComboBox>
 				</StackPanel>
