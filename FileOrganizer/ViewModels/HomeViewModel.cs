@@ -5,9 +5,6 @@ using CommunityToolkit.Mvvm.Input;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
 using FileOrganizer.Interfaces;
 using FileOrganizer.Services;
 
@@ -25,12 +22,13 @@ public partial class HomeViewModel : ViewModelBase
         AppConfigs.RulesChanged += UpdateExtensionsOptions;
     }
 
-    private bool HasExtensionSelected => SelectedExtension != null;
-    private bool HasPathText => FolderPath != null;
+    public bool HasExtensionSelected => SelectedExtension != null;
+    public bool HasPathText => !string.IsNullOrWhiteSpace(FolderPath);
     [ObservableProperty] private int _filesMoved;
-    [ObservableProperty] private string? _lastActionBlock;
+    [ObservableProperty] private string? _lastActionBlock = "Last Action: Waiting for input...";
     [ObservableProperty] private string? _folderPath;
     [ObservableProperty] private string? _selectedExtension;
+    [ObservableProperty] private bool _filterMode;
 
     [ObservableProperty] private ObservableCollection<string>? _extensionList;
     [ObservableProperty] private ObservableCollection<string>? _fileList;
