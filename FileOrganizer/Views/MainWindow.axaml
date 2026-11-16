@@ -4,9 +4,11 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600"
 		xmlns:views="clr-namespace:FileOrganizer.Views"
+		xmlns:vm="clr-namespace:FileOrganizer.ViewModels"
 		Width="700"
 		Height="600"
 		x:Class="FileOrganizer.Views.MainWindow"
+		x:DataType="vm:MainViewModel"
 		Icon="avares://FileOrganizer/Assets/wolf.ico"
 		Title="File organizer"
 		Background="{DynamicResource WindowBgBrush}"
@@ -78,7 +80,7 @@
 			<TabControl>
 				<TabItem Header="Home"
 						 FontSize="12">
-					<views:HomeView x:Name="HomeViewControl"/>
+					<views:HomeView x:Name="HomeViewControl" DataContext="{Binding Home}"/>
 				</TabItem>
 
 

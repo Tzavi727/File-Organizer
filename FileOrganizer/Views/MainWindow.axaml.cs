@@ -119,7 +119,8 @@ namespace FileOrganizer.Views
 
         private void Undo_Click(object? sender, RoutedEventArgs e)
         {
-            HomeViewControl.ExecuteUndo();
+            throw new NotImplementedException();
+            //HomeViewControl.ExecuteUndo();
         }
 
         private async void ResetDefaults_Click(object? sender, RoutedEventArgs e)

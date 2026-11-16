@@ -1,6 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using FileOrganizer.Interfaces;
+using FileOrganizer.Services;
+using FileOrganizer.ViewModels;
 using FileOrganizer.Views;
 
 namespace FileOrganizer
@@ -16,7 +19,12 @@ namespace FileOrganizer
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow();
+                var mainWindow = new MainWindow();
+                var filePicker = new AvaloniaFilePickerService(mainWindow);
+                var mainViewModel = new MainViewModel(filePicker);
+                
+                mainWindow.DataContext = mainViewModel;
+                desktop.MainWindow = mainWindow;
             }
 
             base.OnFrameworkInitializationCompleted();
