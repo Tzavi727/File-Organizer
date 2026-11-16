@@ -12,8 +12,8 @@
         CanResize="False">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0"
@@ -23,8 +23,8 @@
                 BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="4*" />
                 </Grid.ColumnDefinitions>
 
                 <ListBox Grid.Column="0"
@@ -35,8 +35,8 @@
                          FontSize="15"
                          SelectionChanged="ThemeList_SelectionChanged">
 
-                    <ListBoxItem Content="Light" Tag="LightPreview.jpeg"/>
-                    <ListBoxItem Content="Dark" Tag="DarkPreview.jpeg"/>
+                    <ListBoxItem Content="Light" Tag="LightPreview.jpeg" />
+                    <ListBoxItem Content="Dark" Tag="DarkPreview.jpeg" />
 
                 </ListBox>
 
@@ -47,7 +47,7 @@
                         BorderThickness="1">
 
                     <Image Name="ThemePreview"
-                           Stretch="Fill"/>
+                           Stretch="Fill" />
 
                 </Border>
                 <TextBlock Text="Themes Previews"
@@ -55,7 +55,7 @@
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
                            Background="{DynamicResource WindowBgBrush}"
-                           FontWeight="SemiBold"/>
+                           FontWeight="SemiBold" />
             </Grid>
         </Border>
         <Border Grid.Row="1"
@@ -71,10 +71,10 @@
 
                 <Button Content="Save"
                         Width="80"
-                        Click="SaveTheme_Click"/>
+                        Click="SaveTheme_Click" />
                 <Button Content="OK"
                         Width="80"
-                        Click="OK_Click"/>
+                        Click="OK_Click" />
             </StackPanel>
         </Border>
     </Grid>

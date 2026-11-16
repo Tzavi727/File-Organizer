@@ -1,14 +1,20 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 
 namespace FileOrganizer.Views;
 
-public enum DialogType { Error, Confirm }
+public enum DialogType
+{
+    Error,
+    Confirm
+}
+
 public partial class DialogBox : Window
 {
     public DialogBox(string title, string message, DialogType type)
     {
         InitializeComponent();
-        this.Title = title;
+        Title = title;
         DialogMessage.Text = message;
 
         switch (type)
@@ -26,13 +32,13 @@ public partial class DialogBox : Window
         }
     }
 
-    private void OkButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void OkButton_Click(object? sender, RoutedEventArgs e)
     {
-        this.Close(true);
+        Close(true);
     }
 
-    private void AbortButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void AbortButton_Click(object? sender, RoutedEventArgs e)
     {
-        this.Close(false);
+        Close(false);
     }
 }

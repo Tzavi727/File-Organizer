@@ -111,11 +111,11 @@
                     </Grid.ColumnDefinitions>
                     <ListBox Grid.Column="0"
                              ItemsSource="{Binding FileList}"
-                             BorderBrush="{DynamicResource BorderMainBrush}" 
-                             Background="{DynamicResource WindowBgBrush}" 
+                             BorderBrush="{DynamicResource BorderMainBrush}"
+                             Background="{DynamicResource WindowBgBrush}"
                              BorderThickness="1"
                              FontSize="13"
-                             Width="400" 
+                             Width="400"
                              HorizontalAlignment="Left">
                     </ListBox>
                     <Grid Grid.Column="1" RowDefinitions="*,*" RowSpacing="-8">

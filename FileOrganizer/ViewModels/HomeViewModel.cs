@@ -1,10 +1,10 @@
 using System;
 using System.Collections.ObjectModel;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using FileOrganizer.Interfaces;
 using FileOrganizer.Services;
 
@@ -96,7 +96,7 @@ public partial class HomeViewModel : ViewModelBase
     {
         if (string.IsNullOrWhiteSpace(FolderPath) || !Directory.Exists(FolderPath))
             return;
-        
+
         FilesMoved = SorterService.ExecuteOrganization(FolderPath);
         FolderPath = null;
     }
@@ -114,7 +114,6 @@ public partial class HomeViewModel : ViewModelBase
 
         FilesMoved = SorterService.ExecuteOrganizationByExtension(FolderPath, SelectedExtension, folderName);
         FolderPath = null;
-
     }
 
     [RelayCommand]

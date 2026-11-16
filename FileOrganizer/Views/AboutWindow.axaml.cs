@@ -1,5 +1,7 @@
-using Avalonia.Controls;
 using System;
+using System.Diagnostics;
+using Avalonia.Controls;
+using Avalonia.Input;
 
 namespace FileOrganizer.Views;
 
@@ -10,16 +12,15 @@ public partial class AboutWindow : Window
         InitializeComponent();
     }
 
-    private void OpenGithubRepository(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+    private void OpenGithubRepository(object? sender, PointerPressedEventArgs e)
     {
         string url = "https://github.com/Tzavi727/File-Organizer";
         try
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(url) { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
         catch (Exception ex)
         {
-            return;
         }
     }
 }

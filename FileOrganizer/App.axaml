@@ -5,14 +5,14 @@
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
-        <SimpleTheme/>
-        <StyleInclude Source="avares://FileOrganizer/Themes/GlobalStyles.axaml"/>
+        <SimpleTheme />
+        <StyleInclude Source="avares://FileOrganizer/Themes/GlobalStyles.axaml" />
     </Application.Styles>
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceInclude Source="avares://FileOrganizer/Themes/Light.axaml"/>
+                <ResourceInclude Source="avares://FileOrganizer/Themes/Light.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

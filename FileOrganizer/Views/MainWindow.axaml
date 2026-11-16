@@ -1,93 +1,93 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
-		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600"
-		xmlns:views="clr-namespace:FileOrganizer.Views"
-		xmlns:vm="clr-namespace:FileOrganizer.ViewModels"
-		Width="700"
-		Height="600"
-		x:Class="FileOrganizer.Views.MainWindow"
-		x:DataType="vm:MainViewModel"
-		Icon="avares://FileOrganizer/Assets/wolf.ico"
-		Title="File organizer"
-		Background="{DynamicResource WindowBgBrush}"
-		WindowStartupLocation="CenterOwner"
-		CanResize="False">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600"
+        xmlns:views="clr-namespace:FileOrganizer.Views"
+        xmlns:vm="clr-namespace:FileOrganizer.ViewModels"
+        Width="700"
+        Height="600"
+        x:Class="FileOrganizer.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Icon="avares://FileOrganizer/Assets/wolf.ico"
+        Title="File organizer"
+        Background="{DynamicResource WindowBgBrush}"
+        WindowStartupLocation="CenterOwner"
+        CanResize="False">
 
-	<DockPanel>
-
-
-		<Menu DockPanel.Dock="Top">
-			<MenuItem Header="File">
-				<MenuItem Header="Load settings..."
-						  InputGesture="Ctrl+O"
-						  HotKey="Ctrl+O"
-						  Click="LoadSettings_Click"/>
-				<MenuItem Header="_Save settings"
-						  InputGesture="Ctrl+S"
-						  HotKey="Ctrl+S"
-						  Click="ManualSave_Click"/>
-				<MenuItem Header="_Save settings as..."
-						  InputGesture="Ctrl+Shift+S"
-						  HotKey="Ctrl+Shift+S"
-						  Click="SaveSettingsAs_Click"/>
-				<MenuItem Header="Reset to defaults"
-						  Click="ResetDefaults_Click"/>
-				<MenuItem Header="Show History"
-						  Click="OpenHistory_Click"/>
-				<MenuItem Header="_Quit"
-						  InputGesture="Ctrl+Q"
-						  HotKey="Ctrl+Q"
-						  Click="Quit_Click"/>
-			</MenuItem>
+    <DockPanel>
 
 
-			<MenuItem Header="Edit">
-				<MenuItem Header="Undo"
-						  InputGesture="Ctrl+Z"
-						  HotKey="Ctrl+Z"
-						  Click="Undo_Click"/>
-			</MenuItem>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Load settings..."
+                          InputGesture="Ctrl+O"
+                          HotKey="Ctrl+O"
+                          Click="LoadSettings_Click" />
+                <MenuItem Header="_Save settings"
+                          InputGesture="Ctrl+S"
+                          HotKey="Ctrl+S"
+                          Click="ManualSave_Click" />
+                <MenuItem Header="_Save settings as..."
+                          InputGesture="Ctrl+Shift+S"
+                          HotKey="Ctrl+Shift+S"
+                          Click="SaveSettingsAs_Click" />
+                <MenuItem Header="Reset to defaults"
+                          Click="ResetDefaults_Click" />
+                <MenuItem Header="Show History"
+                          Click="OpenHistory_Click" />
+                <MenuItem Header="_Quit"
+                          InputGesture="Ctrl+Q"
+                          HotKey="Ctrl+Q"
+                          Click="Quit_Click" />
+            </MenuItem>
 
 
-			<MenuItem Header="View">
-				<MenuItem Header="Themes"
-						  Click="Themes_Click">
-				</MenuItem>
-			</MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo"
+                          InputGesture="Ctrl+Z"
+                          HotKey="Ctrl+Z"
+                          Click="Undo_Click" />
+            </MenuItem>
 
 
-			<MenuItem Header="Help">
-				<MenuItem Header="Open github page"
-						  Click="OpenGithubPage_Click"/>
-				<MenuItem Header="_About"
-						  InputGesture="F1"
-						  HotKey="F1"
-						  Click="About_Click"/>
-			</MenuItem>
-		</Menu>
+            <MenuItem Header="View">
+                <MenuItem Header="Themes"
+                          Click="Themes_Click">
+                </MenuItem>
+            </MenuItem>
 
 
-		<Grid>
+            <MenuItem Header="Help">
+                <MenuItem Header="Open github page"
+                          Click="OpenGithubPage_Click" />
+                <MenuItem Header="_About"
+                          InputGesture="F1"
+                          HotKey="F1"
+                          Click="About_Click" />
+            </MenuItem>
+        </Menu>
 
 
-			<Border Background="{DynamicResource MenuBgBrush}"
-					Height="30.5"
-					VerticalAlignment="Top"
-					BorderBrush="{DynamicResource BorderMainBrush}"
-					BorderThickness="0,0,0,1"/>
-			<TabControl>
-				<TabItem Header="Home"
-						 FontSize="12">
-					<views:HomeView x:Name="HomeViewControl" DataContext="{Binding Home}"/>
-				</TabItem>
+        <Grid>
 
 
-				<TabItem Header="Settings" FontSize="12">
-					<views:SettingsView x:Name="SettingsViewControl"/>
-				</TabItem>
-			</TabControl>
-		</Grid>
-	</DockPanel>
+            <Border Background="{DynamicResource MenuBgBrush}"
+                    Height="30.5"
+                    VerticalAlignment="Top"
+                    BorderBrush="{DynamicResource BorderMainBrush}"
+                    BorderThickness="0,0,0,1" />
+            <TabControl>
+                <TabItem Header="Home"
+                         FontSize="12">
+                    <views:HomeView x:Name="HomeViewControl" DataContext="{Binding Home}" />
+                </TabItem>
+
+
+                <TabItem Header="Settings" FontSize="12">
+                    <views:SettingsView x:Name="SettingsViewControl" />
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </DockPanel>
 </Window>

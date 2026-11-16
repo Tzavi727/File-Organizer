@@ -1,8 +1,8 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using FileOrganizer.Services;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace FileOrganizer.Views;
 
@@ -14,6 +14,7 @@ public partial class SettingsView : UserControl
         UpdateRulesList();
         AppConfigs.RulesChanged += UpdateRulesList;
     }
+
     private void UpdateRulesList()
     {
         var rules = AppConfigs.GetAllRules();
@@ -87,6 +88,7 @@ public partial class SettingsView : UserControl
         {
             return;
         }
+
         AppConfigs.RemoveRule(extension);
         AppConfigs.SaveRules();
         ExtensionToDeleteBox.Text = "";
@@ -99,11 +101,13 @@ public partial class SettingsView : UserControl
         {
             extension = extension.TrimStart('.');
         }
+
         string folderName = FolderBox.Text?.Trim().ToLower();
         if (string.IsNullOrWhiteSpace(extension) || string.IsNullOrWhiteSpace(folderName))
         {
             return;
         }
+
         AppConfigs.SetNewRule(extension, folderName);
         AppConfigs.SaveRules();
         ExtensionToAddBox.Text = "";

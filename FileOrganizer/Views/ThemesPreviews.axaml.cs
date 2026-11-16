@@ -1,8 +1,9 @@
+using System;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using FileOrganizer.Services;
-using System;
 
 namespace FileOrganizer;
 
@@ -27,7 +28,7 @@ public partial class ThemesPreviews : Window
         }
     }
 
-    private void SaveTheme_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void SaveTheme_Click(object? sender, RoutedEventArgs e)
     {
         var selectedItem = ThemeList.SelectedItem as ListBoxItem;
         if (selectedItem != null && selectedItem.Content != null)
@@ -38,8 +39,8 @@ public partial class ThemesPreviews : Window
         }
     }
 
-    private void OK_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private void OK_Click(object? sender, RoutedEventArgs e)
     {
-        this.Close();
+        Close();
     }
 }

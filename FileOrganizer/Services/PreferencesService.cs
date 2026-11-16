@@ -1,51 +1,46 @@
 ﻿using System.IO;
 using System.Text.Json;
 
-namespace FileOrganizer.Services
+namespace FileOrganizer.Services;
+
+internal class PreferencesService
 {
-    internal class PreferencesService
+    public string Theme { get; set; } = "Light";
+    public bool IsDiscordEnabled { get; set; }
+    public static PreferencesService Preferences = new();
+    public static PreferencesService Get() => Preferences;
+    private const string PreferencesFileName = "Preferences.json";
+
+    public static void SavePreferences()
     {
-        public string Theme { get; set; } = "Light";
+        var json = JsonSerializer.Serialize(Preferences,
+            new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(PreferencesFileName, json);
+    }
 
-        public bool IsDiscordEnabled { get; set; } = false;
-
-        public static PreferencesService Preferences = new PreferencesService();
-
-        public static PreferencesService Get() => Preferences;
-
-        private const string PreferencesFileName = "Preferences.json";
-
-        public static void SavePreferences()
+    public static void LoadPreferences()
+    {
+        if (File.Exists(PreferencesFileName))
         {
-            var json = JsonSerializer.Serialize(Preferences,
-                new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(PreferencesFileName, json);
-        }
-
-        public static void LoadPreferences()
-        {
-            if (File.Exists(PreferencesFileName))
+            try
             {
-                try
-                {
-                    string jsonText = File.ReadAllText(PreferencesFileName);
-                    var loadedPreferences = JsonSerializer.Deserialize<PreferencesService>(jsonText);
+                string jsonText = File.ReadAllText(PreferencesFileName);
+                var loadedPreferences = JsonSerializer.Deserialize<PreferencesService>(jsonText);
 
-                    if (loadedPreferences != null)
-                    {
-                        Preferences = loadedPreferences;
-                    }
-                }
-                catch
+                if (loadedPreferences != null)
                 {
-                    Preferences = new PreferencesService();
-                    SavePreferences();
+                    Preferences = loadedPreferences;
                 }
             }
-            else
+            catch
             {
+                Preferences = new PreferencesService();
                 SavePreferences();
             }
+        }
+        else
+        {
+            SavePreferences();
         }
     }
 }

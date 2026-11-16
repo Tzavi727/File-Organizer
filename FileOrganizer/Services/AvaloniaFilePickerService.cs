@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using FileOrganizer.Interfaces;
 
 namespace FileOrganizer.Services;
@@ -16,7 +17,7 @@ public class AvaloniaFilePickerService : IFilePickerService
         var topLevel = TopLevel.GetTopLevel(_parentVisual);
         if (topLevel == null) return null;
         var folders = await topLevel.StorageProvider.OpenFolderPickerAsync(
-            new Avalonia.Platform.Storage.FolderPickerOpenOptions
+            new FolderPickerOpenOptions
             {
                 Title = "Select the folder to organize",
                 AllowMultiple = false
