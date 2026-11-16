@@ -25,7 +25,7 @@ public partial class HomeViewModel : ViewModelBase
     public bool HasExtensionSelected => SelectedExtension != null;
     public bool HasPathText => !string.IsNullOrWhiteSpace(FolderPath);
     [ObservableProperty] private int _filesMoved;
-    [ObservableProperty] private string? _lastActionBlock = "Last Action: Waiting for input...";
+    [ObservableProperty] private string _lastActionBlock = "Last Action: Waiting for input...";
     [ObservableProperty] private string? _folderPath;
     [ObservableProperty] private string? _selectedExtension;
     [ObservableProperty] private bool _filterMode;
