@@ -23,23 +23,23 @@
                 <MenuItem Header="Load settings..."
                           InputGesture="Ctrl+O"
                           HotKey="Ctrl+O"
-                          Click="LoadSettings_Click" />
+                          Command="{Binding LoadSettingsCommand}" />
                 <MenuItem Header="_Save settings"
                           InputGesture="Ctrl+S"
                           HotKey="Ctrl+S"
-                          Click="ManualSave_Click" />
+                          Command="{Binding ManualSaveCommand}" />
                 <MenuItem Header="_Save settings as..."
                           InputGesture="Ctrl+Shift+S"
                           HotKey="Ctrl+Shift+S"
-                          Click="SaveSettingsAs_Click" />
+                          Command="{Binding SaveSettingsAsCommand}" />
                 <MenuItem Header="Reset to defaults"
-                          Click="ResetDefaults_Click" />
+                          Command="{Binding ResetDefaultsCommand}" />
                 <MenuItem Header="Show History"
-                          Click="OpenHistory_Click" />
+                          Command="{Binding OpenHistoryCommand}" />
                 <MenuItem Header="_Quit"
                           InputGesture="Ctrl+Q"
                           HotKey="Ctrl+Q"
-                          Click="Quit_Click" />
+                          Command="{Binding QuitCommand}" />
             </MenuItem>
 
 
@@ -47,24 +47,24 @@
                 <MenuItem Header="Undo"
                           InputGesture="Ctrl+Z"
                           HotKey="Ctrl+Z"
-                          Click="Undo_Click" />
+                          Command="{Binding UndoCommand}" />
             </MenuItem>
 
 
             <MenuItem Header="View">
                 <MenuItem Header="Themes"
-                          Click="Themes_Click">
+                          Command="{Binding OpenThemesCommand}">
                 </MenuItem>
             </MenuItem>
 
 
             <MenuItem Header="Help">
                 <MenuItem Header="Open github page"
-                          Click="OpenGithubPage_Click" />
+                          Command="{Binding OpenGithubUrlCommand}" />
                 <MenuItem Header="_About"
                           InputGesture="F1"
                           HotKey="F1"
-                          Click="About_Click" />
+                          Command="{Binding OpenAboutCommand}" />
             </MenuItem>
         </Menu>
 
@@ -85,7 +85,7 @@
 
 
                 <TabItem Header="Settings" FontSize="12">
-                    <views:SettingsView x:Name="SettingsViewControl" />
+                    <views:SettingsView x:Name="SettingsViewControl" DataContext="{Binding Settings}" />
                 </TabItem>
             </TabControl>
         </Grid>

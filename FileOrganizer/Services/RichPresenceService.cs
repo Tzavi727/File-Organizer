@@ -1,29 +1,39 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DiscordRPC;
+using FileOrganizer.Interfaces;
 
 namespace FileOrganizer.Services;
 
-internal class RichPresenceService
+internal class RichPresenceService : IRichPresenceService, IDisposable
 {
-    public static DiscordRpcClient? Client { get; private set; }
-    private static CancellationTokenSource? _timerCts;
+    private readonly IPreferencesService _preferencesService;
+    public DiscordRpcClient? Client { get; private set; }
+    private CancellationTokenSource? _timerCts;
 
-    public static void InitializeRpc()
+    public RichPresenceService(IPreferencesService preferencesService)
     {
-        if (PreferencesService.Preferences.IsDiscordEnabled)
+        _preferencesService = preferencesService;
+    }
+
+    public void InitializeRpc()
+    {
+        if (_preferencesService.IsDiscordEnabled)
         {
             Client = new DiscordRpcClient("1515420956527693944");
             Client.Initialize();
         }
     }
 
-    public static void DisposeClient()
+    public void DisposeClient()
     {
+        _timerCts?.Cancel();
+        _timerCts?.Dispose();
         Client?.Dispose();
     }
 
-    public static void SetIdlePresence()
+    public void SetIdlePresence()
     {
         Client?.SetPresence(new RichPresence
         {
@@ -37,7 +47,7 @@ internal class RichPresenceService
         });
     }
 
-    public static async void SetActionPresence(string details, string state)
+    public async Task SetActionPresence(string details, string state)
     {
         _timerCts?.Cancel();
         _timerCts = new CancellationTokenSource();
@@ -54,7 +64,7 @@ internal class RichPresenceService
         }
     }
 
-    public static void UpdateStatus(string details, string state)
+    public void UpdateStatus(string details, string state)
     {
         Client?.SetPresence(new RichPresence
         {
@@ -66,5 +76,10 @@ internal class RichPresenceService
                 LargeImageText = "File Organizer by Tzavi"
             }
         });
+    }
+
+    public void Dispose()
+    {
+        DisposeClient();
     }
 }

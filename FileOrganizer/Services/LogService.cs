@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using FileOrganizer.Configuration;
+using FileOrganizer.Interfaces;
 
 namespace FileOrganizer.Services;
 
-internal class LogService
+internal class LogService : ILogService
 {
-    private const string LogFileName = "FileOrganizer.json";
+    private readonly string _logFilePath = AppPaths.LogFilePath;
 
     public record FileRecord
     {
@@ -23,20 +25,20 @@ internal class LogService
         public required List<FileRecord> FilesMoved { get; set; }
     }
 
-    private static List<FileRecord> _sessionBuffer = new();
-    private static List<SessionLog> _fullLog = new();
+    private List<FileRecord> _sessionBuffer = new();
+    private List<SessionLog> _fullLog = new();
 
-    public static void RecordMove(string fileName, string oldPath, string newPath)
+    public void RecordMove(string fileName, string oldPath, string newPath)
     {
-        _sessionBuffer.Add((new FileRecord
+        _sessionBuffer.Add(new FileRecord
         {
             FileName = fileName,
             OldPath = oldPath,
             NewPath = newPath
-        }));
+        });
     }
 
-    public static void CommitSession()
+    public void CommitSession()
     {
         if (_sessionBuffer.Count == 0) return;
 
@@ -51,14 +53,15 @@ internal class LogService
     }
 
 
-    public static void SaveLog()
+    public void SaveLog()
     {
         List<SessionLog> fullLog = new();
-        if (File.Exists(LogFileName))
+
+        if (File.Exists(_logFilePath))
         {
             try
             {
-                string jsonText = File.ReadAllText(LogFileName);
+                string jsonText = File.ReadAllText(_logFilePath);
                 fullLog = JsonSerializer.Deserialize<List<SessionLog>>(jsonText) ?? new List<SessionLog>();
             }
             catch (Exception)
@@ -71,7 +74,7 @@ internal class LogService
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         string newJson = JsonSerializer.Serialize(fullLog, options);
-        File.WriteAllText(LogFileName, newJson);
+        File.WriteAllText(_logFilePath, newJson);
 
         _fullLog.Clear();
     }

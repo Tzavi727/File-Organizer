@@ -21,6 +21,7 @@ public partial class AboutWindow : Window
         }
         catch (Exception ex)
         {
+            Console.WriteLine($"Failed to open Github repository: {ex.Message}");
         }
     }
 }

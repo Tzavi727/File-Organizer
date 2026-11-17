@@ -82,6 +82,7 @@
                               PlaceholderText="Select Extension."
                               IsEnabled="{Binding FilterMode}"
                               SelectedItem="{Binding SelectedExtension}"
+                              ItemsSource="{Binding ExtensionList}"
                               ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     </ComboBox>
                 </StackPanel>
@@ -126,7 +127,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
                                 Margin="5,0,5,5"
-                                IsEnabled="{Binding HasPathText}"
+                                IsEnabled="{Binding CanSort}"
                                 Command="{Binding FullSortCommand}" />
                         <Button Grid.Row="1"
                                 Content="Run Target Sort"
@@ -136,12 +137,6 @@
                                 VerticalAlignment="Bottom"
                                 Margin="5,27,5,5"
                                 Command="{Binding TargetSortCommand}">
-                            <Button.IsEnabled>
-                                <MultiBinding Converter="{x:Static BoolConverters.And}">
-                                    <Binding Path="FilterMode" />
-                                    <Binding Path="HasExtensionSelected" />
-                                </MultiBinding>
-                            </Button.IsEnabled>
                         </Button>
                     </Grid>
                 </Grid>

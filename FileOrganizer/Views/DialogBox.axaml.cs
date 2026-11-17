@@ -11,6 +11,11 @@ public enum DialogType
 
 public partial class DialogBox : Window
 {
+    public DialogBox()
+    {
+        InitializeComponent();
+    }
+    
     public DialogBox(string title, string message, DialogType type)
     {
         InitializeComponent();

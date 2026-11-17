@@ -1,40 +1,41 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using FileOrganizer.Interfaces;
 
 namespace FileOrganizer.Services;
 
-internal class UndoService
+internal class UndoService : IUndoService
 {
     public record UndoRecord(string FileName, string OldPath, string NewPath);
 
-    private static List<UndoRecord> currentAction = new();
+    private List<UndoRecord> _currentAction = new();
 
-    private static Stack<List<UndoRecord>> undoStack = new();
+    private Stack<List<UndoRecord>> _undoStack = new();
 
-    public static void AddToCurrentAction(string fileName, string oldPath, string newPath)
+    public void AddToCurrentAction(string fileName, string oldPath, string newPath)
     {
-        currentAction.Add(new UndoRecord(fileName, oldPath, newPath));
+        _currentAction.Add(new UndoRecord(fileName, oldPath, newPath));
     }
 
-    public static void CommitLastAction()
+    public void CommitLastAction()
     {
-        if (currentAction.Count > 0)
+        if (_currentAction.Count > 0)
         {
-            undoStack.Push(new List<UndoRecord>(currentAction));
+            _undoStack.Push(new List<UndoRecord>(_currentAction));
             ClearCurrentActionList();
         }
     }
 
-    public static void ClearCurrentActionList()
+    public void ClearCurrentActionList()
     {
-        currentAction.Clear();
+        _currentAction.Clear();
     }
 
-    public static void ExecuteUndo()
+    public void ExecuteUndo()
     {
-        if (undoStack.Count > 0)
+        if (_undoStack.Count > 0)
         {
-            var lastMovedFiles = undoStack.Pop();
+            var lastMovedFiles = _undoStack.Pop();
 
             foreach (UndoRecord move in lastMovedFiles)
             {

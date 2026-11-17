@@ -1,46 +1,21 @@
-using System;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
-using FileOrganizer.Services;
+using FileOrganizer.ViewModels;
 
-namespace FileOrganizer;
+namespace FileOrganizer.Views;
 
 public partial class ThemesPreviews : Window
 {
+    //Default constructor to avoid null warnings.
     public ThemesPreviews()
     {
+        
+    }
+    
+    public ThemesPreviews(ThemesPreviewViewModel viewModel)
+    {
         InitializeComponent();
-    }
+        DataContext = viewModel;
 
-    private void ThemeList_SelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        var selectedItem = ThemeList.SelectedItem as ListBoxItem;
-        var preview = selectedItem?.Tag as string;
-        if (preview == null) return;
-        var uri = new Uri($"avares://FileOrganizer/Assets/ThemesPreviews/{preview}");
-        using (var stream = AssetLoader.Open(uri))
-        {
-            var bitmap = new Bitmap(stream);
-
-            ThemePreview.Source = bitmap;
-        }
-    }
-
-    private void SaveTheme_Click(object? sender, RoutedEventArgs e)
-    {
-        var selectedItem = ThemeList.SelectedItem as ListBoxItem;
-        if (selectedItem != null && selectedItem.Content != null)
-        {
-            string themeName = selectedItem.Content.ToString() ?? "Light";
-
-            ThemesService.SwitchTheme(themeName);
-        }
-    }
-
-    private void OK_Click(object? sender, RoutedEventArgs e)
-    {
-        Close();
+        viewModel.RequestClose += Close;
     }
 }

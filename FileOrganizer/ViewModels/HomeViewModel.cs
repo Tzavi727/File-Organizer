@@ -13,25 +13,47 @@ namespace FileOrganizer.ViewModels;
 public partial class HomeViewModel : ViewModelBase
 {
     private readonly IFilePickerService _filePickerService;
+    private readonly IRichPresenceService _richPresenceService;
+    private readonly ISorterService _sorterService;
+    private readonly IUndoService _undoService;
+    private readonly RuleService _ruleService;
 
-    public HomeViewModel(IFilePickerService filePickerService)
+    public HomeViewModel(IFilePickerService filePickerService, IRichPresenceService richPresenceService,
+        ISorterService sorterService, IUndoService undoService, RuleService ruleService)
     {
         _filePickerService = filePickerService;
+        _richPresenceService = richPresenceService;
+        _sorterService = sorterService;
+        _undoService = undoService;
+        _ruleService = ruleService;
         UpdateExtensionsOptions();
         //I'm sure there is a better way to do this, but I'll leave this as-is for now.
-        AppConfigs.RulesChanged += UpdateExtensionsOptions;
+        ruleService.RulesChanged += UpdateExtensionsOptions;
     }
 
-    public bool HasExtensionSelected => SelectedExtension != null;
-    public bool HasPathText => !string.IsNullOrWhiteSpace(FolderPath);
+
     [ObservableProperty] private int _filesMoved;
+
     [ObservableProperty] private string _lastActionBlock = "Last Action: Waiting for input...";
-    [ObservableProperty] private string? _folderPath;
-    [ObservableProperty] private string? _selectedExtension;
+
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(FullSortCommand))]
+    [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
+    private string? _folderPath;
+
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
+    private string? _selectedExtension;
+
     [ObservableProperty] private bool _filterMode;
 
     [ObservableProperty] private ObservableCollection<string>? _extensionList;
     [ObservableProperty] private ObservableCollection<string>? _fileList;
+
+    private bool CanTargetSort => !string.IsNullOrWhiteSpace(FolderPath) &&
+                                  !string.IsNullOrWhiteSpace(SelectedExtension) &&
+                                  Directory.Exists(FolderPath);
+
+    private bool CanSort => !string.IsNullOrWhiteSpace(FolderPath) && Directory.Exists(FolderPath);
 
     partial void OnFolderPathChanged(string? value)
     {
@@ -55,21 +77,21 @@ public partial class HomeViewModel : ViewModelBase
         }
     }
 
-    partial void OnFilesMovedChanged(int value)
+    private void HandleSortResult(int moved)
     {
-        if (value == 1)
+        if (moved > 0)
         {
-            LastActionBlock = $"Last Action: {value} File organized";
-            RichPresenceService.SetActionPresence("Organizing File...", $"File organized this session: {FilesMoved}");
-        }
-        else if (value == 0)
-        {
-            LastActionBlock = "Could not find any files to organize...";
+            FilesMoved = moved;
+            LastActionBlock = moved == 1
+                ? "Last Action: 1 File organized"
+                : $"Last Action: {moved} Files organized";
+
+            _richPresenceService.SetActionPresence("Organizing Files...",
+                $"Files organized this session: {FilesMoved}");
         }
         else
         {
-            LastActionBlock = $"Last Action: {value} Files organized";
-            RichPresenceService.SetActionPresence("Organizing Files...", $"Files organized this session: {FilesMoved}");
+            LastActionBlock = "Could not find any files to organize...";
         }
     }
 
@@ -91,44 +113,74 @@ public partial class HomeViewModel : ViewModelBase
             FolderPath = path;
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSort))]
     private void FullSort()
     {
         if (string.IsNullOrWhiteSpace(FolderPath) || !Directory.Exists(FolderPath))
             return;
 
-        FilesMoved = SorterService.ExecuteOrganization(FolderPath);
-        FolderPath = null;
+        FilesMoved = _sorterService.ExecuteOrganization(FolderPath);
+
+        HandleSortResult(FilesMoved);
+        RefreshFileList(FolderPath);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanTargetSort))]
     private void TargetSort()
     {
         if (string.IsNullOrWhiteSpace(FolderPath) || !Directory.Exists(FolderPath) ||
             string.IsNullOrWhiteSpace(SelectedExtension))
             return;
 
-        if (!AppConfigs.ContainsRule(SelectedExtension) ||
-            !AppConfigs.TryGetExtensionFolder(SelectedExtension, out string folderName))
+        if (!_ruleService.ContainsRule(SelectedExtension) ||
+            !_ruleService.TryGetExtensionFolder(SelectedExtension, out string folderName))
             return;
 
-        FilesMoved = SorterService.ExecuteOrganizationByExtension(FolderPath, SelectedExtension, folderName);
-        FolderPath = null;
+        FilesMoved = _sorterService.ExecuteOrganizationByExtension(FolderPath, SelectedExtension, folderName);
+
+        HandleSortResult(FilesMoved);
+        RefreshFileList(FolderPath);
     }
 
     [RelayCommand]
     private void ExecuteUndo()
     {
-        UndoService.ExecuteUndo();
-        FolderPath = null;
+        _undoService.ExecuteUndo();
+        
+        if (string.IsNullOrWhiteSpace(FolderPath) || !Directory.Exists(FolderPath))
+            return;
+        
+        RefreshFileList(FolderPath);
     }
 
     private void UpdateExtensionsOptions()
     {
-        var rules = AppConfigs.GetAllRules();
+        var rules = _ruleService.GetAllRules();
 
         var extensions = rules.Keys.ToList();
 
         ExtensionList = new ObservableCollection<string>(extensions);
+    }
+
+    private void RefreshFileList(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path) || !Directory.Exists(path))
+        {
+            FileList = null;
+            return;
+        }
+
+        try
+        {
+            string[] files = Directory.GetFiles(path);
+
+            var fileNames = files.Select(f => Path.GetFileName(f)).ToList();
+
+            FileList = new ObservableCollection<string>(fileNames);
+        }
+        catch (Exception)
+        {
+            FileList = new ObservableCollection<string> { "Acess Denied or Error..." };
+        }
     }
 }

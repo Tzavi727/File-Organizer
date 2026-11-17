@@ -1,40 +1,42 @@
 ﻿using System.IO;
 using System.Text.Json;
+using FileOrganizer.Configuration;
+using FileOrganizer.Interfaces;
 
 namespace FileOrganizer.Services;
 
-internal class PreferencesService
+public class PreferencesService : IPreferencesService
 {
     public string Theme { get; set; } = "Light";
     public bool IsDiscordEnabled { get; set; }
-    public static PreferencesService Preferences = new();
-    public static PreferencesService Get() => Preferences;
-    private const string PreferencesFileName = "Preferences.json";
+    private readonly string _preferencesFileName = AppPaths.PreferencesFilePath;
 
-    public static void SavePreferences()
+    public void SavePreferences()
     {
-        var json = JsonSerializer.Serialize(Preferences,
+        var json = JsonSerializer.Serialize(this,
             new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(PreferencesFileName, json);
+        File.WriteAllText(_preferencesFileName, json);
     }
 
-    public static void LoadPreferences()
+    public void LoadPreferences()
     {
-        if (File.Exists(PreferencesFileName))
+        if (File.Exists(_preferencesFileName))
         {
             try
             {
-                string jsonText = File.ReadAllText(PreferencesFileName);
+                var jsonText = File.ReadAllText(_preferencesFileName);
                 var loadedPreferences = JsonSerializer.Deserialize<PreferencesService>(jsonText);
 
-                if (loadedPreferences != null)
-                {
-                    Preferences = loadedPreferences;
-                }
+                if (loadedPreferences == null)
+                    return;
+
+                Theme = loadedPreferences.Theme;
+                IsDiscordEnabled = loadedPreferences.IsDiscordEnabled;
             }
             catch
             {
-                Preferences = new PreferencesService();
+                Theme = "Light";
+                IsDiscordEnabled = false;
                 SavePreferences();
             }
         }

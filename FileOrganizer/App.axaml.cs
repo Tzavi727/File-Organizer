@@ -19,11 +19,32 @@ public class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var mainWindow = new MainWindow();
-            var filePicker = new AvaloniaFilePickerService(mainWindow);
-            var mainViewModel = new MainViewModel(filePicker);
+            var appConfigs = new RuleService();
+            var filePicker = new AvaloniaFilePickerService(mainWindow, appConfigs);
+            var dialogService = new DialogService(mainWindow, appConfigs);
+            var logService = new LogService();
+            var undoService = new UndoService();
+            var preferencesService = new PreferencesService();
+            var sorterService = new SorterService(logService, undoService, appConfigs);
+            var richPresenceService = new RichPresenceService(preferencesService);
+            var themesService = new ThemesService(preferencesService);
 
+
+            var mainViewModel = new MainViewModel
+            (
+                filePicker,
+                richPresenceService,
+                sorterService,
+                undoService,
+                preferencesService,
+                themesService,
+                dialogService,
+                appConfigs
+            );
             mainWindow.DataContext = mainViewModel;
             desktop.MainWindow = mainWindow;
+
+            desktop.ShutdownRequested += (sender, args) => { richPresenceService?.Dispose(); };
         }
 
         base.OnFrameworkInitializationCompleted();

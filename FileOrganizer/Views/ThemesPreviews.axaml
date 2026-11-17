@@ -2,8 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:FileOrganizer.ViewModels"
         mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="400"
-        x:Class="FileOrganizer.ThemesPreviews"
+        x:Class="FileOrganizer.Views.ThemesPreviews"
+        x:DataType="vm:ThemesPreviewViewModel"
         Width="600"
         Height="500"
         Title="ThemesPreviews"
@@ -33,10 +35,10 @@
                          Padding="0,0,0,0"
                          BorderBrush="{DynamicResource BorderMainBrush}"
                          FontSize="15"
-                         SelectionChanged="ThemeList_SelectionChanged">
+                         SelectedItem="{Binding SelectedTheme}">
 
-                    <ListBoxItem Content="Light" Tag="LightPreview.jpeg" />
-                    <ListBoxItem Content="Dark" Tag="DarkPreview.jpeg" />
+                    <ListBoxItem Content="Light" />
+                    <ListBoxItem Content="Dark" />
 
                 </ListBox>
 
@@ -50,7 +52,8 @@
                            Stretch="Fill" />
 
                 </Border>
-                <TextBlock Text="Themes Previews"
+                <TextBlock Grid.Column="0"
+                           Text="Themes Previews"
                            Margin="0,-13,0,0"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Top"
@@ -71,10 +74,10 @@
 
                 <Button Content="Save"
                         Width="80"
-                        Click="SaveTheme_Click" />
+                        Command="{Binding SaveThemeCommand}" />
                 <Button Content="OK"
                         Width="80"
-                        Click="OK_Click" />
+                        Command="{Binding OkCommand}" />
             </StackPanel>
         </Border>
     </Grid>
