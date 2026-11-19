@@ -1,10 +1,13 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Menu -->
     <Style Selector="Menu">
         <Setter Property="Background" Value="{DynamicResource MenuBgBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextMainBrush}" />
     </Style>
 
+    <!-- MenuItem -->
     <Style Selector="MenuItem">
         <Setter Property="Background" Value="{DynamicResource MenuItemBgBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource MenuItemBorderBrush}" />
@@ -20,7 +23,13 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource WindowBgBrush}" />
     </Style>
-
+    
+    <!-- TabControl -->
+    <Style Selector="TabControl /template/ ItemsPresenter">
+        <Setter Property="Margin" Value="1,0,0,0" />
+    </Style>
+    
+    <!-- TabItem -->
     <Style Selector="TabItem">
         <Setter Property="Background" Value="{DynamicResource TabItemDefaultBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextMainBrush}" />
@@ -48,20 +57,14 @@
         <Setter Property="Margin" Value="-2,-1,-1,-1" />
     </Style>
 
-    <Style Selector="TabControl /template/ ItemsPresenter">
-        <Setter Property="Margin" Value="1,0,0,0" />
-    </Style>
-
+    <!-- TextBox -->
     <Style Selector="TextBox /template/ Border">
         <Setter Property="Opacity" Value="0.5" />
     </Style>
 
     <Style Selector="TextBox:pointerover /template/ Border">
         <Setter Property="Opacity" Value="1" />
-    </Style>
-
-    <Style Selector="TextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource TextMainBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
     </Style>
 
     <Style Selector="TextBox">
@@ -69,10 +72,6 @@
         <Setter Property="Background" Value="{DynamicResource InputBgBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
         <Setter Property="CaretBrush" Value="{DynamicResource CaretBrush}" />
-    </Style>
-
-    <Style Selector="TextBox:pointerover /template/ Border">
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
     </Style>
 
     <Style Selector="TextBox:focus /template/ Border">
@@ -84,6 +83,12 @@
         <Setter Property="Opacity" Value="1" />
     </Style>
 
+    <!-- TextBlock -->
+    <Style Selector="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextMainBrush}" />
+    </Style>
+
+    <!-- Button -->
     <Style Selector="Button">
         <Setter Property="Background" Value="{DynamicResource ButtonBgBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
@@ -98,6 +103,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
     </Style>
 
+    <!-- ComboBox -->
     <Style Selector="ComboBox">
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource TextMainBrush}" />
@@ -132,22 +138,23 @@
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
     </Style>
 
+    <!-- ComboBoxItem -->
     <Style Selector="ComboBoxItem">
         <Setter Property="Background" Value="{DynamicResource WindowBgBrush}" />
     </Style>
 
-    <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter">
+    <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter, ComboBoxItem:selected /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ComboBoxItemHoverBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
         <Setter Property="BorderThickness" Value="1" />
     </Style>
 
-    <Style Selector="ComboBoxItem:selected /template/ ContentPresenter">
-        <Setter Property="Background" Value="{DynamicResource ComboBoxItemHoverBrush}" />
+    <!-- ListBox -->
+    <Style Selector="ListBox">
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
     </Style>
 
+    <!-- ListBoxItem -->
     <Style Selector="ListBoxItem:pointerover /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ListBoxItemHoverBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
@@ -158,10 +165,7 @@
         <Setter Property="Background" Value="{DynamicResource ListBoxItemSelectedBgBrush}" />
     </Style>
 
-    <Style Selector="ListBox">
-        <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
-    </Style>
-
+    <!-- CheckBox -->
     <Style Selector="CheckBox">
         <Setter Property="Foreground" Value="{DynamicResource TextMainBrush}" />
         <Setter Property="Padding" Value="8,0,0,0" />
