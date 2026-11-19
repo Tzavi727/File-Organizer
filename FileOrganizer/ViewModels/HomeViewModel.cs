@@ -30,30 +30,37 @@ public partial class HomeViewModel : ViewModelBase
         //I'm sure there is a better way to do this, but I'll leave this as-is for now.
         ruleService.RulesChanged += UpdateExtensionsOptions;
     }
-
-
+    
     [ObservableProperty] private int _filesMoved;
-
     [ObservableProperty] private string _lastActionBlock = "Last Action: Waiting for input...";
+    [ObservableProperty] private double _lastActionOpacity = 0.5;
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(FullSortCommand))]
     [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
+    [NotifyPropertyChangedFor(nameof(FolderPathHasText))]
     private string? _folderPath;
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
+    [NotifyPropertyChangedFor(nameof(HasSelectedExtension))]
     private string? _selectedExtension;
 
-    [ObservableProperty] private bool _filterMode;
-
+    [ObservableProperty] 
+    [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
+    private bool _filterMode;
+    
     [ObservableProperty] private ObservableCollection<string>? _extensionList;
     [ObservableProperty] private ObservableCollection<string>? _fileList;
 
     private bool CanTargetSort => !string.IsNullOrWhiteSpace(FolderPath) &&
                                   !string.IsNullOrWhiteSpace(SelectedExtension) &&
-                                  Directory.Exists(FolderPath);
-
+                                  Directory.Exists(FolderPath) &&
+                                  FilterMode;
     private bool CanSort => !string.IsNullOrWhiteSpace(FolderPath) && Directory.Exists(FolderPath);
+    public bool FolderPathHasText => !string.IsNullOrWhiteSpace(FolderPath);
+    public bool HasSelectedExtension => !string.IsNullOrWhiteSpace(SelectedExtension);
+    
 
     partial void OnFolderPathChanged(string? value)
     {
@@ -85,6 +92,7 @@ public partial class HomeViewModel : ViewModelBase
             LastActionBlock = moved == 1
                 ? "Last Action: 1 File organized"
                 : $"Last Action: {moved} Files organized";
+            LastActionOpacity = 1.0;
 
             _richPresenceService.SetActionPresence("Organizing Files...",
                 $"Files organized this session: {FilesMoved}");
@@ -92,6 +100,7 @@ public partial class HomeViewModel : ViewModelBase
         else
         {
             LastActionBlock = "Could not find any files to organize...";
+            LastActionOpacity = 0.5;
         }
     }
 
@@ -146,10 +155,10 @@ public partial class HomeViewModel : ViewModelBase
     private void ExecuteUndo()
     {
         _undoService.ExecuteUndo();
-        
+
         if (string.IsNullOrWhiteSpace(FolderPath) || !Directory.Exists(FolderPath))
             return;
-        
+
         RefreshFileList(FolderPath);
     }
 

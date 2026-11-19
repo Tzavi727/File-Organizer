@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:FileOrganizer.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="600"
              x:Class="FileOrganizer.Views.HomeView"
              x:DataType="vm:HomeViewModel">
     <Grid>
@@ -19,15 +19,16 @@
                     BorderThickness="1">
                 <StackPanel VerticalAlignment="Center">
                     <TextBlock Text="{Binding LastActionBlock}"
+                               Opacity="{Binding LastActionOpacity}"
                                FontWeight="SemiBold"
-                               Opacity="0.5"
                                Margin="5,0,0,0" />
                     <TextBox Text="{Binding FolderPath}"
                              Watermark="Path..."
                              FontSize="30"
                              Height="50"
                              Margin="5"
-                             VerticalAlignment="Center" />
+                             VerticalAlignment="Center" 
+                             Classes.HasText="{Binding FolderPathHasText}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -83,6 +84,7 @@
                               IsEnabled="{Binding FilterMode}"
                               SelectedItem="{Binding SelectedExtension}"
                               ItemsSource="{Binding ExtensionList}"
+                              Classes.HasSelection="{Binding HasSelectedExtension}"
                               ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     </ComboBox>
                 </StackPanel>
