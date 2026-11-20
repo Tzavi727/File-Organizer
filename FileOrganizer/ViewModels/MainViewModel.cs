@@ -16,7 +16,6 @@ public partial class MainViewModel : ViewModelBase
     public HomeViewModel Home { get; }
     public SettingsViewModel Settings { get; }
     private readonly IFilePickerService _filePickerService;
-    private readonly IRichPresenceService _richPresenceService;
     private readonly ISorterService _sorterService;
     private readonly IUndoService _undoService;
     private readonly IPreferencesService _preferencesService;
@@ -25,7 +24,6 @@ public partial class MainViewModel : ViewModelBase
     private readonly RuleService _ruleService;
 
     public MainViewModel(IFilePickerService filePickerService,
-        IRichPresenceService richPresenceService,
         ISorterService sorterService,
         IUndoService undoService,
         IPreferencesService preferencesService,
@@ -34,7 +32,6 @@ public partial class MainViewModel : ViewModelBase
         RuleService ruleService)
     {
         _filePickerService = filePickerService;
-        _richPresenceService = richPresenceService;
         _sorterService = sorterService;
         _undoService = undoService;
         _preferencesService = preferencesService;
@@ -45,11 +42,9 @@ public partial class MainViewModel : ViewModelBase
         preferencesService.LoadPreferences();
         ruleService.LoadRules();
         themesService.SwitchTheme(preferencesService.Theme);
-        richPresenceService.InitializeRpc();
-        richPresenceService.SetIdlePresence();
-
-        Settings = new SettingsViewModel(ruleService, richPresenceService, preferencesService);
-        Home = new HomeViewModel(filePickerService, richPresenceService, sorterService, undoService, ruleService);
+        
+        Settings = new SettingsViewModel(ruleService, preferencesService);
+        Home = new HomeViewModel(filePickerService, sorterService, undoService, ruleService);
     }
 
     [RelayCommand]

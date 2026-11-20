@@ -28,14 +28,12 @@ public class App : Application
             var undoService = new UndoService();
             var preferencesService = new PreferencesService();
             var sorterService = new SorterService(logService, undoService, appConfigs);
-            var richPresenceService = new RichPresenceService(preferencesService);
             var themesService = new ThemesService(preferencesService);
 
 
             var mainViewModel = new MainViewModel
             (
                 filePicker,
-                richPresenceService,
                 sorterService,
                 undoService,
                 preferencesService,
@@ -45,8 +43,7 @@ public class App : Application
             );
             mainWindow.DataContext = mainViewModel;
             desktop.MainWindow = mainWindow;
-
-            desktop.ShutdownRequested += (sender, args) => { richPresenceService?.Dispose(); };
+            
         }
 
         base.OnFrameworkInitializationCompleted();

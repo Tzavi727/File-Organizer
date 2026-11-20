@@ -11,25 +11,12 @@ namespace FileOrganizer.ViewModels;
 public partial class SettingsViewModel : ViewModelBase
 {
     private readonly RuleService _ruleService;
-    private readonly IRichPresenceService _richPresenceService;
     private readonly IPreferencesService _preferencesService;
-    private readonly bool _isInitializing;
 
-    public SettingsViewModel(RuleService ruleService, IRichPresenceService richPresenceService,
-        IPreferencesService preferencesService)
+    public SettingsViewModel(RuleService ruleService, IPreferencesService preferencesService)
     {
         _ruleService = ruleService;
-        _richPresenceService = richPresenceService;
         _preferencesService = preferencesService;
-        _isInitializing = true;
-        try
-        {
-            RichPresenceCheckBox = _preferencesService.IsDiscordEnabled;
-        }
-        finally
-        {
-            _isInitializing = false;
-        }
         UpdateRulesList();
         _ruleService.RulesChanged += UpdateRulesList;
     }
@@ -50,8 +37,7 @@ public partial class SettingsViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(RemoveRuleCommand))]
     [NotifyPropertyChangedFor(nameof(HasKeyToRemoveText))]
     private string? _keyToRemove;
-
-    [ObservableProperty] private bool _richPresenceCheckBox;
+    
     private bool CanAddRule() => !string.IsNullOrWhiteSpace(KeyToAdd) && !string.IsNullOrWhiteSpace(ValueToAdd);
     private bool CanRemoveRule() => !string.IsNullOrWhiteSpace(KeyToRemove);
     public bool HasKeyToAddText => !string.IsNullOrWhiteSpace(KeyToAdd);
@@ -103,24 +89,5 @@ public partial class SettingsViewModel : ViewModelBase
                 RulesList.Add(record);
             }
         }
-    }
-
-    partial void OnRichPresenceCheckBoxChanged(bool value)
-    {
-        if (_isInitializing)
-            return;
-        
-        if (value)
-        {
-            _richPresenceService.InitializeRpc();
-            _richPresenceService.SetIdlePresence();
-        }
-        else
-        {
-            _richPresenceService.DisposeClient();
-        }
-
-        _preferencesService.IsDiscordEnabled = value;
-        _preferencesService.SavePreferences();
     }
 }

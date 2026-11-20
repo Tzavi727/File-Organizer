@@ -8,7 +8,6 @@ namespace FileOrganizer.Services;
 public class PreferencesService : IPreferencesService
 {
     public string Theme { get; set; } = "Light";
-    public bool IsDiscordEnabled { get; set; }
     private readonly string _preferencesFileName = AppPaths.PreferencesFilePath;
 
     public void SavePreferences()
@@ -33,12 +32,10 @@ public class PreferencesService : IPreferencesService
                     return;
 
                 Theme = loadedPreferences.Theme;
-                IsDiscordEnabled = loadedPreferences.IsDiscordEnabled;
             }
             catch
             {
                 Theme = "Light";
-                IsDiscordEnabled = false;
                 SavePreferences();
             }
         }

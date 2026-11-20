@@ -62,32 +62,8 @@
         </Grid>
 
 
-        <Grid Grid.Row="1" ColumnDefinitions="Auto,*">
-            <Border Grid.Column="0" MaxHeight="135 "
-                    Margin="10"
-                    Padding="15"
-                    BorderBrush="{DynamicResource BorderMainBrush}"
-                    BorderThickness="1">
-                <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                    <StackPanel Spacing="10">
-                        <CheckBox Content="Discord Rich Presence"
-                                  IsChecked="{Binding RichPresenceCheckBox}" />
-                    </StackPanel>
-                </ScrollViewer>
-            </Border>
-            <TextBlock Grid.Column="0"
-                       Text="App Preferences"
-                       FontWeight="SemiBold"
-                       FontSize="12"
-                       Background="{DynamicResource WindowBgBrush}"
-                       Margin="20, 3, 0, 0"
-                       HorizontalAlignment="Left"
-                       VerticalAlignment="Top">
-            </TextBlock>
-
-
-            <Border Grid.Column="1"
-                    Margin="10"
+        <Grid Grid.Row="1">
+            <Border Margin="10"
                     Padding="15"
                     BorderBrush="{DynamicResource BorderMainBrush}"
                     BorderThickness="1">
@@ -153,8 +129,7 @@
                     </Grid>
                 </StackPanel>
             </Border>
-            <TextBlock Grid.Column="1"
-                       Text="Rule Management"
+            <TextBlock Text="Rule Management"
                        FontWeight="SemiBold"
                        FontSize="12"
                        Background="{DynamicResource WindowBgBrush}"

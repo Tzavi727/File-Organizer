@@ -13,16 +13,14 @@ namespace FileOrganizer.ViewModels;
 public partial class HomeViewModel : ViewModelBase
 {
     private readonly IFilePickerService _filePickerService;
-    private readonly IRichPresenceService _richPresenceService;
     private readonly ISorterService _sorterService;
     private readonly IUndoService _undoService;
     private readonly RuleService _ruleService;
 
-    public HomeViewModel(IFilePickerService filePickerService, IRichPresenceService richPresenceService,
-        ISorterService sorterService, IUndoService undoService, RuleService ruleService)
+    public HomeViewModel(IFilePickerService filePickerService, ISorterService sorterService, 
+        IUndoService undoService, RuleService ruleService)
     {
         _filePickerService = filePickerService;
-        _richPresenceService = richPresenceService;
         _sorterService = sorterService;
         _undoService = undoService;
         _ruleService = ruleService;
@@ -93,9 +91,6 @@ public partial class HomeViewModel : ViewModelBase
                 ? "Last Action: 1 File organized"
                 : $"Last Action: {moved} Files organized";
             LastActionOpacity = 1.0;
-
-            _richPresenceService.SetActionPresence("Organizing Files...",
-                $"Files organized this session: {FilesMoved}");
         }
         else
         {
