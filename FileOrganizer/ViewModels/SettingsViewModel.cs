@@ -25,19 +25,28 @@ public partial class SettingsViewModel : ViewModelBase
     }
 
     [ObservableProperty] private ObservableCollection<RuleRecord>? _rulesList;
-
-    [NotifyCanExecuteChangedFor(nameof(AddRuleCommand))] [ObservableProperty]
+    
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(AddRuleCommand))] 
+    [NotifyPropertyChangedFor(nameof(HasKeyToAddText))]
     private string? _keyToAdd;
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(AddRuleCommand))]
+    [ObservableProperty] 
+    [NotifyCanExecuteChangedFor(nameof(AddRuleCommand))]
+    [NotifyPropertyChangedFor(nameof(HasValueToAddText))]
     private string? _valueToAdd;
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(RemoveRuleCommand))]
+    [ObservableProperty] 
+    [NotifyCanExecuteChangedFor(nameof(RemoveRuleCommand))]
+    [NotifyPropertyChangedFor(nameof(HasKeyToRemoveText))]
     private string? _keyToRemove;
 
     [ObservableProperty] private bool _richPresenceCheckBox;
     private bool CanAddRule() => !string.IsNullOrWhiteSpace(KeyToAdd) && !string.IsNullOrWhiteSpace(ValueToAdd);
     private bool CanRemoveRule() => !string.IsNullOrWhiteSpace(KeyToRemove);
+    public bool HasKeyToAddText => !string.IsNullOrWhiteSpace(KeyToAdd);
+    public bool HasValueToAddText => !string.IsNullOrWhiteSpace(ValueToAdd);
+    public bool HasKeyToRemoveText => !string.IsNullOrWhiteSpace(KeyToRemove);
 
     [RelayCommand(CanExecute = nameof(CanAddRule))]
     private void AddRule()
