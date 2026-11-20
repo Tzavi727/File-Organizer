@@ -35,10 +35,8 @@
                          Padding="0,0,0,0"
                          BorderBrush="{DynamicResource BorderMainBrush}"
                          FontSize="15"
-                         SelectedItem="{Binding SelectedTheme}">
-
-                    <ListBoxItem Content="Light" />
-                    <ListBoxItem Content="Dark" />
+                         SelectedItem="{Binding SelectedTheme}"
+                         ItemsSource="{Binding ThemePreviews}">
 
                 </ListBox>
 
@@ -49,7 +47,8 @@
                         BorderThickness="1">
 
                     <Image Name="ThemePreview"
-                           Stretch="Fill" />
+                           Stretch="Fill"
+                           Source="{Binding PreviewBitmap}"/>
 
                 </Border>
                 <TextBlock Grid.Column="0"

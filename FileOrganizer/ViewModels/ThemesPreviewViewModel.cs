@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -18,6 +19,9 @@ public partial class ThemesPreviewViewModel : ViewModelBase
     {
         _themesService = themesService;
     }
+    
+    [ObservableProperty]
+    private ObservableCollection<string> _themePreviews = ["Light", "Dark"];
 
     [RelayCommand]
     private void SaveTheme()
@@ -41,9 +45,9 @@ public partial class ThemesPreviewViewModel : ViewModelBase
 
         string previewFileName = value switch
         {
-            "Dark" => "dark-preview.png",
-            "Light" => "light-preview.png",
-            _ => "default-preview.png" // I do not have a default
+            "Light" => "LightPreview.jpeg",
+            "Dark" => "DarkPreview.jpeg",
+            _ => "LightPreview.jpeg"
         };
 
         try
