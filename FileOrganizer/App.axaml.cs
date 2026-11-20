@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using FileOrganizer.Configuration;
 using FileOrganizer.Services;
 using FileOrganizer.ViewModels;
 using FileOrganizer.Views;
@@ -18,6 +19,7 @@ public class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
+            AppPaths.EnsureDirectoryExists(AppPaths.AppDirectory);
             var mainWindow = new MainWindow();
             var appConfigs = new RuleService();
             var filePicker = new AvaloniaFilePickerService(mainWindow, appConfigs);

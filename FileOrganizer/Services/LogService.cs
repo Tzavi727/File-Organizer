@@ -74,6 +74,7 @@ internal class LogService : ILogService
 
         var options = new JsonSerializerOptions { WriteIndented = true };
         string newJson = JsonSerializer.Serialize(fullLog, options);
+        AppPaths.EnsureParentDirectory(_logFilePath);
         File.WriteAllText(_logFilePath, newJson);
 
         _fullLog.Clear();

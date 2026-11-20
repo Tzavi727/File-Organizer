@@ -15,6 +15,8 @@ public class PreferencesService : IPreferencesService
     {
         var json = JsonSerializer.Serialize(this,
             new JsonSerializerOptions { WriteIndented = true });
+        
+        AppPaths.EnsureParentDirectory(_preferencesFileName);
         File.WriteAllText(_preferencesFileName, json);
     }
 

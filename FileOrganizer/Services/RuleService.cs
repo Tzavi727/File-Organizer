@@ -86,6 +86,8 @@ public class RuleService
     {
         var json = JsonSerializer.Serialize(GetRulesForSave(),
             new JsonSerializerOptions { WriteIndented = true });
+
+        AppPaths.EnsureParentDirectory(_rulesFileName);
         File.WriteAllText(_rulesFileName, json);
     }
 
@@ -115,20 +117,20 @@ public class RuleService
 
     public void ImportRules(string path)
     {
-        if (File.Exists(path))
+        if (!File.Exists(path))
+            return;
+        
+        try
         {
-            try
-            {
-                var jsonText = File.ReadAllText(path);
-                var loadedRules = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonText) ??
-                                  new Dictionary<string, string>();
-                ReplaceRules(loadedRules);
-                SaveRules();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"FileOrganizer couldn't import rules from {path}: {ex.Message}");
-            }
+            var jsonText = File.ReadAllText(path);
+            var loadedRules = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonText) ??
+                              new Dictionary<string, string>();
+            ReplaceRules(loadedRules);
+            SaveRules();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"FileOrganizer couldn't import rules from {path}: {ex.Message}");
         }
     }
 
@@ -138,6 +140,8 @@ public class RuleService
         {
             var json = JsonSerializer.Serialize(GetRulesForSave(),
                 new JsonSerializerOptions { WriteIndented = true });
+            
+            await Task.Run(() => AppPaths.EnsureParentDirectory(path));
             await File.WriteAllTextAsync(path, json);
         }
         catch (Exception ex)
