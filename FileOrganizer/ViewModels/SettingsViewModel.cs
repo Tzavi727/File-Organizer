@@ -13,6 +13,7 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly RuleService _ruleService;
     private readonly IRichPresenceService _richPresenceService;
     private readonly IPreferencesService _preferencesService;
+    private readonly bool _isInitializing;
 
     public SettingsViewModel(RuleService ruleService, IRichPresenceService richPresenceService,
         IPreferencesService preferencesService)
@@ -20,6 +21,15 @@ public partial class SettingsViewModel : ViewModelBase
         _ruleService = ruleService;
         _richPresenceService = richPresenceService;
         _preferencesService = preferencesService;
+        _isInitializing = true;
+        try
+        {
+            RichPresenceCheckBox = _preferencesService.IsDiscordEnabled;
+        }
+        finally
+        {
+            _isInitializing = false;
+        }
         UpdateRulesList();
         _ruleService.RulesChanged += UpdateRulesList;
     }
@@ -97,6 +107,9 @@ public partial class SettingsViewModel : ViewModelBase
 
     partial void OnRichPresenceCheckBoxChanged(bool value)
     {
+        if (_isInitializing)
+            return;
+        
         if (value)
         {
             _richPresenceService.InitializeRpc();
