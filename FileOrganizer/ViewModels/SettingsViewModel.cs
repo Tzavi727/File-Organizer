@@ -25,18 +25,18 @@ public partial class SettingsViewModel : ViewModelBase
     }
 
     [ObservableProperty] private ObservableCollection<RuleRecord>? _rulesList;
-    
+
     [ObservableProperty]
-    [NotifyCanExecuteChangedFor(nameof(AddRuleCommand))] 
+    [NotifyCanExecuteChangedFor(nameof(AddRuleCommand))]
     [NotifyPropertyChangedFor(nameof(HasKeyToAddText))]
     private string? _keyToAdd;
 
-    [ObservableProperty] 
+    [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(AddRuleCommand))]
     [NotifyPropertyChangedFor(nameof(HasValueToAddText))]
     private string? _valueToAdd;
 
-    [ObservableProperty] 
+    [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(RemoveRuleCommand))]
     [NotifyPropertyChangedFor(nameof(HasKeyToRemoveText))]
     private string? _keyToRemove;

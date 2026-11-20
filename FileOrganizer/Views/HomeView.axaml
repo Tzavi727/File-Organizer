@@ -27,8 +27,8 @@
                              FontSize="30"
                              Height="50"
                              Margin="5"
-                             VerticalAlignment="Center" 
-                             Classes.HasText="{Binding FolderPathHasText}"/>
+                             VerticalAlignment="Center"
+                             Classes.HasText="{Binding FolderPathHasText}" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />

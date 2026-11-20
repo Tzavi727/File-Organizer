@@ -48,7 +48,7 @@
 
                     <Image Name="ThemePreview"
                            Stretch="Fill"
-                           Source="{Binding PreviewBitmap}"/>
+                           Source="{Binding PreviewBitmap}" />
 
                 </Border>
                 <TextBlock Grid.Column="0"

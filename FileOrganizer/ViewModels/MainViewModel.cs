@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -48,7 +47,7 @@ public partial class MainViewModel : ViewModelBase
         themesService.SwitchTheme(preferencesService.Theme);
         richPresenceService.InitializeRpc();
         richPresenceService.SetIdlePresence();
-        
+
         Settings = new SettingsViewModel(ruleService, richPresenceService, preferencesService);
         Home = new HomeViewModel(filePickerService, richPresenceService, sorterService, undoService, ruleService);
     }

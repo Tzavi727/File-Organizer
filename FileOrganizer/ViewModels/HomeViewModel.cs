@@ -30,7 +30,7 @@ public partial class HomeViewModel : ViewModelBase
         //I'm sure there is a better way to do this, but I'll leave this as-is for now.
         ruleService.RulesChanged += UpdateExtensionsOptions;
     }
-    
+
     [ObservableProperty] private int _filesMoved;
     [ObservableProperty] private string _lastActionBlock = "Last Action: Waiting for input...";
     [ObservableProperty] private double _lastActionOpacity = 0.5;
@@ -46,10 +46,9 @@ public partial class HomeViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(HasSelectedExtension))]
     private string? _selectedExtension;
 
-    [ObservableProperty] 
-    [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
+    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
     private bool _filterMode;
-    
+
     [ObservableProperty] private ObservableCollection<string>? _extensionList;
     [ObservableProperty] private ObservableCollection<string>? _fileList;
 
@@ -57,10 +56,11 @@ public partial class HomeViewModel : ViewModelBase
                                   !string.IsNullOrWhiteSpace(SelectedExtension) &&
                                   Directory.Exists(FolderPath) &&
                                   FilterMode;
+
     private bool CanSort => !string.IsNullOrWhiteSpace(FolderPath) && Directory.Exists(FolderPath);
     public bool FolderPathHasText => !string.IsNullOrWhiteSpace(FolderPath);
     public bool HasSelectedExtension => !string.IsNullOrWhiteSpace(SelectedExtension);
-    
+
 
     partial void OnFolderPathChanged(string? value)
     {

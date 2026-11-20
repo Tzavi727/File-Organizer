@@ -15,7 +15,7 @@ public partial class DialogBox : Window
     {
         InitializeComponent();
     }
-    
+
     public DialogBox(string title, string message, DialogType type)
     {
         InitializeComponent();

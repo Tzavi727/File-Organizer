@@ -1,6 +1,6 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
     <!-- Menu -->
     <Style Selector="Menu">
         <Setter Property="Background" Value="{DynamicResource MenuBgBrush}" />
@@ -23,12 +23,12 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Background" Value="{DynamicResource WindowBgBrush}" />
     </Style>
-    
+
     <!-- TabControl -->
     <Style Selector="TabControl /template/ ItemsPresenter">
         <Setter Property="Margin" Value="1,0,0,0" />
     </Style>
-    
+
     <!-- TabItem -->
     <Style Selector="TabItem">
         <Setter Property="Background" Value="{DynamicResource TabItemDefaultBrush}" />
@@ -143,7 +143,8 @@
         <Setter Property="Background" Value="{DynamicResource WindowBgBrush}" />
     </Style>
 
-    <Style Selector="ComboBoxItem:pointerover /template/ ContentPresenter, ComboBoxItem:selected /template/ ContentPresenter">
+    <Style
+        Selector="ComboBoxItem:pointerover /template/ ContentPresenter, ComboBoxItem:selected /template/ ContentPresenter">
         <Setter Property="Background" Value="{DynamicResource ComboBoxItemHoverBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource BorderMainBrush}" />
         <Setter Property="BorderThickness" Value="1" />

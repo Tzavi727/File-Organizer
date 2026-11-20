@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using FileOrganizer.Interfaces;
 
 namespace FileOrganizer.Services;
@@ -41,7 +40,7 @@ internal class SorterService : ISorterService
         foreach (string file in files)
         {
             string extension = Path.GetExtension(file).TrimStart('.');
-            
+
             if (!_ruleService.ContainsRule(extension))
                 continue;
 

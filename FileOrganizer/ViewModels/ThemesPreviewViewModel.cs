@@ -19,9 +19,8 @@ public partial class ThemesPreviewViewModel : ViewModelBase
     {
         _themesService = themesService;
     }
-    
-    [ObservableProperty]
-    private ObservableCollection<string> _themePreviews = ["Light", "Dark"];
+
+    [ObservableProperty] private ObservableCollection<string> _themePreviews = ["Light", "Dark"];
 
     [RelayCommand]
     private void SaveTheme()

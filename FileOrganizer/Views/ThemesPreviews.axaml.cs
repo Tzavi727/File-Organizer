@@ -8,9 +8,8 @@ public partial class ThemesPreviews : Window
     //Default constructor to avoid null warnings.
     public ThemesPreviews()
     {
-        
     }
-    
+
     public ThemesPreviews(ThemesPreviewViewModel viewModel)
     {
         InitializeComponent();
