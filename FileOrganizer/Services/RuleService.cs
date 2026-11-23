@@ -119,7 +119,7 @@ public class RuleService
     {
         if (!File.Exists(path))
             return;
-        
+
         try
         {
             var jsonText = File.ReadAllText(path);
@@ -140,7 +140,7 @@ public class RuleService
         {
             var json = JsonSerializer.Serialize(GetRulesForSave(),
                 new JsonSerializerOptions { WriteIndented = true });
-            
+
             await Task.Run(() => AppPaths.EnsureParentDirectory(path));
             await File.WriteAllTextAsync(path, json);
         }

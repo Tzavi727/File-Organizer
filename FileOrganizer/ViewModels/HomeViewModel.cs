@@ -17,7 +17,7 @@ public partial class HomeViewModel : ViewModelBase
     private readonly IUndoService _undoService;
     private readonly RuleService _ruleService;
 
-    public HomeViewModel(IFilePickerService filePickerService, ISorterService sorterService, 
+    public HomeViewModel(IFilePickerService filePickerService, ISorterService sorterService,
         IUndoService undoService, RuleService ruleService)
     {
         _filePickerService = filePickerService;
@@ -44,7 +44,8 @@ public partial class HomeViewModel : ViewModelBase
     [NotifyPropertyChangedFor(nameof(HasSelectedExtension))]
     private string? _selectedExtension;
 
-    [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
+    [ObservableProperty]
+    [NotifyCanExecuteChangedFor(nameof(TargetSortCommand))]
     private bool _filterMode;
 
     [ObservableProperty] private ObservableCollection<string>? _extensionList;

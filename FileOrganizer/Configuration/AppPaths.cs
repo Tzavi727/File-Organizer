@@ -15,7 +15,7 @@ public static class AppPaths
     public static readonly string RulesFilePath = Path.Combine(AppDirectory, "Rules.json");
 
     public static readonly string PreferencesFilePath = Path.Combine(AppDirectory, "Preferences.json");
-    
+
     public static string EnsureParentDirectory(string filePath)
     {
         var directory = Path.GetDirectoryName(filePath);

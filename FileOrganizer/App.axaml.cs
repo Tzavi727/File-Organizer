@@ -43,7 +43,7 @@ public class App : Application
             );
             mainWindow.DataContext = mainViewModel;
             desktop.MainWindow = mainWindow;
-            
+
         }
 
         base.OnFrameworkInitializationCompleted();

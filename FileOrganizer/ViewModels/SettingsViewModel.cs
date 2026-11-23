@@ -37,7 +37,7 @@ public partial class SettingsViewModel : ViewModelBase
     [NotifyCanExecuteChangedFor(nameof(RemoveRuleCommand))]
     [NotifyPropertyChangedFor(nameof(HasKeyToRemoveText))]
     private string? _keyToRemove;
-    
+
     private bool CanAddRule() => !string.IsNullOrWhiteSpace(KeyToAdd) && !string.IsNullOrWhiteSpace(ValueToAdd);
     private bool CanRemoveRule() => !string.IsNullOrWhiteSpace(KeyToRemove);
     public bool HasKeyToAddText => !string.IsNullOrWhiteSpace(KeyToAdd);

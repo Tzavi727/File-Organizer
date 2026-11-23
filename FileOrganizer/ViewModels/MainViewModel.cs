@@ -42,7 +42,7 @@ public partial class MainViewModel : ViewModelBase
         preferencesService.LoadPreferences();
         ruleService.LoadRules();
         themesService.SwitchTheme(preferencesService.Theme);
-        
+
         Settings = new SettingsViewModel(ruleService, preferencesService);
         Home = new HomeViewModel(filePickerService, sorterService, undoService, ruleService);
     }
