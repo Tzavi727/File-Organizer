@@ -5,7 +5,7 @@ A C# program that organizes your files into folders according to their respectiv
 <p align="middle">
   <img src="https://i.imgur.com/AeZnJHr.jpeg" width="410" align="middle"/>
   <img src="https://i.imgur.com/3Llu21L.jpeg" width="410" align="middle"/>
-  <img src="https://i.imgur.com/nWc03bc.jpeg"" width="410" align="middle"/>
+  <img src="https://i.imgur.com/nWc03bc.jpeg" width="410" align="middle"/>
 </p>
 
 ---
@@ -22,8 +22,6 @@ A C# program that organizes your files into folders according to their respectiv
     *   It also auto sorts files by its extension (e.g., .png -> images folder) using LINQ queries.
 *   **Undo System**
     *   It also has an undo option allowing you to safely go back in session undoing your last session.
-*   **Discord Integration**
-    *   Live Rich Presence tracking your organization session.
 *   **Real-Time File Scanning**
     *   Automatically scans and lists files in the selected directory as you type or browse.
 *   **Session Logs:**
@@ -64,14 +62,14 @@ The **File Organizer** provides multiple tools to ensure your files remain safe 
 
 ### Option 2: Run from the source
 
-1.  **Prerequisites:** You need to have the **.NET SDK** installed on your machine (Version 8.0 or higher recommended).
+1.  **Prerequisites:** You need to have the **.NET 10 SDK** installed on your machine.
 2.  **Clone the repository:**
     ```bash
     git clone https://github.com/Tzavi727/File-Organizer.git
     ```
 3.  **Navigate to the project folder:**
     ```bash
-    cd src/FileOrganizer
+    cd FileOrganizer
     ```
 4.  **Run the application:**
     ```bash
